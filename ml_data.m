@@ -59,8 +59,8 @@ length(labels(1,:))
 length(inputs(1,:))/12
 
 % saving
-saveFunction(inputs, dt, 'inputs')
-saveFunction(labels, dt, 'labels')
+saveFunction(transpose(inputs), dt, 'inputs')
+saveFunction(transpose(labels), dt, 'labels')
 
 function savefunction_1=saveFunction(val, dt, name)
     path = strcat('ml_input_', dt);
