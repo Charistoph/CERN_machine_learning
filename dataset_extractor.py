@@ -130,3 +130,7 @@ except Exception as e:
     raise
 
 print ""
+
+# length checks
+print "difference between input length and dataset length =", inputlength/inputheigth - (len(train_dataset) + len(test_dataset) + len(valid_dataset))
+print "difference between input length and labels length =", inputlength/inputheigth - (len(train_labels) + len(test_labels) + len(valid_labels))
