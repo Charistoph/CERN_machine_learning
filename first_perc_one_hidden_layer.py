@@ -58,6 +58,7 @@ print ('\nstart time: ' + str(start))
 para_dataset_size = 72
 para_labels_size = 5
 batch_size = 128
+num_nodes= 1024
 learning_rate = 0.5
 
 graph = tf.Graph()
@@ -72,32 +73,52 @@ with graph.as_default():
     tf_test_dataset = tf.constant(test_dataset)
 
     # Variables.
-    weights = tf.Variable(
-        tf.truncated_normal([para_dataset_size, para_labels_size]))
-    biases = tf.Variable(tf.zeros([para_labels_size]))
+    weights_1 = tf.Variable(
+        tf.truncated_normal([para_dataset_size, num_nodes]))
+    biases_1 = tf.Variable(tf.zeros([num_nodes]))
+    weights_2 = tf.Variable(tf.truncated_normal([num_nodes, para_labels_size]))
+    biases_2 = tf.Variable(tf.zeros([para_labels_size]))
 
     # Training computation.
-    logits = tf.matmul(tf_train_dataset, weights) + biases
+    logits_1 = tf.matmul(tf_train_dataset, weights_1) + biases_1
+
+    # Hidden layer
+    # RELU
+    relu_layer = tf.nn.relu(logits_1)
+
+    logits_2 = tf.matmul(relu_layer, weights_2) + biases_2
 
     # Quadratic Loss Function
 #    loss = tf.reduce_mean(
-#        tf.nn.softmax_cross_entropy_with_logits(labels=tf_train_labels, logits=logits))
+#        tf.nn.softmax_cross_entropy_with_logits(labels=tf_train_labels, logits=logits_2))
 
-    loss = tf.reduce_mean(tf.square(tf_train_labels - logits))
+    loss = tf.reduce_mean(tf.square(tf_train_labels - logits_2))
 
     # Optimizer.
     optimizer = tf.train.GradientDescentOptimizer(learning_rate).minimize(loss)
 
     # Predictions for the training, validation, and test data.
-#    train_prediction = tf.nn.softmax(logits)
+#    train_prediction = tf.nn.softmax(logits_1)
 #    valid_prediction = tf.nn.softmax(
-#        tf.matmul(tf_valid_dataset, weights) + biases)
-#    test_prediction = tf.nn.softmax(tf.matmul(tf_test_dataset, weights) + biases)
-    train_prediction = tf.nn.sigmoid(logits)
-    valid_prediction = tf.nn.sigmoid(
-        tf.matmul(tf_valid_dataset, weights) + biases)
-    test_prediction = tf.nn.sigmoid(tf.matmul(tf_test_dataset, weights) + biases)
+#        tf.matmul(tf_valid_dataset, weights_1) + biases_1)
+#    test_prediction = tf.nn.softmax(tf.matmul(tf_test_dataset, weights_1) + biases_1)
 
+    # Predictions for the training
+    train_prediction = tf.nn.softmax(logits_2)
+
+    # Predictions for validation
+    logits_1 = tf.matmul(tf_valid_dataset, weights_1) + biases_1
+    relu_layer= tf.nn.relu(logits_1)
+    logits_2 = tf.matmul(relu_layer, weights_2) + biases_2
+
+    valid_prediction = tf.nn.softmax(logits_2)
+
+    # Predictions for test
+    logits_1 = tf.matmul(tf_test_dataset, weights_1) + biases_1
+    relu_layer= tf.nn.relu(logits_1)
+    logits_2 = tf.matmul(relu_layer, weights_2) + biases_2
+
+    test_prediction =  tf.nn.softmax(logits_2)
 
 #-------------------------------------------------------------------------------
 # run computation and iterate
