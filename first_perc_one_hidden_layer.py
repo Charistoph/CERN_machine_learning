@@ -8,6 +8,7 @@ from six.moves import range
 import os
 import time
 import scipy.misc
+import matplotlib.pyplot as plt
 
 # get pickle file
 pickle_file = 'data_root/5para.pickle'
@@ -61,6 +62,8 @@ batch_size = 128
 num_nodes= 1024
 learning_rate = 0.5
 
+loss_history = np.empty(shape=[1],dtype=float)
+
 graph = tf.Graph()
 with graph.as_default():
 
@@ -92,7 +95,34 @@ with graph.as_default():
 #    loss = tf.reduce_mean(
 #        tf.nn.softmax_cross_entropy_with_logits(labels=tf_train_labels, logits=logits_2))
 
+    print('tf_train_dataset', tf_train_dataset.shape)
+    print('weights_1', weights_1.shape)
+    print('biases_1', biases_1.shape)
+    print('logits_1', logits_1.shape)
+    print('relu_layer', relu_layer.shape)
+    print('weights_2', weights_2.shape)
+    print('biases_2', biases_2.shape)
+    print('logits_2', logits_2.shape)
+    print('tf_train_dataset', tf_train_labels.shape)
+
+
+#    print('tf_train_labels', tf_train_labels)
+#    print('logits_2', logits_2)
+#    t1 = tf_train_labels - logits_2
+#    print('t1.eval', t1.eval)
+#    p1 = tf.Print(t1, message="t1")
+
     loss = tf.reduce_mean(tf.square(tf_train_labels - logits_2))
+    print('loss', loss.shape)
+
+#    print('loss.eval', loss.eval)
+#    p2 = tf.Print(loss, message="loss")
+
+#    model = tf.global_variables_initializer()
+#    with tf.Session() as session:
+#        session.run(model)
+#        #print(session.run(loss))
+#        print(session.run(tf_train_labels - logits_2))
 
     # Optimizer.
     optimizer = tf.train.GradientDescentOptimizer(learning_rate).minimize(loss)
@@ -123,7 +153,7 @@ with graph.as_default():
 #-------------------------------------------------------------------------------
 # run computation and iterate
 #num_steps = 3001
-num_steps = 3001
+num_steps = 3
 
 def accuracy(predictions, labels):
     return (100.0 * np.sum(np.argmax(predictions, 1) == np.argmax(labels, 1))
@@ -154,10 +184,35 @@ with tf.Session(graph=graph) as session:
                     str(step) + ': ' + str(time.clock()-currenttime))
             currenttime = time.clock()
 
+        tf_train_dataset_v,weights_1_v,biases_1_v,logits_1_v,relu_layer_v,weights_2_v,biases_2_v,logits_2_v,tf_train_labels_v = session.run([tf_train_dataset,weights_1,biases_1,logits_1,relu_layer,weights_2,biases_2,logits_2,tf_train_labels], feed_dict=feed_dict)
+        print('\nStep:', step)
+
+        print('tf_train_dataset_v', tf_train_dataset_v[0:5,0])
+        print('weights_1_v', weights_1_v[0:5,0])
+        print('biases_1_v', biases_1_v[0:5])
+        print('logits_1_v', logits_1_v[0:5,0])
+        print('relu_layer_v', relu_layer_v[0:5,0])
+        print('weights_2_v', weights_2_v[0:5,0])
+        print('biases_2_v', biases_2_v[0:5])
+        print('logits_2_v', logits_2_v[0:5,0])
+        print('tf_train_labels_v', tf_train_labels_v[0:5,0])
+        print('loss',l)
+
     print("Test accuracy: %.1f%%" % accuracy(test_prediction.eval(), test_labels))
     print ('total computing time: ' + str(time.clock()-start))
 
+#    print(session.run(l))
+#    print(session.run())
+
+
+# Save for statistics
+    loss_history = np.append(loss_history,l)
+
 #    saver = tf.train.Saver()
 #    saver.save(session, 'session_store/a2_sgd.ckpt')
+
+plt.plot(range(len(loss_history)),loss_history)
+plt.axis([0,num_steps,0,np.max(loss_history)])
+#plt.show()
 
 print('programm terminated.')
