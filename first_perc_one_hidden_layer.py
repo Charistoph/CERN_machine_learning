@@ -58,7 +58,7 @@ print ('\nstart time: ' + str(start))
 para_dataset_size = 72
 para_labels_size = 5
 batch_size = 128
-
+learning_rate = 0.5
 
 graph = tf.Graph()
 with graph.as_default():
@@ -78,17 +78,25 @@ with graph.as_default():
 
     # Training computation.
     logits = tf.matmul(tf_train_dataset, weights) + biases
-    loss = tf.reduce_mean(
-        tf.nn.softmax_cross_entropy_with_logits(labels=tf_train_labels, logits=logits))
+
+    # Quadratic Loss Function
+#    loss = tf.reduce_mean(
+#        tf.nn.softmax_cross_entropy_with_logits(labels=tf_train_labels, logits=logits))
+
+    loss = tf.reduce_mean(tf.square(tf_train_labels - logits))
 
     # Optimizer.
-    optimizer = tf.train.GradientDescentOptimizer(0.5).minimize(loss)
+    optimizer = tf.train.GradientDescentOptimizer(learning_rate).minimize(loss)
 
     # Predictions for the training, validation, and test data.
-    train_prediction = tf.nn.softmax(logits)
-    valid_prediction = tf.nn.softmax(
+#    train_prediction = tf.nn.softmax(logits)
+#    valid_prediction = tf.nn.softmax(
+#        tf.matmul(tf_valid_dataset, weights) + biases)
+#    test_prediction = tf.nn.softmax(tf.matmul(tf_test_dataset, weights) + biases)
+    train_prediction = tf.nn.sigmoid(logits)
+    valid_prediction = tf.nn.sigmoid(
         tf.matmul(tf_valid_dataset, weights) + biases)
-    test_prediction = tf.nn.softmax(tf.matmul(tf_test_dataset, weights) + biases)
+    test_prediction = tf.nn.sigmoid(tf.matmul(tf_test_dataset, weights) + biases)
 
 
 #-------------------------------------------------------------------------------
