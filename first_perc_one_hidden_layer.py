@@ -60,7 +60,7 @@ para_dataset_size = 72
 para_labels_size = 5
 batch_size = 128
 num_nodes= 1024
-learning_rate = 0.5
+learning_rate = 0.1
 
 loss_history = np.empty(shape=[1],dtype=float)
 
@@ -76,34 +76,63 @@ with graph.as_default():
     tf_test_dataset = tf.constant(test_dataset)
 
     # Variables.
-    weights_1 = tf.Variable(
-        tf.truncated_normal([para_dataset_size, num_nodes]))
-    biases_1 = tf.Variable(tf.zeros([num_nodes]))
-    weights_2 = tf.Variable(tf.truncated_normal([num_nodes, para_labels_size]))
-    biases_2 = tf.Variable(tf.zeros([para_labels_size]))
+    weights = tf.Variable(
+        tf.truncated_normal([para_dataset_size, para_labels_size]))
+    biases = tf.Variable(tf.zeros([para_labels_size]))
 
     # Training computation.
-    logits_1 = tf.matmul(tf_train_dataset, weights_1) + biases_1
+    logits = tf.matmul(tf_train_dataset, weights) + biases
+
+#    loss = tf.reduce_mean(
+#        tf.nn.softmax_cross_entropy_with_logits(labels=tf_train_labels, logits=logits))
+    loss = tf.reduce_mean(tf.square(tf_train_labels - logits))
+
+    print('tf_train_dataset', tf_train_dataset.shape)
+    print('tf_train_labels', tf_train_labels.shape)
+    print('weights', weights.shape)
+    print('biases', biases.shape)
+    print('logits', logits.shape)
+    print('loss', loss.shape)
+
+    # Optimizer.
+    optimizer = tf.train.GradientDescentOptimizer(learning_rate).minimize(loss)
+
+    # Predictions for the training, validation, and test data.
+    train_prediction = tf.nn.softmax(logits)
+    valid_prediction = tf.nn.softmax(
+        tf.matmul(tf_valid_dataset, weights) + biases)
+    test_prediction = tf.nn.softmax(tf.matmul(tf_test_dataset, weights) + biases)
+
+#-------------------------------------------------------------------------------
+    # Variables.
+#    weights_1 = tf.Variable(
+#        tf.truncated_normal([para_dataset_size, num_nodes]))
+#    biases_1 = tf.Variable(tf.zeros([num_nodes]))
+#    weights_2 = tf.Variable(tf.truncated_normal([num_nodes, para_labels_size]))
+#    biases_2 = tf.Variable(tf.zeros([para_labels_size]))
+#
+#    # Training computation.
+#    logits_1 = tf.matmul(tf_train_dataset, weights_1) + biases_1
 
     # Hidden layer
     # RELU
-    relu_layer = tf.nn.relu(logits_1)
+#    relu_layer = tf.nn.relu(logits_1)
+#
+#    logits_2 = tf.matmul(relu_layer, weights_2) + biases_2
 
-    logits_2 = tf.matmul(relu_layer, weights_2) + biases_2
+#    print('tf_train_dataset', tf_train_dataset.shape)
+#    print('tf_train_labels', tf_train_labels.shape)
+#    print('weights_1', weights_1.shape)
+#    print('biases_1', biases_1.shape)
+#    print('logits_1', logits_1.shape)
+#    print('relu_layer', relu_layer.shape)
+#    print('weights_2', weights_2.shape)
+#    print('biases_2', biases_2.shape)
+#    print('logits_2', logits_2.shape)
 
     # Quadratic Loss Function
 #    loss = tf.reduce_mean(
-#        tf.nn.softmax_cross_entropy_with_logits(labels=tf_train_labels, logits=logits_2))
-
-    print('tf_train_dataset', tf_train_dataset.shape)
-    print('weights_1', weights_1.shape)
-    print('biases_1', biases_1.shape)
-    print('logits_1', logits_1.shape)
-    print('relu_layer', relu_layer.shape)
-    print('weights_2', weights_2.shape)
-    print('biases_2', biases_2.shape)
-    print('logits_2', logits_2.shape)
-    print('tf_train_dataset', tf_train_labels.shape)
+#        tf.nn.softmax_cross_entropy_with_logits(labels=tf_train_labels, logits=logits_1))
 
 
 #    print('tf_train_labels', tf_train_labels)
@@ -112,8 +141,8 @@ with graph.as_default():
 #    print('t1.eval', t1.eval)
 #    p1 = tf.Print(t1, message="t1")
 
-    loss = tf.reduce_mean(tf.square(tf_train_labels - logits_2))
-    print('loss', loss.shape)
+#    loss = tf.reduce_mean(tf.square(tf_train_labels - logits_2))
+#    print('loss', loss.shape)
 
 #    print('loss.eval', loss.eval)
 #    p2 = tf.Print(loss, message="loss")
@@ -125,35 +154,35 @@ with graph.as_default():
 #        print(session.run(tf_train_labels - logits_2))
 
     # Optimizer.
-    optimizer = tf.train.GradientDescentOptimizer(learning_rate).minimize(loss)
-
-    # Predictions for the training, validation, and test data.
+#    optimizer = tf.train.GradientDescentOptimizer(learning_rate).minimize(loss)
+#
+#    # Predictions for the training, validation, and test data.
 #    train_prediction = tf.nn.softmax(logits_1)
 #    valid_prediction = tf.nn.softmax(
 #        tf.matmul(tf_valid_dataset, weights_1) + biases_1)
 #    test_prediction = tf.nn.softmax(tf.matmul(tf_test_dataset, weights_1) + biases_1)
 
-    # Predictions for the training
-    train_prediction = tf.nn.softmax(logits_2)
-
-    # Predictions for validation
-    logits_1 = tf.matmul(tf_valid_dataset, weights_1) + biases_1
-    relu_layer= tf.nn.relu(logits_1)
-    logits_2 = tf.matmul(relu_layer, weights_2) + biases_2
-
-    valid_prediction = tf.nn.softmax(logits_2)
-
-    # Predictions for test
-    logits_1 = tf.matmul(tf_test_dataset, weights_1) + biases_1
-    relu_layer= tf.nn.relu(logits_1)
-    logits_2 = tf.matmul(relu_layer, weights_2) + biases_2
-
-    test_prediction =  tf.nn.softmax(logits_2)
+#    # Predictions for the training
+#    train_prediction = tf.nn.softmax(logits_2)
+#
+#    # Predictions for validation
+#    logits_1 = tf.matmul(tf_valid_dataset, weights_1) + biases_1
+#    relu_layer= tf.nn.relu(logits_1)
+#    logits_2 = tf.matmul(relu_layer, weights_2) + biases_2
+#
+#    valid_prediction = tf.nn.softmax(logits_2)
+#
+#    # Predictions for test
+#    logits_1 = tf.matmul(tf_test_dataset, weights_1) + biases_1
+#    relu_layer= tf.nn.relu(logits_1)
+#    logits_2 = tf.matmul(relu_layer, weights_2) + biases_2
+#
+#    test_prediction =  tf.nn.softmax(logits_2)
 
 #-------------------------------------------------------------------------------
 # run computation and iterate
 #num_steps = 3001
-num_steps = 3
+num_steps = 300
 
 def accuracy(predictions, labels):
     return (100.0 * np.sum(np.argmax(predictions, 1) == np.argmax(labels, 1))
@@ -176,7 +205,7 @@ with tf.Session(graph=graph) as session:
         _, l, predictions = session.run(
           [optimizer, loss, train_prediction], feed_dict=feed_dict)
         if (step % 500 == 0):
-            print("Minibatch loss at step %d: %f" % (step, l))
+            print("\nMinibatch loss at step %d: %f" % (step, l))
             print("Minibatch accuracy: %.1f%%" % accuracy(predictions, batch_labels))
             print("Validation accuracy: %.1f%%" % accuracy(
                     valid_prediction.eval(), valid_labels))
@@ -184,35 +213,48 @@ with tf.Session(graph=graph) as session:
                     str(step) + ': ' + str(time.clock()-currenttime))
             currenttime = time.clock()
 
-        tf_train_dataset_v,weights_1_v,biases_1_v,logits_1_v,relu_layer_v,weights_2_v,biases_2_v,logits_2_v,tf_train_labels_v = session.run([tf_train_dataset,weights_1,biases_1,logits_1,relu_layer,weights_2,biases_2,logits_2,tf_train_labels], feed_dict=feed_dict)
-        print('\nStep:', step)
+        # Append current loss to loss history
+        loss_history = np.append(loss_history,l)
 
-        print('tf_train_dataset_v', tf_train_dataset_v[0:5,0])
-        print('weights_1_v', weights_1_v[0:5,0])
-        print('biases_1_v', biases_1_v[0:5])
-        print('logits_1_v', logits_1_v[0:5,0])
-        print('relu_layer_v', relu_layer_v[0:5,0])
-        print('weights_2_v', weights_2_v[0:5,0])
-        print('biases_2_v', biases_2_v[0:5])
-        print('logits_2_v', logits_2_v[0:5,0])
-        print('tf_train_labels_v', tf_train_labels_v[0:5,0])
-        print('loss',l)
+        tf_train_dataset_v,weights_1_v,biases_1_v,logits_1_v,tf_train_labels_v = session.run([tf_train_dataset,weights,biases,logits,tf_train_labels], feed_dict=feed_dict)
 
-    print("Test accuracy: %.1f%%" % accuracy(test_prediction.eval(), test_labels))
+        if (step < 3 or step > num_steps-2):
+            print('\nStep:', step)
+            print("Minibatch loss at step %d: %f" % (step, l))
+            print('tf_train_dataset_v', tf_train_dataset_v[0:5,0])
+            print('weights_1_v', weights_1_v[0:5,0])
+            print('biases_1_v', biases_1_v[0:5])
+            print('logits_1_v', logits_1_v[0:5,0])
+            print('tf_train_labels_v', tf_train_labels_v[0:5,0])
+            print('loss',l)
+
+#        tf_train_dataset_v,weights_1_v,biases_1_v,logits_1_v,relu_layer_v,weights_2_v,biases_2_v,logits_2_v,tf_train_labels_v = session.run([tf_train_dataset,weights_1,biases_1,logits_1,relu_layer,weights_2,biases_2,logits_2,tf_train_labels], feed_dict=feed_dict)
+#        print('\nStep:', step)
+#
+#        print('tf_train_dataset_v', tf_train_dataset_v[0:5,0])
+#        print('weights_1_v', weights_1_v[0:5,0])
+#        print('biases_1_v', biases_1_v[0:5])
+#        print('logits_1_v', logits_1_v[0:5,0])
+#        print('relu_layer_v', relu_layer_v[0:5,0])
+#        print('weights_2_v', weights_2_v[0:5,0])
+#        print('biases_2_v', biases_2_v[0:5])
+#        print('logits_2_v', logits_2_v[0:5,0])
+#        print('tf_train_labels_v', tf_train_labels_v[0:5,0])
+#        print('loss',l)
+
+    print("\nTest accuracy: %.1f%%" % accuracy(test_prediction.eval(), test_labels))
     print ('total computing time: ' + str(time.clock()-start))
 
 #    print(session.run(l))
 #    print(session.run())
 
-
-# Save for statistics
-    loss_history = np.append(loss_history,l)
-
 #    saver = tf.train.Saver()
 #    saver.save(session, 'session_store/a2_sgd.ckpt')
 
+plt.figure('loss_history')
 plt.plot(range(len(loss_history)),loss_history)
-plt.axis([0,num_steps,0,np.max(loss_history)])
 #plt.show()
+plt.savefig('ml_output/loss_history.png')
+plt.gcf().clear()
 
 print('programm terminated.')
