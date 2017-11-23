@@ -1,5 +1,5 @@
 clear
-temp=load('output.csv');
+temp=load('input_data/output.csv');
 l=length(temp)
 ntr=0;
 iline=1;
@@ -17,7 +17,7 @@ while iline<l
     iline=iline+15;
     for icomp=1:track(ntr).ncomp
         iline=iline+1;
-        track(ntr).comp(icomp).weight=temp(iline);        
+        track(ntr).comp(icomp).weight=temp(iline);
         iline=iline+1;
         track(ntr).comp(icomp).par=temp(iline:iline+4);
         iline=iline+5;
