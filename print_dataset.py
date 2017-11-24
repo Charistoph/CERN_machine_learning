@@ -70,6 +70,7 @@ def create_dir(savedir):
 
 def print_dist(savedir,name,plotdata):
     plt.figure(name)
+    plt.title(name)
     plt.hist(plotdata, normed=True, bins=30)
 #    plt.show()
     plt.savefig(savedir + '/' + name + '.png')
@@ -89,9 +90,11 @@ create_dir(savedir_targets)
 create_dir(savedir_inputs)
 create_dir(savedir_inputs_total)
 
+labels = ['q_p','dx_dz','dy_dz','x','y']
+
 # for target 5 parameters create distribution histos
 for i in range(0,5):
-    name = "Plot_"+str(i)
+    name = "Targets_SIM_Para_" + str(i+1) + "_" + labels[i]
     print_dist(savedir_targets,name,targets[:,i])
 
 
@@ -104,7 +107,7 @@ for k in range(0,total_dataset):
 
 # for 60 compontents = 12*5 reco parameters create distribution histos
 for i in range(0,5):
-    name = "Plot_"+str(i)
+    name = "Inputs_Total_RECO_Para_" + str(i+1) + "_" + labels[i]
     print_dist(savedir_inputs,name,inputs_rearranged[:,i])
 
 
@@ -116,7 +119,7 @@ for i in range(0,12):
 
 # for 5 total input reco parameters create distribution histos
 for i in range(0,5):
-    name = "Plot_"+str(i)
+    name = "Inputs_RECO_Para_" + str(i+1) + "_" + labels[i]
     print_dist(savedir_inputs_total,name,inputs_total[:,i])
 
 # checks

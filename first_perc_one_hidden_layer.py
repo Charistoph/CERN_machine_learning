@@ -75,6 +75,85 @@ with graph.as_default():
     tf_valid_dataset = tf.constant(valid_dataset)
     tf_test_dataset = tf.constant(test_dataset)
 
+#-------------------------------------------------------------------------------
+#    '''
+    # Variables.
+    weights_1 = tf.Variable(
+        tf.truncated_normal([para_dataset_size, num_nodes]))
+    biases_1 = tf.Variable(tf.zeros([num_nodes]))
+    weights_2 = tf.Variable(tf.truncated_normal([num_nodes, para_targets_size]))
+    biases_2 = tf.Variable(tf.zeros([para_targets_size]))
+
+    # Training computation.
+    logits_1 = tf.matmul(tf_train_dataset, weights_1) + biases_1
+
+    # Hidden layer
+    # RELU
+    relu_layer = tf.nn.tanh(logits_1)
+
+    logits_2 = tf.matmul(relu_layer, weights_2) + biases_2
+
+    print('tf_train_dataset', tf_train_dataset.shape)
+    print('tf_train_targets', tf_train_targets.shape)
+    print('weights_1', weights_1.shape)
+    print('biases_1', biases_1.shape)
+    print('logits_1', logits_1.shape)
+    print('relu_layer', relu_layer.shape)
+    print('weights_2', weights_2.shape)
+    print('biases_2', biases_2.shape)
+    print('logits_2', logits_2.shape)
+
+    # Quadratic Loss Function
+#    loss = tf.reduce_mean(
+#        tf.nn.softmax_cross_entropy_with_logits(targets=tf_train_targets, logits=logits_1))
+
+
+#    print('tf_train_targets', tf_train_targets)
+#    print('logits_2', logits_2)
+#    t1 = tf_train_targets - logits_2
+#    print('t1.eval', t1.eval)
+#    p1 = tf.Print(t1, message="t1")
+
+    loss = tf.reduce_mean(tf.square(tf_train_targets - logits_2))
+    print('loss', loss.shape)
+
+#    print('loss.eval', loss.eval)
+#    p2 = tf.Print(loss, message="loss")
+
+#    model = tf.global_variables_initializer()
+#    with tf.Session() as session:
+#        session.run(model)
+#        #print(session.run(loss))
+#        print(session.run(tf_train_targets - logits_2))
+
+    # Optimizer.
+    optimizer = tf.train.GradientDescentOptimizer(learning_rate).minimize(loss)
+
+    # Predictions for the training, validation, and test data.
+    train_prediction = tf.nn.softmax(logits_1)
+    valid_prediction = tf.nn.softmax(
+        tf.matmul(tf_valid_dataset, weights_1) + biases_1)
+    test_prediction = tf.nn.softmax(tf.matmul(tf_test_dataset, weights_1) + biases_1)
+
+    # Predictions for the training
+    train_prediction = tf.nn.softmax(logits_2)
+
+    # Predictions for validation
+    logits_1 = tf.matmul(tf_valid_dataset, weights_1) + biases_1
+    relu_layer= tf.nn.relu(logits_1)
+    logits_2 = tf.matmul(relu_layer, weights_2) + biases_2
+
+    valid_prediction = tf.nn.softmax(logits_2)
+
+    # Predictions for test
+    logits_1 = tf.matmul(tf_test_dataset, weights_1) + biases_1
+    relu_layer= tf.nn.relu(logits_1)
+    logits_2 = tf.matmul(relu_layer, weights_2) + biases_2
+
+    test_prediction =  tf.nn.softmax(logits_2)
+    '''
+#-------------------------------------------------------------------------------
+
     # Variables.
     weights = tf.Variable(
         tf.truncated_normal([para_dataset_size, para_targets_size]))
@@ -84,7 +163,7 @@ with graph.as_default():
     logits = tf.matmul(tf_train_dataset, weights) + biases
 
 #    loss = tf.reduce_mean(
-#        tf.nn.softmax_cross_entropy_with_logits(targets=tf_train_targets, logits=logits))
+#        tf.nn.softmax_cross_entropy_with_logits(targets=tf_train_targets, ogits=logits))
     loss = tf.reduce_mean(tf.square(tf_train_targets - logits))
 
     print('tf_train_dataset', tf_train_dataset.shape)
@@ -102,83 +181,7 @@ with graph.as_default():
     valid_prediction = tf.nn.softmax(
         tf.matmul(tf_valid_dataset, weights) + biases)
     test_prediction = tf.nn.softmax(tf.matmul(tf_test_dataset, weights) + biases)
-
-#-------------------------------------------------------------------------------
-    # Variables.
-#    weights_1 = tf.Variable(
-#        tf.truncated_normal([para_dataset_size, num_nodes]))
-#    biases_1 = tf.Variable(tf.zeros([num_nodes]))
-#    weights_2 = tf.Variable(tf.truncated_normal([num_nodes, para_targets_size]))
-#    biases_2 = tf.Variable(tf.zeros([para_targets_size]))
-#
-#    # Training computation.
-#    logits_1 = tf.matmul(tf_train_dataset, weights_1) + biases_1
-
-    # Hidden layer
-    # RELU
-#    relu_layer = tf.nn.relu(logits_1)
-#
-#    logits_2 = tf.matmul(relu_layer, weights_2) + biases_2
-
-#    print('tf_train_dataset', tf_train_dataset.shape)
-#    print('tf_train_targets', tf_train_targets.shape)
-#    print('weights_1', weights_1.shape)
-#    print('biases_1', biases_1.shape)
-#    print('logits_1', logits_1.shape)
-#    print('relu_layer', relu_layer.shape)
-#    print('weights_2', weights_2.shape)
-#    print('biases_2', biases_2.shape)
-#    print('logits_2', logits_2.shape)
-
-    # Quadratic Loss Function
-#    loss = tf.reduce_mean(
-#        tf.nn.softmax_cross_entropy_with_logits(targets=tf_train_targets, logits=logits_1))
-
-
-#    print('tf_train_targets', tf_train_targets)
-#    print('logits_2', logits_2)
-#    t1 = tf_train_targets - logits_2
-#    print('t1.eval', t1.eval)
-#    p1 = tf.Print(t1, message="t1")
-
-#    loss = tf.reduce_mean(tf.square(tf_train_targets - logits_2))
-#    print('loss', loss.shape)
-
-#    print('loss.eval', loss.eval)
-#    p2 = tf.Print(loss, message="loss")
-
-#    model = tf.global_variables_initializer()
-#    with tf.Session() as session:
-#        session.run(model)
-#        #print(session.run(loss))
-#        print(session.run(tf_train_targets - logits_2))
-
-    # Optimizer.
-#    optimizer = tf.train.GradientDescentOptimizer(learning_rate).minimize(loss)
-#
-#    # Predictions for the training, validation, and test data.
-#    train_prediction = tf.nn.softmax(logits_1)
-#    valid_prediction = tf.nn.softmax(
-#        tf.matmul(tf_valid_dataset, weights_1) + biases_1)
-#    test_prediction = tf.nn.softmax(tf.matmul(tf_test_dataset, weights_1) + biases_1)
-
-#    # Predictions for the training
-#    train_prediction = tf.nn.softmax(logits_2)
-#
-#    # Predictions for validation
-#    logits_1 = tf.matmul(tf_valid_dataset, weights_1) + biases_1
-#    relu_layer= tf.nn.relu(logits_1)
-#    logits_2 = tf.matmul(relu_layer, weights_2) + biases_2
-#
-#    valid_prediction = tf.nn.softmax(logits_2)
-#
-#    # Predictions for test
-#    logits_1 = tf.matmul(tf_test_dataset, weights_1) + biases_1
-#    relu_layer= tf.nn.relu(logits_1)
-#    logits_2 = tf.matmul(relu_layer, weights_2) + biases_2
-#
-#    test_prediction =  tf.nn.softmax(logits_2)
-
+    '''
 #-------------------------------------------------------------------------------
 # run computation and iterate
 #num_steps = 3001
@@ -215,7 +218,7 @@ with tf.Session(graph=graph) as session:
 
         # Append current loss to loss history
         loss_history = np.append(loss_history,l)
-
+        '''
         tf_train_dataset_v,weights_1_v,biases_1_v,logits_1_v,tf_train_targets_v = session.run([tf_train_dataset,weights,biases,logits,tf_train_targets], feed_dict=feed_dict)
 
         if (step < 3 or step > num_steps-2):
@@ -227,26 +230,25 @@ with tf.Session(graph=graph) as session:
             print('logits_1_v', logits_1_v[0:5,0])
             print('tf_train_targets_v', tf_train_targets_v[0:5,0])
             print('loss',l)
+        '''
+        tf_train_dataset_v,weights_1_v,biases_1_v,logits_1_v,relu_layer_v,weights_2_v,biases_2_v,logits_2_v,tf_train_targets_v = session.run([tf_train_dataset,weights_1,biases_1,logits_1,relu_layer,weights_2,biases_2,logits_2,tf_train_targets], feed_dict=feed_dict)
 
-#        tf_train_dataset_v,weights_1_v,biases_1_v,logits_1_v,relu_layer_v,weights_2_v,biases_2_v,logits_2_v,tf_train_targets_v = session.run([tf_train_dataset,weights_1,biases_1,logits_1,relu_layer,weights_2,biases_2,logits_2,tf_train_targets], feed_dict=feed_dict)
-#        print('\nStep:', step)
-#
-#        print('tf_train_dataset_v', tf_train_dataset_v[0:5,0])
-#        print('weights_1_v', weights_1_v[0:5,0])
-#        print('biases_1_v', biases_1_v[0:5])
-#        print('logits_1_v', logits_1_v[0:5,0])
-#        print('relu_layer_v', relu_layer_v[0:5,0])
-#        print('weights_2_v', weights_2_v[0:5,0])
-#        print('biases_2_v', biases_2_v[0:5])
-#        print('logits_2_v', logits_2_v[0:5,0])
-#        print('tf_train_targets_v', tf_train_targets_v[0:5,0])
-#        print('loss',l)
-
+        if (step < 3 or step > num_steps-2):
+            print('\nStep:', step)
+            print('tf_train_dataset_v\n', tf_train_dataset_v[0:5,0])
+            print('weights_1_v\n', weights_1_v[0:5,0])
+            print('biases_1_v\n', biases_1_v[0:5])
+            print('logits_1_v\n', logits_1_v[0:5,0])
+            print('relu_layer_v\n', relu_layer_v[0:5,0])
+            print('weights_2_v\n', weights_2_v[0:5,0])
+            print('biases_2_v\n', biases_2_v[0:5])
+            print('logits_2_v\n', logits_2_v[0:5,0])
+            print('tf_train_targets_v\n', tf_train_targets_v[0:5,0])
+            print('loss\n',l)
+#        '''
     print("\nTest accuracy: %.1f%%" % accuracy(test_prediction.eval(), test_targets))
     print ('total computing time: ' + str(time.clock()-start))
 
-#    print(session.run(l))
-#    print(session.run())
 
 #    saver = tf.train.Saver()
 #    saver.save(session, 'session_store/a2_sgd.ckpt')
