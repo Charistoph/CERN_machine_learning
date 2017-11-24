@@ -17,7 +17,7 @@ for itr=1:ntr
         % allparas(1,1) = number of components
 %        allparas(1,counter*13-12)=track(counter).ncomp;
         % simparas(1:5,:) = targets (simulated 5 parameters)
-        simparas(1:5,counter)=track(counter).mixt.par;
+        simparas(1:5,counter)=track(counter).tp;
         for int=1:track(counter).ncomp
             % recoparas(1,2:13) = component weights
             recoparas(1,counter*12-12+int)=track(counter).comp(int).weight;
@@ -27,16 +27,22 @@ for itr=1:ntr
     end
 end
 
-%
+% test
+simparas(1:5,1:5);
+
 meansim=mean(simparas,2);
 simparas=simparas-meansim;
 stdsim=transpose(std(transpose(simparas)));
 
 for int2=1:length(simparas(1,:))
-    for int3=1:length(simparas(:,1))
+    for int3=1:length(simparas(:,1))-2
         simparas(int3,int2)=simparas(int3,int2)/stdsim(int3);
     end
 end
+
+% test
+simparas(1:5,1:5);
+recoparas(1:5,1:5);
 
 meanreco=mean(recoparas,2);
 recoparas(2:6,:)=recoparas(2:6,:)-meanreco(2:6);
@@ -58,10 +64,14 @@ ntr
 length(targets(1,:))
 length(inputs(1,:))/12
 
+% test
+mean(simparas,2)
+a=mean(recoparas,2);
+a(2:6)
+
 % saving
 saveFunction(inputs, dt, 'inputs')
 saveFunction(targets, dt, 'targets')
-
 
 %===============================================================================
 % main

@@ -3,7 +3,7 @@ import csv
 import numpy as np
 from six.moves import cPickle as pickle
 
-workingdir = 'ml_input_2017.11.24_12_08_41'
+workingdir = 'ml_input_2017.11.24_16_50_07'
 
 #===============================================================================
 # functions
@@ -52,16 +52,16 @@ def randomize(dataset, targets):
 #===============================================================================
 # main
 
-# generate input and label arrays
+# generate input and target arrays
 inputlength = getlength('inputs.csv')
 inputheigth = 72
 inputs = np.zeros(shape=(inputheigth,inputlength/inputheigth))
 inputs = getdata(inputs, inputheigth, 'inputs.csv')
 
-labellength = getlength('targets.csv')
-labelheigth = 5
-targets = np.zeros(shape=(labelheigth,labellength/labelheigth))
-targets = getdata(targets, labelheigth, 'targets.csv')
+targetlength = getlength('targets.csv')
+targetheigth = 5
+targets = np.zeros(shape=(targetheigth,targetlength/targetheigth))
+targets = getdata(targets, targetheigth, 'targets.csv')
 
 # transpose datasets
 inputs = np.transpose(inputs)
