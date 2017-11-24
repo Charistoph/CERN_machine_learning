@@ -16,7 +16,7 @@ for itr=1:ntr
         counter = counter + 1;
         % allparas(1,1) = number of components
 %        allparas(1,counter*13-12)=track(counter).ncomp;
-        % simparas(1:5,:) = labels (simulated 5 parameters)
+        % simparas(1:5,:) = targets (simulated 5 parameters)
         simparas(1:5,counter)=track(counter).mixt.par;
         for int=1:track(counter).ncomp
             % recoparas(1,2:13) = component weights
@@ -48,19 +48,19 @@ for int2=1:length(recoparas(1,:))
     end
 end
 
-labels = transpose(simparas)
-inputs = transpose(recoparas)
+targets = transpose(simparas);
+inputs = transpose(recoparas);
 
 % counts
 string('tracks not used = ')
 itr-counter
 ntr
-length(labels(1,:))
+length(targets(1,:))
 length(inputs(1,:))/12
 
 % saving
 saveFunction(inputs, dt, 'inputs')
-saveFunction(labels, dt, 'labels')
+saveFunction(targets, dt, 'targets')
 
 
 %===============================================================================

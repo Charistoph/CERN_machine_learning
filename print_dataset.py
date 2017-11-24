@@ -13,24 +13,24 @@ def get_data():
     # get pickle file
     pickle_file = 'data_root/5para.pickle'
 
-    # open pickle file and datasets & labels
+    # open pickle file and datasets & targets
     with open(pickle_file, 'rb') as f:
         save = pickle.load(f)
         train_dataset = save['train_dataset']
-        train_labels = save['train_labels']
+        train_targets = save['train_targets']
         valid_dataset = save['valid_dataset']
-        valid_labels = save['valid_labels']
+        valid_targets = save['valid_targets']
         test_dataset = save['test_dataset']
-        test_labels = save['test_labels']
+        test_targets = save['test_targets']
         del save  # hint to help gc free up memory
 
-#    print('Training set', train_dataset.shape, train_labels.shape)
-#    print('Validation set', valid_dataset.shape, valid_labels.shape)
-#    print('Test set', test_dataset.shape, test_labels.shape)
+#    print('Training set', train_dataset.shape, train_targets.shape)
+#    print('Validation set', valid_dataset.shape, valid_targets.shape)
+#    print('Test set', test_dataset.shape, test_targets.shape)
 
     total_dataset = train_dataset.shape[0] + valid_dataset.shape[0] + test_dataset.shape[0]
     inputheigth = train_dataset.shape[1]
-    labelheigth = train_labels.shape[1]
+    labelheigth = train_targets.shape[1]
 
     train_size = train_dataset.shape[0]
     valid_size = valid_dataset.shape[0]
@@ -45,20 +45,20 @@ def get_data():
 
     inputs = np.zeros(shape=(total_dataset,inputheigth))
     inputs_total = np.zeros(shape=(total_dataset,5))
-    labels = np.zeros(shape=(total_dataset,labelheigth))
+    targets = np.zeros(shape=(total_dataset,labelheigth))
 
 #    print('inputs.shape', inputs.shape)
-#    print('labels.shape', labels.shape)
+#    print('targets.shape', targets.shape)
 
-# write split datasets into single dataset, save for labels
+# write split datasets into single dataset, save for targets
     inputs[0:train_size,:] = train_dataset
-    labels[0:train_size,:] = train_labels
+    targets[0:train_size,:] = train_targets
     inputs[train_size:train_size+valid_size,:] = valid_dataset
-    labels[train_size:train_size+valid_size,:] = valid_labels
+    targets[train_size:train_size+valid_size,:] = valid_targets
     inputs[train_size+valid_size:valid_size+train_size+test_size,:] = test_dataset
-    labels[train_size+valid_size:valid_size+train_size+test_size,:] = test_labels
+    targets[train_size+valid_size:valid_size+train_size+test_size,:] = test_targets
 
-    return inputs,inputs_total,labels
+    return inputs,inputs_total,targets
 
 def create_dir(savedir):
     try:
@@ -76,19 +76,19 @@ def print_dist(savedir,name,plotdata):
 #-------------------------------------------------------------------------------
 # main code
 
-inputs,inputs_total,labels = get_data()
+inputs,inputs_total,targets = get_data()
 
 # create directories
-savedir_labels = savedir + '/labels'
+savedir_targets = savedir + '/targets'
 savedir_inputs = savedir + '/inputs'
 create_dir(savedir)
-create_dir(savedir_labels)
+create_dir(savedir_targets)
 create_dir(savedir_inputs)
 
 # for label 5 parameters create distribution histos
 for i in range(0,5):
     name = "Plot_"+str(i)
-    print_dist(savedir_labels,name,labels[:,i])
+    print_dist(savedir_targets,name,targets[:,i])
 
 # calculate total inputs = weights times parameters
 for i in range(0,12):
@@ -102,9 +102,9 @@ for i in range(0,5):
     print_dist(savedir_inputs,name,inputs_total[:,i])
 
 # checks
-#diff = np.mean(np.transpose(labels-inputs_total),1)
+#diff = np.mean(np.transpose(targets-inputs_total),1)
 #print('diff', diff)
-#diff_means = np.mean(np.transpose(labels),1) - np.mean(np.transpose(inputs_total),1)
+#diff_means = np.mean(np.transpose(targets),1) - np.mean(np.transpose(inputs_total),1)
 #print('diff_means', diff_means)
-#print(np.mean(np.transpose(labels),1)/diff_means)
+#print(np.mean(np.transpose(targets),1)/diff_means)
 #print(np.mean(np.transpose(inputs_total),1)/diff_means)

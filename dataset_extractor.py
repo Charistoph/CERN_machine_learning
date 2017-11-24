@@ -3,7 +3,7 @@ import csv
 import numpy as np
 from six.moves import cPickle as pickle
 
-workingdir = 'ml_input_2017.11.23_09_14_11'
+workingdir = 'ml_input_2017.11.24_12_08_41'
 
 #===============================================================================
 # functions
@@ -41,11 +41,11 @@ def getdata(array, arrayheight, filename):
     return array
 
 #randomize arrays
-def randomize(dataset, labels):
-  permutation = np.random.permutation(labels.shape[0])
+def randomize(dataset, targets):
+  permutation = np.random.permutation(targets.shape[0])
   shuffled_dataset = dataset[permutation,:]
-  shuffled_labels = labels[permutation,:]
-  return shuffled_dataset, shuffled_labels
+  shuffled_targets = targets[permutation,:]
+  return shuffled_dataset, shuffled_targets
 
 # spilt data set into training, validation and testing dataset
 
@@ -58,22 +58,22 @@ inputheigth = 72
 inputs = np.zeros(shape=(inputheigth,inputlength/inputheigth))
 inputs = getdata(inputs, inputheigth, 'inputs.csv')
 
-labellength = getlength('labels.csv')
+labellength = getlength('targets.csv')
 labelheigth = 5
-labels = np.zeros(shape=(labelheigth,labellength/labelheigth))
-labels = getdata(labels, labelheigth, 'labels.csv')
+targets = np.zeros(shape=(labelheigth,labellength/labelheigth))
+targets = getdata(targets, labelheigth, 'targets.csv')
 
 # transpose datasets
 inputs = np.transpose(inputs)
-labels = np.transpose(labels)
+targets = np.transpose(targets)
 
 print "inputs shape =", inputs.shape
-print "labels shape =", labels.shape
+print "targets shape =", targets.shape
 print ""
 
 
 # randomize
-inputs, labels = randomize(inputs, labels)
+inputs, targets = randomize(inputs, targets)
 
 # define data sizes
 #train_size = 200000
@@ -90,16 +90,16 @@ print ""
 
 # split dataset
 train_dataset = inputs[0:test_size,:]
-train_labels = labels[0:test_size,:]
+train_targets = targets[0:test_size,:]
 valid_dataset = inputs[test_size:test_size+valid_size,:]
-valid_labels = labels[test_size:test_size+valid_size,:]
+valid_targets = targets[test_size:test_size+valid_size,:]
 test_dataset = inputs[test_size+valid_size:test_size+valid_size+train_size,:]
-test_labels = labels[test_size+valid_size:test_size+valid_size+train_size,:]
+test_targets = targets[test_size+valid_size:test_size+valid_size+train_size,:]
 
 # sizes
-print('Training:', train_dataset.shape, train_labels.shape)
-print('Validation:', valid_dataset.shape, valid_labels.shape)
-print('Testing:', test_dataset.shape, test_labels.shape)
+print('Training:', train_dataset.shape, train_targets.shape)
+print('Validation:', valid_dataset.shape, valid_targets.shape)
+print('Testing:', test_dataset.shape, test_targets.shape)
 print ""
 
 
@@ -116,11 +116,11 @@ try:
     f = open(pickle_file, 'wb')
     save = {
         'train_dataset': train_dataset,
-        'train_labels': train_labels,
+        'train_targets': train_targets,
         'valid_dataset': valid_dataset,
-        'valid_labels': valid_labels,
+        'valid_targets': valid_targets,
         'test_dataset': test_dataset,
-        'test_labels': test_labels,
+        'test_targets': test_targets,
     }
     pickle.dump(save, f, pickle.HIGHEST_PROTOCOL)
     f.close()
@@ -133,4 +133,4 @@ print ""
 
 # length checks
 print "difference between input length and dataset length =", inputlength/inputheigth - (len(train_dataset) + len(test_dataset) + len(valid_dataset))
-print "difference between input length and labels length =", inputlength/inputheigth - (len(train_labels) + len(test_labels) + len(valid_labels))
+print "difference between input length and targets length =", inputlength/inputheigth - (len(train_targets) + len(test_targets) + len(valid_targets))
