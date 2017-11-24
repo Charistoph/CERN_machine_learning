@@ -58,16 +58,21 @@ targets = transpose(simparas);
 inputs = transpose(recoparas);
 
 % counts
-string('tracks not used = ')
-itr-counter
 ntr
-length(targets(1,:))
-length(inputs(1,:))/12
+itr-counter
+length(targets(:,1))
+length(inputs(:,1))/12
 
-% test
+% mean test
 mean(simparas,2)
 a=mean(recoparas,2);
 a(2:6)
+
+% std test
+a=transpose(std(transpose(simparas)));
+a(1:5)
+b=transpose(std(transpose(recoparas)));
+b(2:6)
 
 % saving
 saveFunction(inputs, dt, 'inputs')
