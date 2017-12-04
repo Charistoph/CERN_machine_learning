@@ -10,6 +10,8 @@ import time
 import scipy.misc
 import matplotlib.pyplot as plt
 
+ml_output_path = 'ml_output'
+
 # get pickle file
 pickle_file = 'data_root/5para.pickle'
 
@@ -59,7 +61,7 @@ print ('\nstart time: ' + str(start))
 para_dataset_size = 5
 para_targets_size = 2
 batch_size = 128
-num_nodes= 1024
+num_nodes= 24 # 1024 zu viel
 learning_rate = 0.1
 
 loss_history = np.empty(shape=[1],dtype=float)
@@ -76,7 +78,7 @@ with graph.as_default():
     tf_test_dataset = tf.constant(test_dataset)
 
 #-------------------------------------------------------------------------------
-    '''
+#    '''
     # Variables.
     weights_1 = tf.Variable(
         tf.truncated_normal([para_dataset_size, num_nodes]))
@@ -181,11 +183,11 @@ with graph.as_default():
     valid_prediction = tf.nn.softmax(
         tf.matmul(tf_valid_dataset, weights) + biases)
     test_prediction = tf.nn.softmax(tf.matmul(tf_test_dataset, weights) + biases)
-#    '''
+    '''
 #-------------------------------------------------------------------------------
 # run computation and iterate
 #num_steps = 3001
-num_steps = 3001
+num_steps = 301
 
 def accuracy(predictions, targets):
     return (100.0 * np.sum(np.argmax(predictions, 1) == np.argmax(targets, 1))
@@ -218,7 +220,7 @@ with tf.Session(graph=graph) as session:
 
         # Append current loss to loss history
         loss_history = np.append(loss_history,l)
-#        '''
+        '''
         tf_train_dataset_v,weights_1_v,biases_1_v,logits_1_v,tf_train_targets_v = session.run([tf_train_dataset,weights,biases,logits,tf_train_targets], feed_dict=feed_dict)
 
         if (step < 3 or step > num_steps-2):
@@ -245,7 +247,7 @@ with tf.Session(graph=graph) as session:
             print('logits_2_v\n', logits_2_v[0:5,0])
             print('tf_train_targets_v\n', tf_train_targets_v[0:5,0])
             print('loss\n',l)
-        '''
+#        '''
     print("\nTest accuracy: %.1f%%" % accuracy(test_prediction.eval(), test_targets))
     print ('total computing time: ' + str(time.clock()-start))
 
@@ -259,7 +261,7 @@ if (len(loss_history)<102):
     plt.title('loss_history_smaller_100')
     plt.plot(range(len(loss_history)),loss_history)
     #plt.show()
-    plt.savefig('ml_output/loss_history_smaller_100.png')
+    plt.savefig(ml_output_path + '/loss_history_smaller_100.png')
     plt.gcf().clear()
 
 if (len(loss_history)>102):
@@ -267,14 +269,18 @@ if (len(loss_history)>102):
     plt.title('loss_history_100')
     plt.plot(range(len(loss_history[0:100])),loss_history[0:100])
     #plt.show()
-    plt.savefig('ml_output/loss_history_100.png')
+    plt.savefig(ml_output_path + '/loss_history_100.png')
     plt.gcf().clear()
 
     plt.figure('loss_history_greater_100')
     plt.title('loss_history_greater_100')
     plt.plot(range(len(loss_history[100:])),loss_history[100:])
     #plt.show()
-    plt.savefig('ml_output/loss_history_greater_100.png')
+    plt.savefig(ml_output_path + '/loss_history_greater_100.png')
     plt.gcf().clear()
+
+
+np.savetxt(ml_output_path + "/weights.csv", weights_1_v, delimiter=",")
+np.savetxt(ml_output_path + "/biases.csv", biases_1_v, delimiter=",")
 
 print('programm terminated.')
