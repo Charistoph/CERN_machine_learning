@@ -2,7 +2,8 @@ import numpy as np
 from six.moves import cPickle as pickle
 import matplotlib.pyplot as plt
 
-savedir ="ml_output"
+#savedir = "ml_output"
+savedir = "ml_output_hidden"
 
 #-------------------------------------------------------------------------------
 # functions
@@ -46,21 +47,25 @@ def get_data():
     targets[train_size+valid_size:valid_size+train_size+test_size,:] = test_targets
 
 # other definitions
-    logits = np.zeros(shape=(total_dataset,target_heigth))
+#    logits = np.zeros(shape=(total_dataset,target_heigth))
 
-    return inputs,targets,logits
+#    return inputs,targets,logits
+    return inputs,targets
 
 def get_ml_data(savedir):
-    weights = np.loadtxt(savedir + "/weights.csv", delimiter=",")
-    biases = np.loadtxt(savedir + "/biases.csv", delimiter=",")
+    logits = np.loadtxt(savedir + "/logits.csv", delimiter=",")
+#    weights = np.loadtxt(savedir + "/weights.csv", delimiter=",")
+#    biases = np.loadtxt(savedir + "/biases.csv", delimiter=",")
 
-    return weights,biases
+#    return weights,biases
+    return logits
 
-def data_check(inputs,targets,weights,biases,logits):
+#def data_check(inputs,targets,weights,biases,logits):
+def data_check(inputs,targets,logits):
     print('inputs.shape', inputs.shape)
     print('targets.shape', targets.shape)
-    print('weights.shape', weights.shape)
-    print('biases.shape', biases.shape)
+#    print('weights.shape', weights.shape)
+#    print('biases.shape', biases.shape)
     print('logits.shape', logits.shape)
 
 def print_dist(savedir,name,plotdata):
@@ -74,16 +79,17 @@ def print_dist(savedir,name,plotdata):
 #-------------------------------------------------------------------------------
 # main code
 
-inputs,targets,logits = get_data()
+inputs,targets = get_data()
 
 # get weights & biases from tensorflow ml script
-weights,biases = get_ml_data(savedir)
+logits = get_ml_data(savedir)
 
 # data_check
-data_check(inputs,targets,weights,biases,logits)
+#data_check(inputs,targets,weights,biases,logits)
+data_check(inputs,targets,logits)
 
 # calculate logits
-logits = np.matmul(inputs,weights) + biases
+#logits = np.matmul(inputs,weights) + biases
 
 # calculate difference
 diff = logits-targets

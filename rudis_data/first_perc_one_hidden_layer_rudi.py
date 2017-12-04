@@ -10,7 +10,7 @@ import time
 import scipy.misc
 import matplotlib.pyplot as plt
 
-ml_output_path = 'ml_output'
+ml_output_path = 'ml_output_hidden'
 
 # get pickle file
 pickle_file = 'data_root/5para.pickle'
@@ -65,6 +65,8 @@ num_nodes= 24 # 1024 zu viel
 learning_rate = 0.1
 
 loss_history = np.empty(shape=[1],dtype=float)
+logits = np.empty(shape=(train_targets.shape[0],train_targets.shape[1]),dtype=float)
+
 
 graph = tf.Graph()
 with graph.as_default():
@@ -187,11 +189,7 @@ with graph.as_default():
 #-------------------------------------------------------------------------------
 # run computation and iterate
 #num_steps = 3001
-num_steps = 301
-
-def accuracy(predictions, targets):
-    return (100.0 * np.sum(np.argmax(predictions, 1) == np.argmax(targets, 1))
-          / predictions.shape[0])
+num_steps = 3001
 
 with tf.Session(graph=graph) as session:
     tf.global_variables_initializer().run()
@@ -211,9 +209,6 @@ with tf.Session(graph=graph) as session:
           [optimizer, loss, train_prediction], feed_dict=feed_dict)
         if (step % 500 == 0):
             print("\nMinibatch loss at step %d: %f" % (step, l))
-            print("Minibatch accuracy: %.1f%%" % accuracy(predictions, batch_targets))
-            print("Validation accuracy: %.1f%%" % accuracy(
-                    valid_prediction.eval(), valid_targets))
             print('Computing time for steps ' + str(step-500) + ' to ' +
                     str(step) + ': ' + str(time.clock()-currenttime))
             currenttime = time.clock()
@@ -247,8 +242,10 @@ with tf.Session(graph=graph) as session:
             print('logits_2_v\n', logits_2_v[0:5,0])
             print('tf_train_targets_v\n', tf_train_targets_v[0:5,0])
             print('loss\n',l)
+
+        # write matrix of all logits
+        logits[offset:(offset + batch_size), :] = logits_2_v
 #        '''
-    print("\nTest accuracy: %.1f%%" % accuracy(test_prediction.eval(), test_targets))
     print ('total computing time: ' + str(time.clock()-start))
 
 
@@ -279,8 +276,9 @@ if (len(loss_history)>102):
     plt.savefig(ml_output_path + '/loss_history_greater_100.png')
     plt.gcf().clear()
 
-
-np.savetxt(ml_output_path + "/weights.csv", weights_1_v, delimiter=",")
-np.savetxt(ml_output_path + "/biases.csv", biases_1_v, delimiter=",")
+np.savetxt(ml_output_path + "/logits.csv", logits, delimiter=",")
+np.savetxt(ml_output_path + "/targets.csv", train_targets, delimiter=",")
+#np.savetxt(ml_output_path + "/weights.csv", weights_1_v, delimiter=",")
+#np.savetxt(ml_output_path + "/biases.csv", biases_1_v, delimiter=",")
 
 print('programm terminated.')
