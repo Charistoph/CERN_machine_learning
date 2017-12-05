@@ -1,2 +1,7 @@
 ignore all directories, and all sub-directories, and it's contents:
 */*
+!rudis_data/ml_data_format_rudi.m
+!rudis_data/dataset_extractor_rudi.py
+!rudis_data/first_perc_one_hidden_layer_rudi.py
+!rudis_data/ml_output_analyzer.py
+!rudis_data_matlab/make_trialdata.m

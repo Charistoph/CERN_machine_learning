@@ -59,8 +59,8 @@ print ('\nstart time: ' + str(start))
 para_dataset_size = 72
 para_targets_size = 5
 batch_size = 128
-num_nodes= 1024
-learning_rate = 0.1
+num_nodes= 24
+learning_rate = 0.5
 
 loss_history = np.empty(shape=[1],dtype=float)
 
@@ -185,7 +185,7 @@ with graph.as_default():
 #-------------------------------------------------------------------------------
 # run computation and iterate
 #num_steps = 3001
-num_steps = 300
+num_steps = 3001
 
 def accuracy(predictions, targets):
     return (100.0 * np.sum(np.argmax(predictions, 1) == np.argmax(targets, 1))
@@ -248,7 +248,6 @@ with tf.Session(graph=graph) as session:
 #        '''
     print("\nTest accuracy: %.1f%%" % accuracy(test_prediction.eval(), test_targets))
     print ('total computing time: ' + str(time.clock()-start))
-
 
 #    saver = tf.train.Saver()
 #    saver.save(session, 'session_store/a2_sgd.ckpt')

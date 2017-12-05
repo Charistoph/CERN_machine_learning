@@ -111,6 +111,7 @@ for i in range(0,5):
     print_dist(savedir_inputs,name,inputs_rearranged[:,i])
 
 
+#TODO: check if mean is still = 0
 # calculate total inputs = weights times parameters
 for i in range(0,12):
     for j in range(0,5):
@@ -129,3 +130,8 @@ for i in range(0,5):
 #print('diff_means', diff_means)
 #print(np.mean(np.transpose(targets),1)/diff_means)
 #print(np.mean(np.transpose(inputs_total),1)/diff_means)
+
+#for i in range(0,12):
+#    for j in range(0,5):
+#        print(j,i*6,i*6+j+1)
+#        inputs_total[0,j]=inputs_total[0,j]+inputs[0,i*6]*inputs[0,i*6+j+1]

@@ -1,5 +1,6 @@
 clear
-temp=load('input_data/output.csv');
+%temp=load('input_data/output.csv');
+temp=load('input_data/output_20171204.csv');
 l=length(temp)
 ntr=0;
 iline=1;
