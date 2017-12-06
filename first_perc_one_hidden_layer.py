@@ -63,6 +63,7 @@ num_nodes= 24
 learning_rate = 0.5
 
 loss_history = np.empty(shape=[1],dtype=float)
+final_logits = np.empty(shape=train_targets.shape,dtype=float)
 
 graph = tf.Graph()
 with graph.as_default():
@@ -116,6 +117,8 @@ with graph.as_default():
 
     loss = tf.reduce_mean(tf.square(tf_train_targets - logits_2))
     print('loss', loss.shape)
+
+    logits_for_eval = logits_2
 
 #    print('loss.eval', loss.eval)
 #    p2 = tf.Print(loss, message="loss")
@@ -215,6 +218,7 @@ with tf.Session(graph=graph) as session:
 
         # Append current loss to loss history
         loss_history = np.append(loss_history,l)
+
         '''
         tf_train_dataset_out,weights_1_out,biases_1_out,logits_1_out,tf_train_targets_out = session.run([tf_train_dataset,weights,biases,logits,tf_train_targets], feed_dict=feed_dict)
 
@@ -228,7 +232,10 @@ with tf.Session(graph=graph) as session:
             print('tf_train_targets_out', tf_train_targets_out[0:5,0])
             print('loss',l)
         '''
-        tf_train_dataset_out,weights_1_out,biases_1_out,logits_1_out,relu_layer_out,weights_2_out,biases_2_out,logits_2_out,tf_train_targets_out = session.run([tf_train_dataset,weights_1,biases_1,logits_1,relu_layer,weights_2,biases_2,logits_2,tf_train_targets], feed_dict=feed_dict)
+        tf_train_dataset_out,weights_1_out,biases_1_out,logits_1_out,relu_layer_out,weights_2_out,biases_2_out,logits_2_out,tf_train_targets_out,logits_for_eval_out = session.run([tf_train_dataset,weights_1,biases_1,logits_1,relu_layer,weights_2,biases_2,logits_2,tf_train_targets,logits_for_eval], feed_dict=feed_dict)
+
+        # Update final_logits for difference calculator
+        final_logits[offset:(offset + batch_size), :] = logits_for_eval_out
 
 #        if (step < 3 or step > num_steps-2):
 #            print('\nStep:', step)
@@ -270,16 +277,6 @@ else:
     plt.gcf().clear()
 
 # difference calculator
-print('tf_train_dataset_out', tf_train_dataset_out.shape)
-print('tf_train_targets_out', tf_train_targets_out.shape)
-print('weights_1_out', weights_1_out.shape)
-print('biases_1_out', biases_1_out.shape)
-print('logits_1_out', logits_1_out.shape)
-print('relu_layer_out', relu_layer_out.shape)
-print('weights_2_out', weights_2_out.shape)
-print('biases_2_out', biases_2_out.shape)
-print('logits_2_out', logits_2_out.shape)
-
-#diff=logits_2-
+diff=final_logits-train_targets
 
 print('programm terminated.')
