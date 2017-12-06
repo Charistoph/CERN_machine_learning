@@ -23,16 +23,10 @@ with open(pickle_file, 'rb') as f:
     test_dataset = save['test_dataset']
     test_targets = save['test_targets']
     del save  # hint to help gc free up memory
+
     print('Training set', train_dataset.shape, train_targets.shape)
     print('Validation set', valid_dataset.shape, valid_targets.shape)
     print('Test set', test_dataset.shape, test_targets.shape)
-
-    print('train_dataset type', train_dataset.dtype)
-    print('train_targets type', train_targets.dtype)
-    print('valid_dataset type', valid_dataset.dtype)
-    print('valid_targets type', valid_targets.dtype)
-    print('test_dataset type', test_dataset.dtype)
-    print('test_targets type', test_targets.dtype)
 
     train_dataset = train_dataset.astype(np.float32, copy=False)
     train_targets = train_targets.astype(np.float32, copy=False)
@@ -56,12 +50,15 @@ print ('\nstart time: ' + str(start))
 
 #-------------------------------------------------------------------------------
 # load all the data into TensorFlow and build the computation graph corresponding to our training
+
+# settings
 para_dataset_size = 72
 para_targets_size = 5
 batch_size = 128
 num_nodes= 24
 learning_rate = 0.5
 
+# additional tensors
 loss_history = np.empty(shape=[1],dtype=float)
 final_logits = np.empty(shape=train_targets.shape,dtype=float)
 
@@ -105,86 +102,12 @@ with graph.as_default():
     print('logits_2', logits_2.shape)
 
     # Quadratic Loss Function
-#    loss = tf.reduce_mean(
-#        tf.nn.softmax_cross_entropy_with_logits(targets=tf_train_targets, logits=logits_1))
-
-
-#    print('tf_train_targets', tf_train_targets)
-#    print('logits_2', logits_2)
-#    t1 = tf_train_targets - logits_2
-#    print('t1.eval', t1.eval)
-#    p1 = tf.Print(t1, message="t1")
-
     loss = tf.reduce_mean(tf.square(tf_train_targets - logits_2))
     print('loss', loss.shape)
 
-    logits_for_eval = logits_2
-
-#    print('loss.eval', loss.eval)
-#    p2 = tf.Print(loss, message="loss")
-
-#    model = tf.global_variables_initializer()
-#    with tf.Session() as session:
-#        session.run(model)
-#        #print(session.run(loss))
-#        print(session.run(tf_train_targets - logits_2))
-
-    # Optimizer.
+    # Optimizer & Training Step
     optimizer = tf.train.GradientDescentOptimizer(learning_rate).minimize(loss)
 
-    # Predictions for the training, validation, and test data.
-    train_prediction = tf.nn.softmax(logits_1)
-    valid_prediction = tf.nn.softmax(
-        tf.matmul(tf_valid_dataset, weights_1) + biases_1)
-    test_prediction = tf.nn.softmax(tf.matmul(tf_test_dataset, weights_1) + biases_1)
-
-    # Predictions for the training
-    train_prediction = tf.nn.softmax(logits_2)
-
-    # Predictions for validation
-    logits_1 = tf.matmul(tf_valid_dataset, weights_1) + biases_1
-    relu_layer= tf.nn.relu(logits_1)
-    logits_2 = tf.matmul(relu_layer, weights_2) + biases_2
-
-    valid_prediction = tf.nn.softmax(logits_2)
-
-    # Predictions for test
-    logits_1 = tf.matmul(tf_test_dataset, weights_1) + biases_1
-    relu_layer= tf.nn.relu(logits_1)
-    logits_2 = tf.matmul(relu_layer, weights_2) + biases_2
-
-    test_prediction =  tf.nn.softmax(logits_2)
-    '''
-#-------------------------------------------------------------------------------
-
-    # Variables.
-    weights = tf.Variable(
-        tf.truncated_normal([para_dataset_size, para_targets_size]))
-    biases = tf.Variable(tf.zeros([para_targets_size]))
-
-    # Training computation.
-    logits = tf.matmul(tf_train_dataset, weights) + biases
-
-#    loss = tf.reduce_mean(
-#        tf.nn.softmax_cross_entropy_with_logits(targets=tf_train_targets, ogits=logits))
-    loss = tf.reduce_mean(tf.square(tf_train_targets - logits))
-
-    print('tf_train_dataset', tf_train_dataset.shape)
-    print('tf_train_targets', tf_train_targets.shape)
-    print('weights', weights.shape)
-    print('biases', biases.shape)
-    print('logits', logits.shape)
-    print('loss', loss.shape)
-
-    # Optimizer.
-    optimizer = tf.train.GradientDescentOptimizer(learning_rate).minimize(loss)
-
-    # Predictions for the training, validation, and test data.
-    train_prediction = tf.nn.softmax(logits)
-    valid_prediction = tf.nn.softmax(
-        tf.matmul(tf_valid_dataset, weights) + biases)
-    test_prediction = tf.nn.softmax(tf.matmul(tf_test_dataset, weights) + biases)
-    '''
 #-------------------------------------------------------------------------------
 # run computation and iterate
 #num_steps = 3001
@@ -208,8 +131,8 @@ with tf.Session(graph=graph) as session:
         # The key of the dictionary is the placeholder node of the graph to be fed,
         # and the value is the numpy array to feed to it.
         feed_dict = {tf_train_dataset : batch_data, tf_train_targets : batch_targets}
-        _, l, predictions = session.run(
-          [optimizer, loss, train_prediction], feed_dict=feed_dict)
+        _, l = session.run(
+          [optimizer, loss], feed_dict=feed_dict)
         if (step % 500 == 0):
             print("\nMinibatch loss at step %d: %f" % (step, l))
             print('Computing time for steps ' + str(step-500) + ' to ' +
@@ -219,23 +142,10 @@ with tf.Session(graph=graph) as session:
         # Append current loss to loss history
         loss_history = np.append(loss_history,l)
 
-        '''
-        tf_train_dataset_out,weights_1_out,biases_1_out,logits_1_out,tf_train_targets_out = session.run([tf_train_dataset,weights,biases,logits,tf_train_targets], feed_dict=feed_dict)
-
-        if (step < 3 or step > num_steps-2):
-            print('\nStep:', step)
-            print("Minibatch loss at step %d: %f" % (step, l))
-            print('tf_train_dataset_out', tf_train_dataset_out[0:5,0])
-            print('weights_1_out', weights_1_out[0:5,0])
-            print('biases_1_out', biases_1_out[0:5])
-            print('logits_1_out', logits_1_out[0:5,0])
-            print('tf_train_targets_out', tf_train_targets_out[0:5,0])
-            print('loss',l)
-        '''
-        tf_train_dataset_out,weights_1_out,biases_1_out,logits_1_out,relu_layer_out,weights_2_out,biases_2_out,logits_2_out,tf_train_targets_out,logits_for_eval_out = session.run([tf_train_dataset,weights_1,biases_1,logits_1,relu_layer,weights_2,biases_2,logits_2,tf_train_targets,logits_for_eval], feed_dict=feed_dict)
+        tf_train_dataset_out,weights_1_out,biases_1_out,logits_1_out,relu_layer_out,weights_2_out,biases_2_out,logits_2_out,tf_train_targets_out = session.run([tf_train_dataset,weights_1,biases_1,logits_1,relu_layer,weights_2,biases_2,logits_2,tf_train_targets], feed_dict=feed_dict)
 
         # Update final_logits for difference calculator
-        final_logits[offset:(offset + batch_size), :] = logits_for_eval_out
+        final_logits[offset:(offset + batch_size), :] = logits_2_out
 
 #        if (step < 3 or step > num_steps-2):
 #            print('\nStep:', step)
@@ -255,6 +165,16 @@ with tf.Session(graph=graph) as session:
 
 #    saver = tf.train.Saver()
 #    saver.save(session, 'session_store/a2_sgd.ckpt')
+
+print('tf_train_dataset', tf_train_dataset.shape)
+print('tf_train_targets', tf_train_targets.shape)
+print('weights_1', weights_1.shape)
+print('biases_1', biases_1.shape)
+print('logits_1', logits_1.shape)
+print('relu_layer', relu_layer.shape)
+print('weights_2', weights_2.shape)
+print('biases_2', biases_2.shape)
+print('logits_2', logits_2.shape)
 
 # loss history prints
 if (num_steps<101):
@@ -278,5 +198,24 @@ else:
 
 # difference calculator
 diff=final_logits-train_targets
+diff_mean = np.mean(np.transpose(diff),1)
+diff_std = np.std(np.transpose(diff),1)
+
+f = open("ml_output_tensorflow/tf_output_benchmarks.csv","w")
+f.write(diff_mean)
+f.write(diff_std)
+f.close()
+
+f = open("ml_output_tensorflow/tf_output_benchmarks.csv","w")
+for i in range(0,diff_mean.shape[0]):
+    f.write(str(diff_mean[i]))
+    if i<diff_mean.shape[0]-1:
+        f.write(', ')
+f.write('\n')
+for i in range(0,diff_std.shape[0]):
+    f.write(str(diff_std[i]))
+    if i<diff_std.shape[0]-1:
+        f.write(', ')
+f.close()
 
 print('programm terminated.')
