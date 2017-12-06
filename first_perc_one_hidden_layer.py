@@ -251,11 +251,23 @@ with tf.Session(graph=graph) as session:
 
 #    saver = tf.train.Saver()
 #    saver.save(session, 'session_store/a2_sgd.ckpt')
+if (num_steps<101):
+    plt.figure('loss_history')
+    plt.plot(range(len(loss_history)),loss_history)
+    #plt.show()
+    plt.savefig('ml_output_tensorflow/loss_history.png')
+    plt.gcf().clear()
+else:
+    plt.figure('loss_history_first_100_steps')
+    plt.plot(range(len(loss_history[0:100])),loss_history[0:100])
+    #plt.show()
+    plt.savefig('ml_output_tensorflow/loss_history_first_100_steps.png')
+    plt.gcf().clear()
 
-plt.figure('loss_history')
-plt.plot(range(len(loss_history)),loss_history)
-#plt.show()
-plt.savefig('ml_output/loss_history.png')
-plt.gcf().clear()
+    plt.figure('loss_history_101_to_end_steps')
+    plt.plot(range(len(loss_history[101:len(loss_history)])),loss_history[101:len(loss_history)])
+    #plt.show()
+    plt.savefig('ml_output_tensorflow/loss_history_101_to_end_steps.png')
+    plt.gcf().clear()
 
 print('programm terminated.')
