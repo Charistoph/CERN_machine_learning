@@ -209,9 +209,6 @@ with tf.Session(graph=graph) as session:
           [optimizer, loss, train_prediction], feed_dict=feed_dict)
         if (step % 500 == 0):
             print("\nMinibatch loss at step %d: %f" % (step, l))
-            print("Minibatch accuracy: %.1f%%" % accuracy(predictions, batch_targets))
-            print("Validation accuracy: %.1f%%" % accuracy(
-                    valid_prediction.eval(), valid_targets))
             print('Computing time for steps ' + str(step-500) + ' to ' +
                     str(step) + ': ' + str(time.clock()-currenttime))
             currenttime = time.clock()
@@ -246,11 +243,12 @@ with tf.Session(graph=graph) as session:
             print('tf_train_targets_v\n', tf_train_targets_v[0:5,0])
             print('loss\n',l)
 #        '''
-    print("\nTest accuracy: %.1f%%" % accuracy(test_prediction.eval(), test_targets))
+    print("\nfinal loss: %f" % l)
     print ('total computing time: ' + str(time.clock()-start))
 
 #    saver = tf.train.Saver()
 #    saver.save(session, 'session_store/a2_sgd.ckpt')
+
 if (num_steps<101):
     plt.figure('loss_history')
     plt.plot(range(len(loss_history)),loss_history)
