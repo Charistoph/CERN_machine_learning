@@ -216,32 +216,32 @@ with tf.Session(graph=graph) as session:
         # Append current loss to loss history
         loss_history = np.append(loss_history,l)
         '''
-        tf_train_dataset_v,weights_1_v,biases_1_v,logits_1_v,tf_train_targets_v = session.run([tf_train_dataset,weights,biases,logits,tf_train_targets], feed_dict=feed_dict)
+        tf_train_dataset_out,weights_1_out,biases_1_out,logits_1_out,tf_train_targets_out = session.run([tf_train_dataset,weights,biases,logits,tf_train_targets], feed_dict=feed_dict)
 
         if (step < 3 or step > num_steps-2):
             print('\nStep:', step)
             print("Minibatch loss at step %d: %f" % (step, l))
-            print('tf_train_dataset_v', tf_train_dataset_v[0:5,0])
-            print('weights_1_v', weights_1_v[0:5,0])
-            print('biases_1_v', biases_1_v[0:5])
-            print('logits_1_v', logits_1_v[0:5,0])
-            print('tf_train_targets_v', tf_train_targets_v[0:5,0])
+            print('tf_train_dataset_out', tf_train_dataset_out[0:5,0])
+            print('weights_1_out', weights_1_out[0:5,0])
+            print('biases_1_out', biases_1_out[0:5])
+            print('logits_1_out', logits_1_out[0:5,0])
+            print('tf_train_targets_out', tf_train_targets_out[0:5,0])
             print('loss',l)
         '''
-        tf_train_dataset_v,weights_1_v,biases_1_v,logits_1_v,relu_layer_v,weights_2_v,biases_2_v,logits_2_v,tf_train_targets_v = session.run([tf_train_dataset,weights_1,biases_1,logits_1,relu_layer,weights_2,biases_2,logits_2,tf_train_targets], feed_dict=feed_dict)
+        tf_train_dataset_out,weights_1_out,biases_1_out,logits_1_out,relu_layer_out,weights_2_out,biases_2_out,logits_2_out,tf_train_targets_out = session.run([tf_train_dataset,weights_1,biases_1,logits_1,relu_layer,weights_2,biases_2,logits_2,tf_train_targets], feed_dict=feed_dict)
 
-        if (step < 3 or step > num_steps-2):
-            print('\nStep:', step)
-            print('tf_train_dataset_v\n', tf_train_dataset_v[0:5,0])
-            print('weights_1_v\n', weights_1_v[0:5,0])
-            print('biases_1_v\n', biases_1_v[0:5])
-            print('logits_1_v\n', logits_1_v[0:5,0])
-            print('relu_layer_v\n', relu_layer_v[0:5,0])
-            print('weights_2_v\n', weights_2_v[0:5,0])
-            print('biases_2_v\n', biases_2_v[0:5])
-            print('logits_2_v\n', logits_2_v[0:5,0])
-            print('tf_train_targets_v\n', tf_train_targets_v[0:5,0])
-            print('loss\n',l)
+#        if (step < 3 or step > num_steps-2):
+#            print('\nStep:', step)
+#            print('tf_train_dataset_out\n', tf_train_dataset_out[0:5,0])
+#            print('weights_1_out\n', weights_1_out[0:5,0])
+#            print('biases_1_out\n', biases_1_out[0:5])
+#            print('logits_1_out\n', logits_1_out[0:5,0])
+#            print('relu_layer_out\n', relu_layer_out[0:5,0])
+#            print('weights_2_out\n', weights_2_out[0:5,0])
+#            print('biases_2_out\n', biases_2_out[0:5])
+#            print('logits_2_out\n', logits_2_out[0:5,0])
+#            print('tf_train_targets_out\n', tf_train_targets_out[0:5,0])
+#            print('loss',l)
 #        '''
     print("\nfinal loss: %f" % l)
     print ('total computing time: ' + str(time.clock()-start))
@@ -249,6 +249,7 @@ with tf.Session(graph=graph) as session:
 #    saver = tf.train.Saver()
 #    saver.save(session, 'session_store/a2_sgd.ckpt')
 
+# loss history prints
 if (num_steps<101):
     plt.figure('loss_history')
     plt.plot(range(len(loss_history)),loss_history)
@@ -267,5 +268,18 @@ else:
     #plt.show()
     plt.savefig('ml_output_tensorflow/loss_history_101_to_end_steps.png')
     plt.gcf().clear()
+
+# difference calculator
+print('tf_train_dataset_out', tf_train_dataset_out.shape)
+print('tf_train_targets_out', tf_train_targets_out.shape)
+print('weights_1_out', weights_1_out.shape)
+print('biases_1_out', biases_1_out.shape)
+print('logits_1_out', logits_1_out.shape)
+print('relu_layer_out', relu_layer_out.shape)
+print('weights_2_out', weights_2_out.shape)
+print('biases_2_out', biases_2_out.shape)
+print('logits_2_out', logits_2_out.shape)
+
+#diff=logits_2-
 
 print('programm terminated.')

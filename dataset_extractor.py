@@ -79,22 +79,22 @@ inputs, targets = randomize(inputs, targets)
 #train_size = 200000
 #valid_size = 10000
 #test_size = 10000
+train_size = inputlength/inputheigth-inputlength/inputheigth/20*2
 test_size = inputlength/inputheigth/20
 valid_size = test_size
-train_size = inputlength/inputheigth-test_size*2
 
-print "test_size =", test_size
 print "train_size =", train_size
+print "test_size =", test_size
 print "valid_size =", valid_size
 print ""
 
 # split dataset
-train_dataset = inputs[0:test_size,:]
-train_targets = targets[0:test_size,:]
+test_dataset = inputs[0:test_size,:]
+test_targets = targets[0:test_size,:]
 valid_dataset = inputs[test_size:test_size+valid_size,:]
 valid_targets = targets[test_size:test_size+valid_size,:]
-test_dataset = inputs[test_size+valid_size:test_size+valid_size+train_size,:]
-test_targets = targets[test_size+valid_size:test_size+valid_size+train_size,:]
+train_dataset = inputs[test_size+valid_size:test_size+valid_size+train_size,:]
+train_targets = targets[test_size+valid_size:test_size+valid_size+train_size,:]
 
 # sizes
 print('Training:', train_dataset.shape, train_targets.shape)
