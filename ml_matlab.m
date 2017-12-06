@@ -6,7 +6,7 @@ if readdata
 end
 
 makedata = false;
-ml =       false;
+ml =       true;
 print =    true;
 
 if makedata
@@ -77,8 +77,7 @@ if print
   saveas(figure(1),[pwd '/ml_output_matlab/figure_' num2str(1) '.fig']);
   saveas(figure(2),[pwd '/ml_output_matlab/figure_' num2str(2) '.fig']);
   saveas(figure(3),[pwd '/ml_output_matlab/figure_' num2str(3) '.fig']);
-  saveas(figure(4),[pwd '/ml_output_matlab/figure_' num2str(4) '.fig']);.csv
+  saveas(figure(4),[pwd '/ml_output_matlab/figure_' num2str(4) '.fig']);
   saveas(figure(5),[pwd '/ml_output_matlab/figure_' num2str(5) '.fig']);
-  save ml_output_matlab/results results
   csvwrite('ml_output_matlab/results.csv',results)
 end

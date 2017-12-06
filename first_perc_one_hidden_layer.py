@@ -23,6 +23,14 @@ def save_loss_history(savedir,name,data):
     plt.savefig(savedir + '/' + name + '.png')
     plt.gcf().clear()
 
+# show loss history
+def show_loss_history(savedir,name,data):
+    plt.figure(name)
+    plt.plot(range(len(data)),data)
+    plt.show()
+    #plt.savefig(savedir + '/' + name + '.png')
+    #plt.gcf().clear()
+
 def print_dist(savedir,name,plotdata):
     plt.figure(name)
     plt.title(name)
@@ -78,9 +86,10 @@ print ('\nstart time: ' + str(start))
 # settings
 para_dataset_size = 72
 para_targets_size = 5
-batch_size = 128
-num_nodes= 24
-learning_rate = 0.5
+batch_size = 1024
+num_nodes = 128
+learning_rate = 0.1
+momentum = 0.5
 
 # additional tensors
 loss_history = np.empty(shape=[1],dtype=float)
@@ -129,6 +138,9 @@ with graph.as_default():
 
     # Optimizer & Training Step
     optimizer = tf.train.GradientDescentOptimizer(learning_rate).minimize(loss)
+#    optimizer = tf.train.MomentumOptimizer(learning_rate,momentum,use_locking=False,use_nesterov=False).minimize(loss)
+#    optimizer = tf.train.MomentumOptimizer(learning_rate,momentum,use_locking=False,use_nesterov=True).minimize(loss)
+
 
 #-------------------------------------------------------------------------------
 # run computation and iterate
@@ -194,9 +206,16 @@ with tf.Session(graph=graph) as session:
 # loss history prints
 if (num_steps<101):
     save_loss_history(savedir,'loss_history',loss_history)
+if (num_steps>2001):
+    save_loss_history(savedir,'loss_history_1001_to_end_steps',loss_history[1001:len(loss_history)])
+if (num_steps>10001):
+    save_loss_history(savedir,'loss_history_5001_to_end_steps',loss_history[5001:len(loss_history)])
+if (num_steps>20001):
+    save_loss_history(savedir,'loss_history_10001_to_end_steps',loss_history[10001:len(loss_history)])
 else:
     save_loss_history(savedir,'loss_history_first_100_steps',loss_history[0:100])
     save_loss_history(savedir,'loss_history_101_to_end_steps',loss_history[101:len(loss_history)])
+    save_loss_history(savedir,'loss_history_last_100_steps',loss_history[len(loss_history)-100:len(loss_history)])
 
 # difference calculator
 diff=final_logits-train_targets
@@ -207,13 +226,9 @@ diff_std = np.std(np.transpose(diff),1)
 f = open("ml_output_tensorflow/tf_output_benchmarks.csv","w")
 for i in range(0,diff_mean.shape[0]):
     f.write(str(diff_mean[i]))
-    if i<diff_mean.shape[0]-1:
-        f.write(', ')
-f.write('\n')
-for i in range(0,diff_std.shape[0]):
+    f.write(', ')
     f.write(str(diff_std[i]))
-    if i<diff_std.shape[0]-1:
-        f.write(', ')
+    f.write('\n')
 f.close()
 
 # print histos
