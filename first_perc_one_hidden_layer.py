@@ -10,6 +10,30 @@ import time
 import scipy.misc
 import matplotlib.pyplot as plt
 
+savedir = 'ml_output_tensorflow'
+
+#-------------------------------------------------------------------------------
+# functions
+
+# save loss history
+def save_loss_history(savedir,name,data):
+    plt.figure(name)
+    plt.plot(range(len(data)),data)
+    #plt.show()
+    plt.savefig(savedir + '/' + name + '.png')
+    plt.gcf().clear()
+
+def print_dist(savedir,name,plotdata):
+    plt.figure(name)
+    plt.title(name)
+    plt.hist(plotdata, normed=True, bins=30)
+#    plt.show()
+    plt.savefig(savedir + '/' + name + '.png')
+    plt.gcf().clear()
+
+#-------------------------------------------------------------------------------
+# data loader
+
 # get pickle file
 pickle_file = 'data_root/5para.pickle'
 
@@ -73,8 +97,6 @@ with graph.as_default():
     tf_valid_dataset = tf.constant(valid_dataset)
     tf_test_dataset = tf.constant(test_dataset)
 
-#-------------------------------------------------------------------------------
-#    '''
     # Variables.
     weights_1 = tf.Variable(
         tf.truncated_normal([para_dataset_size, num_nodes]))
@@ -166,46 +188,22 @@ with tf.Session(graph=graph) as session:
 #    saver = tf.train.Saver()
 #    saver.save(session, 'session_store/a2_sgd.ckpt')
 
-print('tf_train_dataset', tf_train_dataset.shape)
-print('tf_train_targets', tf_train_targets.shape)
-print('weights_1', weights_1.shape)
-print('biases_1', biases_1.shape)
-print('logits_1', logits_1.shape)
-print('relu_layer', relu_layer.shape)
-print('weights_2', weights_2.shape)
-print('biases_2', biases_2.shape)
-print('logits_2', logits_2.shape)
+#-------------------------------------------------------------------------------
+# analysis
 
 # loss history prints
 if (num_steps<101):
-    plt.figure('loss_history')
-    plt.plot(range(len(loss_history)),loss_history)
-    #plt.show()
-    plt.savefig('ml_output_tensorflow/loss_history.png')
-    plt.gcf().clear()
+    save_loss_history(savedir,'loss_history',loss_history)
 else:
-    plt.figure('loss_history_first_100_steps')
-    plt.plot(range(len(loss_history[0:100])),loss_history[0:100])
-    #plt.show()
-    plt.savefig('ml_output_tensorflow/loss_history_first_100_steps.png')
-    plt.gcf().clear()
-
-    plt.figure('loss_history_101_to_end_steps')
-    plt.plot(range(len(loss_history[101:len(loss_history)])),loss_history[101:len(loss_history)])
-    #plt.show()
-    plt.savefig('ml_output_tensorflow/loss_history_101_to_end_steps.png')
-    plt.gcf().clear()
+    save_loss_history(savedir,'loss_history_first_100_steps',loss_history[0:100])
+    save_loss_history(savedir,'loss_history_101_to_end_steps',loss_history[101:len(loss_history)])
 
 # difference calculator
 diff=final_logits-train_targets
 diff_mean = np.mean(np.transpose(diff),1)
 diff_std = np.std(np.transpose(diff),1)
 
-f = open("ml_output_tensorflow/tf_output_benchmarks.csv","w")
-f.write(diff_mean)
-f.write(diff_std)
-f.close()
-
+# save mean & std
 f = open("ml_output_tensorflow/tf_output_benchmarks.csv","w")
 for i in range(0,diff_mean.shape[0]):
     f.write(str(diff_mean[i]))
@@ -217,5 +215,11 @@ for i in range(0,diff_std.shape[0]):
     if i<diff_std.shape[0]-1:
         f.write(', ')
 f.close()
+
+# print histos
+labels = ['q_p','dx_dz','dy_dz','x','y']
+for i in range(0,5):
+    name = 'Tensorflow_ML_Output_Para_' + str(i+1) + "_" + labels[i]
+    print_dist(savedir,name,diff[:,i])
 
 print('programm terminated.')
