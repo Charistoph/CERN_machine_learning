@@ -5,7 +5,7 @@ if readdata
   read_data
 end
 
-makedata = false;
+makedata = true;
 ml =       true;
 print =    true;
 
@@ -50,14 +50,15 @@ if ml
   targets(4:5,:)=rand(size(targets(4:5,:)))*10^-10;
 
   net=feedforwardnet(12); % regression network with a single hidden layer with 12 neurons
-%  net=fitnet([72,36,24,15,5]);
+%  net=feedforwardnet([72,12]);
+%  net=feedforwardnet(72);
 
   traininputs=inputs(:,1:round(ntr*19/20));
   traintargets=targets(:,1:round(ntr*19/20));
   testinputs=inputs(:,round(ntr*19/20)+1:end);
   testtargets=targets(:,round(ntr*19/20)+1:end);
 
-%  options = trainingOptions('sgdm','MiniBatchSize',64)
+  options = trainingOptions('sgdm','MiniBatchSize',64)
 
   [net,tr]=train(net,traininputs,traintargets); % train network
 %  [net,tr]=trainNetwork(traininputs,traintargets,net,options); % train network

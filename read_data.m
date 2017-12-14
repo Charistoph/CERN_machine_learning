@@ -26,4 +26,27 @@ while iline<l
         iline=iline+15;
     end
 end
+
+%track(1).tp
+%track(1).comp(1).par
+%track(1).mixt.par
+
+for itr=1:ntr
+  for i=4:5
+    track(itr).tp(i)=track(itr).tp(i)-track(itr).mixt.par(i);
+    % components
+    if track(itr).ncomp == 12
+      for j=1:12
+        track(itr).comp(j).par(i)=track(itr).comp(j).par(i)-track(itr).mixt.par(i);
+      end
+    end
+
+    track(itr).mixt.par(i)=0;
+  end
+end
+
+%track(1).tp
+%track(1).comp(1).par
+%track(1).mixt.par
+
 save tracks track
