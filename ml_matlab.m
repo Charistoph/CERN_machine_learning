@@ -1,4 +1,4 @@
-readdata = false;
+readdata = true;
 
 if readdata
   clear
@@ -47,7 +47,7 @@ if ml
 %  ntr=1
 %  ntr=17443
 
-  targets(4:5,:)=rand(size(targets(4:5,:)))*10^-10;
+%  targets(4:5,:)=rand(size(targets(4:5,:)))*10^-10;
 
   net=feedforwardnet(12); % regression network with a single hidden layer with 12 neurons
 %  net=feedforwardnet([72,12]);
