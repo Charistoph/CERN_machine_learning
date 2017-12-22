@@ -6,8 +6,8 @@ if readdata
 end
 
 makedata = true;
-ml =       true;
-print =    true;
+ml =       false;
+print =    false;
 
 if makedata
   inputs=zeros(ntr,72);
@@ -28,6 +28,32 @@ if makedata
       targets(itr,k)=track(itr).tp(k);
     end
   end
+
+  % How many rows are = 0
+  count=0
+  pos=[]
+  for i=1:size(inputs,1)
+    if inputs(i,3)==0
+      count=count+1;
+      i
+      pos=[pos,i];
+    end
+  end
+
+  % Remove rows = 0
+  count2=0
+  for i=1:size(inputs,1)
+    inputs(i-count2,:)=inputs(i,:);
+    targets(i-count2,:)=targets(i,:);
+    for j=1:size(pos,2)
+      if pos(j)==i
+        count2=count2+1;
+      end
+    end
+  end
+  % Cut away empty rows
+  inputs=inputs(1:ntr-count2,:);
+  targets=targets(1:ntr-count2,:);
 
   size(inputs)
   size(targets)
