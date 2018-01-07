@@ -1,14 +1,17 @@
 readdata = true;
 
+% read data from with read_data script from input_data
 if readdata
   clear
   read_data
 end
 
-makedata = true;
-ml =       false;
-print =    false;
+makedata =  true;
+ml =        true;
+print =     true;
+benchmark = true;
 
+% create inputs and targets of length ntr, remove rows = 0
 if makedata
   inputs=zeros(ntr,72);
   targets=zeros(ntr,5);
@@ -60,6 +63,7 @@ if makedata
   save data_root/matlab_inputs_tagets inputs targets ntr
 end
 
+% matlab train (neural network)
 if ml
   load data_root/matlab_inputs_tagets
 
@@ -75,9 +79,9 @@ if ml
 
 %  targets(4:5,:)=rand(size(targets(4:5,:)))*10^-10;
 
-  net=feedforwardnet(12); % regression network with a single hidden layer with 12 neurons
+%  net=feedforwardnet(12); % regression network with a single hidden layer with 12 neurons
 %  net=feedforwardnet([72,12]);
-%  net=feedforwardnet(72);
+  net=feedforwardnet(48);
 
   traininputs=inputs(:,1:round(ntr*19/20));
   traintargets=targets(:,1:round(ntr*19/20));
@@ -92,6 +96,7 @@ if ml
 
 end
 
+% print histos & save outputs
 if print
   targets=zeros(size(netout));
   results=zeros(size(netout,1),2);
@@ -107,4 +112,8 @@ if print
   saveas(figure(4),[pwd '/ml_output_matlab/figure_' num2str(4) '.fig']);
   saveas(figure(5),[pwd '/ml_output_matlab/figure_' num2str(5) '.fig']);
   csvwrite('ml_output_matlab/results.csv',results)
+end
+
+if benchmark
+   benchmark_check 
 end
