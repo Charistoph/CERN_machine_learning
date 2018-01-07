@@ -10,7 +10,7 @@ dt = datestr(now,'yyyy.mm.dd_HH_MM_SS');
 
 % loop over all tracks
 for itr=1:ntr
-    % eliminates all tracks which don't have 12 components
+    % eliminates all tracks which don`t have 12 components
     if track(itr).ncomp == 12
         itr;
         counter = counter + 1;
@@ -27,21 +27,23 @@ for itr=1:ntr
     end
 end
 
-% test
-simparas(1:5,1:5);
+% Reco formatting to Targets
+%simparas(1:5,1:5);
 
-meansim=mean(simparas,2);
-simparas=simparas-meansim;
-stdsim=transpose(std(transpose(simparas)));
+%meansim=mean(simparas,2);
+%simparas=simparas-meansim;
+%stdsim=transpose(std(transpose(simparas)));
 
-for int2=1:length(simparas(1,:))
-    for int3=1:length(simparas(:,1))-2
-        simparas(int3,int2)=simparas(int3,int2)/stdsim(int3);
-    end
-end
+%for int2=1:length(simparas(1,:))
+%    for int3=1:length(simparas(:,1))-2
+%        simparas(int3,int2)=simparas(int3,int2)/stdsim(int3);
+%    end
+%end
 
-% test
-simparas(1:5,1:5);
+%simparas(1:5,1:5);
+targets = transpose(simparas);
+
+% Reco formatting to Inputs
 recoparas(1:5,1:5);
 
 meanreco=mean(recoparas,2);
@@ -54,7 +56,7 @@ for int2=1:length(recoparas(1,:))
     end
 end
 
-targets = transpose(simparas);
+recoparas(1:5,1:5);
 inputs = transpose(recoparas);
 
 % counts
