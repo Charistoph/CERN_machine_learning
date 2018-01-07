@@ -81,7 +81,7 @@ if ml
 
 %  net=feedforwardnet(12); % regression network with a single hidden layer with 12 neurons
 %  net=feedforwardnet([72,12]);
-  net=feedforwardnet(48);
+  net=feedforwardnet(12);
 
   traininputs=inputs(:,1:round(ntr*19/20));
   traintargets=targets(:,1:round(ntr*19/20));
@@ -106,14 +106,23 @@ if print
     results(i,:)=[mean(res(i,:)),std(res(i,:))];
   end
 
-  saveas(figure(1),[pwd '/ml_output_matlab/figure_' num2str(1) '.fig']);
-  saveas(figure(2),[pwd '/ml_output_matlab/figure_' num2str(2) '.fig']);
-  saveas(figure(3),[pwd '/ml_output_matlab/figure_' num2str(3) '.fig']);
-  saveas(figure(4),[pwd '/ml_output_matlab/figure_' num2str(4) '.fig']);
-  saveas(figure(5),[pwd '/ml_output_matlab/figure_' num2str(5) '.fig']);
+  path = strcat(pwd,'/ml_output_matlab/',num2str(year(datetime)),'.',num2str(month(datetime)),'.',num2str(day(datetime)),'-',num2str(floor(hours(timeofday(datetime)))),':',num2str(floor(minutes(timeofday(datetime)))-floor(hours(timeofday(datetime)))*60),':',num2str(floor(seconds(timeofday(datetime)))- floor(minutes(timeofday(datetime)))*60))
+  resultspath = strcat(path,'/results.csv')
+  benchmark_resultspath = strcat(path,'/benchmark_results.csv')
+
+  mkdir(path)
+
+  saveas(figure(1),[path '/figure_' num2str(1) '.fig']);
+  saveas(figure(2),[path '/figure_' num2str(2) '.fig']);
+  saveas(figure(3),[path '/figure_' num2str(3) '.fig']);
+  saveas(figure(4),[path '/figure_' num2str(4) '.fig']);
+  saveas(figure(5),[path '/figure_' num2str(5) '.fig']);
+
   csvwrite('ml_output_matlab/results.csv',results)
+  csvwrite(resultspath,results)
 end
 
 if benchmark
-   benchmark_check 
+   benchmark_check
+   csvwrite(benchmark_resultspath,benchmark_result)
 end

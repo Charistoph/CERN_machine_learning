@@ -29,8 +29,8 @@ baseline_std
 matlab_std
 tensorflow_std
 
-result(1,:)=baseline_std;
-result(2,:)=matlab_std;
-result(3,:)=tensorflow_std;
+benchmark_result(1,:)=baseline_std;
+benchmark_result(2,:)=matlab_std;
+benchmark_result(3,:)=tensorflow_std;
 
-csvwrite('benchmark_data/benchmark_result.csv',result)
+csvwrite('benchmark_data/benchmark_result.csv',benchmark_result)
