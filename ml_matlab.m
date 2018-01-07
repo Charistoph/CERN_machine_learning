@@ -64,72 +64,78 @@ if makedata
   save data_root/matlab_inputs_tagets inputs targets ntr
 end
 
-% matlab train (neural network)
-if ml
-  load data_root/matlab_inputs_tagets
+neurons_list = [5,12,24,48,72];
 
-  inputs=transpose(inputs);
-  targets=transpose(targets);
+for i=1:size(neurons_list,2)
+  neurons = neurons_list(i)
 
-  size(inputs)
-  size(targets)
+  % matlab train (neural network)
+  if ml
+    load data_root/matlab_inputs_tagets
 
-  ntr=size(inputs,2);
-%  ntr=1
-%  ntr=17443
+    inputs=transpose(inputs);
+    targets=transpose(targets);
 
-%  targets(4:5,:)=rand(size(targets(4:5,:)))*10^-10;
+    size(inputs)
+    size(targets)
 
-%  net=feedforwardnet(12); % regression network with a single hidden layer with 12 neurons
-%  net=feedforwardnet([24,12]);
-  neurons = 24
-  net=feedforwardnet(neurons);
+    ntr=size(inputs,2);
+  %  ntr=1
+  %  ntr=17443
 
-  options = trainingOptions('sgdm','MiniBatchSize',64)
+  %  targets(4:5,:)=rand(size(targets(4:5,:)))*10^-10;
 
-  % net = Newly trained network
-  % tr = Training record (epoch and perf)
-  [net,tr]=train(net,inputs,targets); % train network
-%  [net,tr]=trainNetwork(traininputs,traintargets,net,options); % train network
-  netout=net(inputs); % compute net output of trained net to given input
+  %  net=feedforwardnet(12); % regression network with a single hidden layer with 12 neurons
+  %  net=feedforwardnet([24,12]);
+  %  neurons = 24
+    net=feedforwardnet(neurons);
 
-end
+    options = trainingOptions('sgdm','MiniBatchSize',64)
 
-% print histos & save outputs
-if print
-  results=zeros(size(netout,1),2);
-  res=targets-netout;
-  for i=1:size(netout,1)
-    figure(i),clf,hist(res(i,:),50);
-    results(i,:)=[mean(res(i,:)),std(res(i,:))];
+    % net = Newly trained network
+    % tr = Training record (epoch and perf)
+    [net,tr]=train(net,inputs,targets); % train network
+  %  [net,tr]=trainNetwork(traininputs,traintargets,net,options); % train network
+    netout=net(inputs); % compute net output of trained net to given input
+
   end
 
-  dt = datestr(now,'yyyy.mm.dd-HH:MM:SS')
-  path = strcat(pwd,'/ml_output_matlab/',dt)
-  resultspath = strcat(path,'/results.csv')
-  benchmark_resultspath = strcat(path,'/benchmark_results.csv')
+  % print histos & save outputs
+  if print
+    results=zeros(size(netout,1),2);
+    res=targets-netout;
+    for i=1:size(netout,1)
+      figure(i),clf,hist(res(i,:),50);
+      results(i,:)=[mean(res(i,:)),std(res(i,:))];
+    end
 
-  mkdir(path)
+    dt = datestr(now,'yyyy.mm.dd-HH:MM:SS')
+    path = strcat(pwd,'/ml_output_matlab/',dt)
+    resultspath = strcat(path,'/results.csv')
+    benchmark_resultspath = strcat(path,'/benchmark_results.csv')
 
-  saveas(figure(1),[path '/figure_' num2str(1) '.fig']);
-  saveas(figure(2),[path '/figure_' num2str(2) '.fig']);
-  saveas(figure(3),[path '/figure_' num2str(3) '.fig']);
-  saveas(figure(4),[path '/figure_' num2str(4) '.fig']);
-  saveas(figure(5),[path '/figure_' num2str(5) '.fig']);
+    mkdir(path)
 
-  csvwrite('ml_output_matlab/results.csv',results)
-  csvwrite(resultspath,results)
-end
+    saveas(figure(1),[path '/figure_' num2str(1) '.fig']);
+    saveas(figure(2),[path '/figure_' num2str(2) '.fig']);
+    saveas(figure(3),[path '/figure_' num2str(3) '.fig']);
+    saveas(figure(4),[path '/figure_' num2str(4) '.fig']);
+    saveas(figure(5),[path '/figure_' num2str(5) '.fig']);
 
-if benchmark
-  benchmark_check;
-  csvwrite(benchmark_resultspath,benchmark_result);
-
-  ml_train_log  = strcat(dt, {':     '});
-  for i=1:5
-    ml_train_log = strcat(ml_train_log, num2str(matlab_worse_than_baseline(i)), {'    '});
+    csvwrite('ml_output_matlab/results.csv',results)
+    csvwrite(resultspath,results)
   end
-  ml_train_log  = strcat(ml_train_log, {'  - neurons: '}, num2str(neurons))
 
-  dlmwrite('ml_output_matlab/ml_train_log.csv',ml_train_log,'delimiter','','-append');
+  if benchmark
+    benchmark_check;
+    csvwrite(benchmark_resultspath,benchmark_result);
+
+    ml_train_log  = strcat(dt, {':     '});
+    for i=1:5
+      ml_train_log = strcat(ml_train_log, num2str(matlab_worse_than_baseline(i)), {'    '});
+    end
+    ml_train_log  = strcat(ml_train_log, {'  - neurons: '}, num2str(neurons))
+
+    dlmwrite('ml_output_matlab/ml_train_log.csv',ml_train_log,'delimiter','','-append');
+  end
 end
