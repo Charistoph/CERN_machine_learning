@@ -3,7 +3,7 @@ load('tracks.mat')
 ntr=length(track);
 %ntr=1;
 counter = 0;
-dt = datestr(now,'yyyy.mm.dd_HH_MM_SS');
+dt = datestr(now,'yyyy.mm.dd-HH:MM:SS');
 
 %===============================================================================
 % main
@@ -84,8 +84,8 @@ saveFunction(targets, dt, 'targets')
 % main
 
 function savefunction_1=saveFunction(val, dt, name)
-    path = strcat('ml_input_', dt);
+    path = strcat('ml_input/', dt);
     status = mkdir(path);
-    path = strcat('ml_input_', dt, '/', name, '.csv');
+    path = strcat('ml_input/', dt, '/', name, '.csv');
     csvwrite(path,val);
 end

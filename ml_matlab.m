@@ -1,3 +1,4 @@
+
 readdata = true;
 
 % read data from with read_data script from input_data
@@ -34,11 +35,11 @@ if makedata
 
   % How many rows are = 0
   count=0
-  pos=[]
+  pos=[];
   for i=1:size(inputs,1)
     if inputs(i,3)==0
       count=count+1;
-      i
+      i;
       pos=[pos,i];
     end
   end
@@ -80,33 +81,31 @@ if ml
 %  targets(4:5,:)=rand(size(targets(4:5,:)))*10^-10;
 
 %  net=feedforwardnet(12); % regression network with a single hidden layer with 12 neurons
-%  net=feedforwardnet([72,12]);
-  net=feedforwardnet(12);
-
-  traininputs=inputs(:,1:round(ntr*19/20));
-  traintargets=targets(:,1:round(ntr*19/20));
-  testinputs=inputs(:,round(ntr*19/20)+1:end);
-  testtargets=targets(:,round(ntr*19/20)+1:end);
+%  net=feedforwardnet([24,12]);
+  neurons = 24
+  net=feedforwardnet(neurons);
 
   options = trainingOptions('sgdm','MiniBatchSize',64)
 
-  [net,tr]=train(net,traininputs,traintargets); % train network
+  % net = Newly trained network
+  % tr = Training record (epoch and perf)
+  [net,tr]=train(net,inputs,targets); % train network
 %  [net,tr]=trainNetwork(traininputs,traintargets,net,options); % train network
-  netout=net(testinputs); % compute net output
+  netout=net(inputs); % compute net output of trained net to given input
 
 end
 
 % print histos & save outputs
 if print
-  targets=zeros(size(netout));
   results=zeros(size(netout,1),2);
-  res=testtargets-netout;
+  res=targets-netout;
   for i=1:size(netout,1)
     figure(i),clf,hist(res(i,:),50);
     results(i,:)=[mean(res(i,:)),std(res(i,:))];
   end
 
-  path = strcat(pwd,'/ml_output_matlab/',num2str(year(datetime)),'.',num2str(month(datetime)),'.',num2str(day(datetime)),'-',num2str(floor(hours(timeofday(datetime)))),':',num2str(floor(minutes(timeofday(datetime)))-floor(hours(timeofday(datetime)))*60),':',num2str(floor(seconds(timeofday(datetime)))- floor(minutes(timeofday(datetime)))*60))
+  dt = datestr(now,'yyyy.mm.dd-HH:MM:SS')
+  path = strcat(pwd,'/ml_output_matlab/',dt)
   resultspath = strcat(path,'/results.csv')
   benchmark_resultspath = strcat(path,'/benchmark_results.csv')
 
@@ -123,6 +122,14 @@ if print
 end
 
 if benchmark
-   benchmark_check
-   csvwrite(benchmark_resultspath,benchmark_result)
+  benchmark_check;
+  csvwrite(benchmark_resultspath,benchmark_result);
+
+  ml_train_log  = strcat(dt, {':     '});
+  for i=1:5
+    ml_train_log = strcat(ml_train_log, num2str(matlab_worse_than_baseline(i)), {'    '});
+  end
+  ml_train_log  = strcat(ml_train_log, {'  - neurons: '}, num2str(neurons))
+
+  dlmwrite('ml_output_matlab/ml_train_log.csv',ml_train_log,'delimiter','','-append');
 end
