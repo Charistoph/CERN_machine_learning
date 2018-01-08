@@ -1,3 +1,8 @@
+% DO NOT RUN THIS FILE ALONE
+% RUN THROUGH RUNNING *** ml_matlab.m ***
+
+% compares MAD, Matlab & Tensorflow results
+
 mat1 = csvread('benchmark_data/output_m3_maxcomp_12.csv',12,0);
 
 baseline_std = mat1(1,:);
@@ -40,3 +45,13 @@ end
 matlab_worse_than_baseline
 
 csvwrite('benchmark_data/benchmark_result.csv',benchmark_result)
+
+csvwrite(benchmark_resultspath,benchmark_result);
+
+ml_train_log  = strcat(dt, {':     '});
+for i=1:5
+  ml_train_log = strcat(ml_train_log, num2str(matlab_worse_than_baseline(i)), {'    '});
+end
+ml_train_log  = strcat(ml_train_log, {'  - neurons: '}, num2str(neurons))
+
+dlmwrite('ml_output_matlab/ml_train_log.csv',ml_train_log,'delimiter','','-append');

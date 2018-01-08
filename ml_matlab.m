@@ -1,5 +1,4 @@
-
-readdata = true;
+readdata =      true;
 
 % read data from with read_data script from input_data
 if readdata
@@ -7,88 +6,15 @@ if readdata
   read_data
 end
 
-makedata =  true;
-datacheck =  true;
-ml =        true;
-print =     true;
-benchmark = true;
+makedata =      true;
+datacheck =     true;
+ml =            true;
+printdata =     true;
+benchmark =     true;
 
 % create inputs and targets of length ntr, remove rows = 0
 if makedata
-  inputs=zeros(ntr,72);
-  targets=zeros(ntr,5);
-
-  for itr=1:ntr
-    if track(itr).ncomp==12
-      for i=1:track(itr).ncomp
-        for j=1:size(track(1).comp(i).par,1)
-        % inputs
-          inputs(itr,i*6-5+j)=track(itr).comp(i).par(j);
-        end
-        inputs(itr,i*6-5)=track(itr).comp(i).weight;
-      end
-    end
-    % targets
-    for k=1:size(track(1).tp,1)
-      targets(itr,k)=track(itr).tp(k);
-    end
-  end
-
-  % How many rows are = 0
-  count=0
-  pos=[];
-  for i=1:size(inputs,1)
-    if inputs(i,3)==0
-      count=count+1;
-      i;
-      pos=[pos,i];
-    end
-  end
-
-  % Remove rows = 0
-  count2=0
-  for i=1:size(inputs,1)
-    inputs(i-count2,:)=inputs(i,:);
-    targets(i-count2,:)=targets(i,:);
-    for j=1:size(pos,2)
-      if pos(j)==i
-        count2=count2+1;
-      end
-    end
-  end
-  % Cut away empty rows
-  inputs=inputs(1:ntr-count2,:);
-  targets=targets(1:ntr-count2,:);
-
-  size(inputs)
-  size(targets)
-
-  if datacheck
-    count_inputs=0;
-    pos_inputs=[];
-    count_targets=0;
-    pos_targets=[];
-    for i=1:size(inputs,2)
-      for j=1:size(inputs,1)
-        if inputs(j,i)==0
-          count_inputs=count_inputs+1;
-          i;
-          pos_inputs=[pos_inputs,i];
-        end
-      end
-      for j=1:size(targets,1)
-        if targets(j,i)==0
-          count_targets=count_targets+1;
-          i;
-          pos_targets=[pos_targets,i];
-        end
-      end
-    end
-    count_inputs
-    count_targets
-  end
-
-  save data_root/matlab_inputs_tagets inputs targets ntr
+  make_data
 end
 
 % neurons_list = [5,12,24,48,72];
@@ -107,8 +33,6 @@ if ml
   size(targets)
 
   ntr=size(inputs,2);
-%  ntr=1
-%  ntr=17443
 
 %  targets(4:5,:)=rand(size(targets(4:5,:)))*10^-10;
 
@@ -127,41 +51,11 @@ if ml
 end
 
 % print histos & save outputs
-if print
-  results=zeros(size(netout,1),2);
-  res=targets-netout;
-  for i=1:size(netout,1)
-    figure(i),clf,hist(res(i,:),50);
-    results(i,:)=[mean(res(i,:)),std(res(i,:))];
-  end
-
-  dt = datestr(now,'yyyy.mm.dd-HH:MM:SS')
-  path = strcat(pwd,'/ml_output_matlab/',dt)
-  resultspath = strcat(path,'/results.csv')
-  benchmark_resultspath = strcat(path,'/benchmark_results.csv')
-
-  mkdir(path)
-
-  saveas(figure(1),[path '/figure_' num2str(1) '.fig']);
-  saveas(figure(2),[path '/figure_' num2str(2) '.fig']);
-  saveas(figure(3),[path '/figure_' num2str(3) '.fig']);
-  saveas(figure(4),[path '/figure_' num2str(4) '.fig']);
-  saveas(figure(5),[path '/figure_' num2str(5) '.fig']);
-
-  csvwrite('ml_output_matlab/results.csv',results)
-  csvwrite(resultspath,results)
+if printdata
+  results_print
 end
 
+% compares MAD, Matlab & Tensorflow results
 if benchmark
-  benchmark_check;
-  csvwrite(benchmark_resultspath,benchmark_result);
-
-  ml_train_log  = strcat(dt, {':     '});
-  for i=1:5
-    ml_train_log = strcat(ml_train_log, num2str(matlab_worse_than_baseline(i)), {'    '});
-  end
-  ml_train_log  = strcat(ml_train_log, {'  - neurons: '}, num2str(neurons))
-
-  dlmwrite('ml_output_matlab/ml_train_log.csv',ml_train_log,'delimiter','','-append');
+  benchmark_check
 end
-% end
