@@ -48,6 +48,25 @@ end
 inputs=inputs(1:ntr-count2,:);
 targets=targets(1:ntr-count2,:);
 
+%for i=1:size(targets,1)
+%  figure(i),clf,hist(targets(i,:),50)
+%end
+
+% remove targets with radius over 0.001
+overCounter=0
+pos=[];
+for i=1:size(targets,1)
+  if targets(i,4)*targets(i,4)+targets(i,5)*targets(i,5)>0.001
+    overCounter=overCounter+1;
+    pos=[pos,i];
+  end
+end
+overCounter
+
+
+
+
+
 size(inputs)
 size(targets)
 

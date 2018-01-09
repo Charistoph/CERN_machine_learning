@@ -11,6 +11,7 @@ datacheck =     true;
 ml =            true;
 printdata =     true;
 benchmark =     true;
+analyzedata =   false;
 
 % create inputs and targets of length ntr, remove rows = 0
 if makedata
@@ -38,15 +39,23 @@ if ml
 
 %  regression network with a single hidden layer with 12 neurons
   neurons = [12,5]
+%  neurons = 5
   net=feedforwardnet(neurons);
 
   options = trainingOptions('sgdm','MiniBatchSize',64)
 
   % net = Newly trained network
   % tr = Training record (epoch and perf)
-  [net,tr]=train(net,inputs,targets); % train network
+%  [net,tr]=train(net,inputs,targets); % train network
+  [net,tr]=train(net,inputs,targets(1:3,:)); % train network
 %  [net,tr]=trainNetwork(traininputs,traintargets,net,options); % train network
   netout=net(inputs); % compute net output of trained net to given input
+
+  if size(netout,1)<5
+    newmat = zeros(5,size(netout,2));
+    newmat(1:size(netout,1),:)=netout;
+    netout=newmat;
+  end
 
 end
 
@@ -58,4 +67,9 @@ end
 % compares MAD, Matlab & Tensorflow results
 if benchmark
   benchmark_check
+end
+
+% analyzed ml output
+if analyzedata
+  analyze_ml_output
 end

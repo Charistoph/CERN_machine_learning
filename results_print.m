@@ -16,8 +16,8 @@ resultspath = strcat(path,'/results.csv')
 benchmark_resultspath = strcat(path,'/benchmark_results.csv')
 mkdir(path)
 
-for i=1:5
-saveas(figure(i),[path '/figure_' num2str(i) '.fig']);
+for i=1:size(netout,1)
+  saveas(figure(i),[path '/figure_' num2str(i) '.fig']);
 end
 
 csvwrite('ml_output_matlab/results.csv',results)
