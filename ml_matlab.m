@@ -18,58 +18,89 @@ if makedata
   make_data
 end
 
-% neurons_list = [5,12,24,48,72];
-
-% for i=1:size(neurons_list,2)
-%  neurons = neurons_list(i)
 
 % matlab train (neural network)
-if ml
-  load data_root/matlab_inputs_tagets
+for trainMethod=1:6
+  if ml
+    load data_root/matlab_inputs_tagets
 
-  inputs=transpose(inputs);
-  targets=transpose(targets);
+    inputs=transpose(inputs);
+    targets=transpose(targets);
 
-  size(inputs)
-  size(targets)
+    ntr=size(inputs,2);
 
-  ntr=size(inputs,2);
+% switch to test different methods
+    if trainMethod == 1
+      neurons = [12,5]
+      targets_train=targets(1:3,:);
+    end
 
-%  targets(4:5,:)=rand(size(targets(4:5,:)))*10^-10;
+    if trainMethod == 2
+      neurons = [24,12,5]
+      targets_train=targets(1:3,:);
+    end
 
-%  regression network with a single hidden layer with 12 neurons
-  neurons = [12,5]
-%  neurons = 5
-  net=feedforwardnet(neurons);
+    if trainMethod == 3
+      neurons = [48,24,12,5]
+      targets_train=targets(1:3,:);
+    end
 
-  options = trainingOptions('sgdm','MiniBatchSize',64)
+    if trainMethod == 4
+      neurons = [12,5]
+      targets(4:5,:)=rand(size(targets(4:5,:)))*10^-10;
+      targets_train = targets
+    end
 
-  % net = Newly trained network
-  % tr = Training record (epoch and perf)
-%  [net,tr]=train(net,inputs,targets); % train network
-  [net,tr]=train(net,inputs,targets(1:3,:)); % train network
-%  [net,tr]=trainNetwork(traininputs,traintargets,net,options); % train network
-  netout=net(inputs); % compute net output of trained net to given input
+    if trainMethod == 5
+      neurons = [24,12,5]
+      targets(4:5,:)=rand(size(targets(4:5,:)))*10^-10;
+      targets_train = targets
+    end
 
-  if size(netout,1)<5
-    newmat = zeros(5,size(netout,2));
-    newmat(1:size(netout,1),:)=netout;
-    netout=newmat;
+    if trainMethod == 6
+      neurons = [48,24,12,5]
+      targets(4:5,:)=rand(size(targets(4:5,:)))*10^-10;
+      targets_train = targets
+    end
+
+    size(inputs)
+    size(targets)
+    size(targets_train)
+    
+  %  regression network with a single hidden layer with 12 neurons
+    net=feedforwardnet(neurons);
+
+  %  options = trainingOptions('sgdm','MiniBatchSize',64)
+
+    % net = Newly trained network
+    % tr = Training record (epoch and perf)
+
+    [net,tr]=train(net,inputs,targets_train); % train network
+  %  [net,tr]=trainNetwork(traininputs,traintargets,net,options); % train network
+
+    netout=net(inputs); % compute net output of trained net to given input
+
+    if size(netout,1)<5
+      newmat = zeros(5,size(netout,2));
+      newmat(1:size(netout,1),:)=netout;
+      netout=newmat;
+    end
+
   end
 
-end
+  % print histos & save outputs
+  if printdata
+    results_print
+  end
 
-% print histos & save outputs
-if printdata
-  results_print
-end
+  % compares MAD, Matlab & Tensorflow results
+  if benchmark
+    benchmark_check
+  end
 
-% compares MAD, Matlab & Tensorflow results
-if benchmark
-  benchmark_check
-end
+  % analyzed ml output
+  if analyzedata
+    analyze_ml_output
+  end
 
-% analyzed ml output
-if analyzedata
-  analyze_ml_output
 end

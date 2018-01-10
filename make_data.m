@@ -63,10 +63,6 @@ for i=1:size(targets,1)
 end
 overCounter
 
-
-
-
-
 size(inputs)
 size(targets)
 

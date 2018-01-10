@@ -52,6 +52,6 @@ ml_train_log  = strcat(dt, {':     '});
 for i=1:5
   ml_train_log = strcat(ml_train_log, num2str(matlab_worse_than_baseline(i)), {'    '});
 end
-ml_train_log  = strcat(ml_train_log, {'  - '}, num2str(neurons))
+ml_train_log  = strcat(ml_train_log, {'  - '}, num2str(neurons), {' LM, MSE, sgdm, Batchs.,64 '}, num2str(trainMethod))
 
 dlmwrite('ml_output_matlab/ml_train_log.csv',ml_train_log,'delimiter','','-append');
