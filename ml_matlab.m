@@ -18,9 +18,8 @@ if makedata
   make_data
 end
 
-
 % matlab train (neural network)
-for trainMethod=6:6
+for trainMethod=4:6
   if ml
     load data_root/matlab_inputs_tagets
 
@@ -30,35 +29,35 @@ for trainMethod=6:6
     ntr=size(inputs,2);
 
 % switch to test different methods
-    if trainMethod == 1
-      neurons = [12,5]
+  if trainMethod == 1
+      neurons = [48,24]
       targets_train=targets(1:3,:);
     end
 
     if trainMethod == 2
-      neurons = [24,12,5]
+      neurons = [48,24]
       targets_train=targets(1:3,:);
     end
 
     if trainMethod == 3
-      neurons = [48,24,12,5]
+      neurons = [48,24]
       targets_train=targets(1:3,:);
     end
 
     if trainMethod == 4
-      neurons = [12,5]
+      neurons = [48,24]
       targets(4:5,:)=rand(size(targets(4:5,:)))*10^-10;
       targets_train = targets;
     end
 
     if trainMethod == 5
-      neurons = [24,12,5]
+      neurons = [48,24]
       targets(4:5,:)=rand(size(targets(4:5,:)))*10^-10;
       targets_train = targets;
     end
 
     if trainMethod == 6
-      neurons = [48,24,12,5]
+      neurons = [48,24]
       targets(4:5,:)=rand(size(targets(4:5,:)))*10^-10;
       targets_train = targets;
     end
