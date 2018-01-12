@@ -19,7 +19,7 @@ if makedata
 end
 
 % matlab train (neural network)
-for trainMethod=1:3
+for trainMethod=1:23
   if ml
     load data_root/matlab_inputs_tagets
 
@@ -33,26 +33,170 @@ for trainMethod=1:3
       neurons = [48,24]
       targets(4:5,:)=rand(size(targets(4:5,:)))*10^-10;
       targets_train = targets;
+      net=feedforwardnet(neurons);
     end
 
     if trainMethod == 2
       neurons = [48,24]
       targets(4:5,:)=rand(size(targets(4:5,:)))*10^-10;
       targets_train = targets;
+      net=feedforwardnet(neurons);
     end
 
     if trainMethod == 3
       neurons = [48,24]
       targets(4:5,:)=rand(size(targets(4:5,:)))*10^-10;
       targets_train = targets;
+      net=feedforwardnet(neurons);
+    end
+
+   if trainMethod == 4
+      neurons = [48,24]
+      targets(4:5,:)=rand(size(targets(4:5,:)))*10^-10;
+      targets_train = targets;
+      net=fitnet(neurons,'trainlm');
+    end
+
+    if trainMethod == 5
+      neurons = [48,24]
+      targets(4:5,:)=rand(size(targets(4:5,:)))*10^-10;
+      targets_train = targets;
+      net=fitnet(neurons,'traingd');    
+    end
+
+    if trainMethod == 6
+      neurons = [48,24]
+      targets(4:5,:)=rand(size(targets(4:5,:)))*10^-10;
+      targets_train = targets;
+      net=fitnet(neurons,'traingdm');
+    end
+
+    if trainMethod == 7
+      neurons = [48,24]
+      targets(4:5,:)=rand(size(targets(4:5,:)))*10^-10;
+      targets_train = targets;
+      net=fitnet(neurons,'traingdx');
+    end
+
+   if trainMethod == 8
+      neurons = [5]
+      targets(4:5,:)=rand(size(targets(4:5,:)))*10^-10;
+      targets_train = targets;
+      net=fitnet(neurons,'trainlm');
+    end
+
+    if trainMethod == 9
+      neurons = [5]
+      targets(4:5,:)=rand(size(targets(4:5,:)))*10^-10;
+      targets_train = targets;
+      net=fitnet(neurons,'traingd');    
+    end
+
+    if trainMethod == 10
+      neurons = [5]
+      targets(4:5,:)=rand(size(targets(4:5,:)))*10^-10;
+      targets_train = targets;
+      net=fitnet(neurons,'traingdm');
+    end
+
+    if trainMethod == 11
+      neurons = [5]
+      targets(4:5,:)=rand(size(targets(4:5,:)))*10^-10;
+      targets_train = targets;
+      net=fitnet(neurons,'traingdx');
+    end
+
+   if trainMethod == 12
+      neurons = [12]
+      targets(4:5,:)=rand(size(targets(4:5,:)))*10^-10;
+      targets_train = targets;
+      net=fitnet(neurons,'trainlm');
+    end
+
+    if trainMethod == 13
+      neurons = [12]
+      targets(4:5,:)=rand(size(targets(4:5,:)))*10^-10;
+      targets_train = targets;
+      net=fitnet(neurons,'traingd');    
+    end
+
+    if trainMethod == 14
+      neurons = [12]
+      targets(4:5,:)=rand(size(targets(4:5,:)))*10^-10;
+      targets_train = targets;
+      net=fitnet(neurons,'traingdm');
+    end
+
+    if trainMethod == 15
+      neurons = [12]
+      targets(4:5,:)=rand(size(targets(4:5,:)))*10^-10;
+      targets_train = targets;
+      net=fitnet(neurons,'traingdx');
+    end
+
+   if trainMethod == 16
+      neurons = [24]
+      targets(4:5,:)=rand(size(targets(4:5,:)))*10^-10;
+      targets_train = targets;
+      net=fitnet(neurons,'trainlm');
+    end
+
+    if trainMethod == 17
+      neurons = [24]
+      targets(4:5,:)=rand(size(targets(4:5,:)))*10^-10;
+      targets_train = targets;
+      net=fitnet(neurons,'traingd');    
+    end
+
+    if trainMethod == 18
+      neurons = [24]
+      targets(4:5,:)=rand(size(targets(4:5,:)))*10^-10;
+      targets_train = targets;
+      net=fitnet(neurons,'traingdm');
+    end
+
+    if trainMethod == 19
+      neurons = [24]
+      targets(4:5,:)=rand(size(targets(4:5,:)))*10^-10;
+      targets_train = targets;
+      net=fitnet(neurons,'traingdx');
+    end
+
+   if trainMethod == 20
+      neurons = [48]
+      targets(4:5,:)=rand(size(targets(4:5,:)))*10^-10;
+      targets_train = targets;
+      net=fitnet(neurons,'trainlm');
+    end
+
+    if trainMethod == 21
+      neurons = [48]
+      targets(4:5,:)=rand(size(targets(4:5,:)))*10^-10;
+      targets_train = targets;
+      net=fitnet(neurons,'traingd');    
+    end
+
+    if trainMethod == 22
+      neurons = [48]
+      targets(4:5,:)=rand(size(targets(4:5,:)))*10^-10;
+      targets_train = targets;
+      net=fitnet(neurons,'traingdm');
+    end
+
+    if trainMethod == 23
+      neurons = [48]
+      targets(4:5,:)=rand(size(targets(4:5,:)))*10^-10;
+      targets_train = targets;
+      net=fitnet(neurons,'traingdx');
     end
 
     size(inputs)
     size(targets)
     size(targets_train)
-    
+    trainMethod
+
   %  regression network with a single hidden layer with 12 neurons
-    net=feedforwardnet(neurons);
+%    net=feedforwardnet(neurons);
 
   %  options = trainingOptions('sgdm','MiniBatchSize',64)
 
