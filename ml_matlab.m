@@ -19,7 +19,8 @@ if makedata
 end
 
 % matlab train (neural network)
-for trainMethod=1:23
+%for trainMethod=1:23
+for trainMethod=24:24
   if ml
     load data_root/matlab_inputs_tagets
 
@@ -27,6 +28,9 @@ for trainMethod=1:23
     targets=transpose(targets);
 
     ntr=size(inputs,2);
+
+    trainSwitch = true;
+    targets_train = 0;
 
 % switch to test different methods
      if trainMethod == 1
@@ -195,16 +199,30 @@ for trainMethod=1:23
     size(targets_train)
     trainMethod
 
-  %  regression network with a single hidden layer with 12 neurons
-%    net=feedforwardnet(neurons);
+% MATLAB Train
+    if trainSwitch == false
+  %    regression network with a single hidden layer with 12 neurons
+  %    neurons = [12]
+  %    net=feedforwardnet(neurons);
 
-  %  options = trainingOptions('sgdm','MiniBatchSize',64)
+      % net = Newly trained network
+      % tr = Training record (epoch and perf)
+      [net,tr]=train(net,inputs,targets_train,'useParallel','yes','useGPU','yes'); % train network
+    end
 
-    % net = Newly trained network
-    % tr = Training record (epoch and perf)
+% MATLAB TrainNetwork: CONVOLUTIONAL NETWORK
+    if trainSwitch == true
 
-    [net,tr]=train(net,inputs,targets_train,'useParallel','yes','useGPU','yes'); % train network
-  %  [net,tr]=trainNetwork(traininputs,traintargets,net,options); % train network
+      options = trainingOptions('sgdm','MiniBatchSize',64);
+
+      layers = [sequenceInputLayer(size(inputs,1))
+                softmaxLayer
+                regressionLayer];
+
+  %    [trainedNet,traininfo] = trainNetwork(___)
+      trainedNet=trainNetwork(inputs,targets,layers,options); % train network
+
+    end
 
     netout=net(inputs); % compute net output of trained net to given input
 
