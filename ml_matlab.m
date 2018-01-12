@@ -19,7 +19,7 @@ if makedata
 end
 
 % matlab train (neural network)
-for trainMethod=4:6
+for trainMethod=1:3
   if ml
     load data_root/matlab_inputs_tagets
 
@@ -29,34 +29,19 @@ for trainMethod=4:6
     ntr=size(inputs,2);
 
 % switch to test different methods
-  if trainMethod == 1
+     if trainMethod == 1
       neurons = [48,24]
-      targets_train=targets(1:3,:);
+      targets(4:5,:)=rand(size(targets(4:5,:)))*10^-10;
+      targets_train = targets;
     end
 
     if trainMethod == 2
       neurons = [48,24]
-      targets_train=targets(1:3,:);
+      targets(4:5,:)=rand(size(targets(4:5,:)))*10^-10;
+      targets_train = targets;
     end
 
     if trainMethod == 3
-      neurons = [48,24]
-      targets_train=targets(1:3,:);
-    end
-
-    if trainMethod == 4
-      neurons = [48,24]
-      targets(4:5,:)=rand(size(targets(4:5,:)))*10^-10;
-      targets_train = targets;
-    end
-
-    if trainMethod == 5
-      neurons = [48,24]
-      targets(4:5,:)=rand(size(targets(4:5,:)))*10^-10;
-      targets_train = targets;
-    end
-
-    if trainMethod == 6
       neurons = [48,24]
       targets(4:5,:)=rand(size(targets(4:5,:)))*10^-10;
       targets_train = targets;
@@ -74,7 +59,7 @@ for trainMethod=4:6
     % net = Newly trained network
     % tr = Training record (epoch and perf)
 
-    [net,tr]=train(net,inputs,targets_train); % train network
+    [net,tr]=train(net,inputs,targets_train,'useParallel','yes','useGPU','yes'); % train network
   %  [net,tr]=trainNetwork(traininputs,traintargets,net,options); % train network
 
     netout=net(inputs); % compute net output of trained net to given input
