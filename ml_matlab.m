@@ -19,8 +19,7 @@ if makedata
 end
 
 % matlab train (neural network)
-%for trainMethod=1:23
-for trainMethod=24:24
+for trainMethod=20:23
   if ml
     load data_root/matlab_inputs_tagets
 
@@ -192,20 +191,6 @@ for trainMethod=24:24
       targets(4:5,:)=rand(size(targets(4:5,:)))*10^-10;
       targets_train = targets;
       net=fitnet(neurons,'traingdx');
-    end
-
-    if trainMethod == 24
-      neurons = [24]
-      targets(4:5,:)=rand(size(targets(4:5,:)))*10^-10;
-      inputs_tmp=inputs(:,abs(targets(3,:))<1.7);
-      targets_tmp=targets(:,abs(targets(3,:))<1.7);
-      inputs=0;
-      targets=0;
-      targets_train=0;
-      inputs=inputs_tmp;
-      targets_train=targets_tmp;
-      targets=targets_tmp;
-      net=feedforwardnet(neurons);
     end
 
     size(inputs)

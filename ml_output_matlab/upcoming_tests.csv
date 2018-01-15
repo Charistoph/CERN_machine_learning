@@ -208,6 +208,22 @@ template:
 
 
 old tests:
+13.01.2018
+    if trainMethod == 24
+      neurons = [24]
+      targets(4:5,:)=rand(size(targets(4:5,:)))*10^-10;
+      inputs_tmp=inputs(:,abs(targets(3,:))<1.7);
+      targets_tmp=targets(:,abs(targets(3,:))<1.7);
+      inputs=0;
+      targets=0;
+      targets_train=0;
+      inputs=inputs_tmp;
+      targets_train=targets_tmp;
+      targets=targets_tmp;
+      net=feedforwardnet(neurons);
+    end
+
+
 12.01.2018
     if trainMethod == 1
       neurons = [12,5]

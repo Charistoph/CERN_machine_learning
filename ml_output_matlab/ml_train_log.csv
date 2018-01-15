@@ -72,3 +72,26 @@ Result of 9-10.1.2018 with no mixture subtraction results are a lot better, targ
 
 * Simplify the problem - take out waves in Para3
 2018.01.12-16:42:59:     0.93681   0.46486   0.5682    2.1714e-10 1.0136e-10 - 24             train, feedforwardnet, LM, MSE, sgdm, Batchs.,64 inputs & targets(:,abs(targets(3,:))<1.7)
+2018.01.13-13:26:15:     0.87392   0.48523   1.3062    2.2112e-10 9.6888e-11 - 48  24         train, LM, MSE, sgdm, Batchs.,64 targets(1:5,:), rand(size(targets(4:5,:)))*10^-10
+2018.01.13-13:54:47:     0.83842   0.44962   1.2479    2.0659e-10 1.0301e-10 - 48  24         train, LM, MSE, sgdm, Batchs.,64 targets(1:5,:), rand(size(targets(4:5,:)))*10^-10
+2018.01.13-17:49:26:     0.90468   0.5398    1.3448    2.0548e-10 1.0115e-10 - 48  24         train, LM, MSE, sgdm, Batchs.,64 targets(1:5,:), rand(size(targets(4:5,:)))*10^-10
+2018.01.13-18:26:29:     0.86325   0.4782    1.2955    2.0929e-10 1.1023e-10 - 48  24         train, fitnet, trainlm, MSE, sgdm, Batchs.,64 targets(1:5,:), rand(size(targets(4:5,:)))*10^-10
+2018.01.13-18:26:36:     10.677    6.2872    66.4199   2.1455e-10 1.3137e-10 - 48  24         train, fitnet, traingd, MSE, sgdm, Batchs.,64 targets(1:5,:), rand(size(targets(4:5,:)))*10^-10
+2018.01.13-18:26:41:     3.8007    2.0459    162.7261  1.9527e-10 9.3487e-11 - 48  24         train, fitnet, traingdm, MSE, sgdm, Batchs.,64 targets(1:5,:), rand(size(targets(4:5,:)))*10^-10
+2018.01.13-18:26:47:     3.9834    9.444     22.6636   2.1928e-10 9.9311e-11 - 48  24         train, fitnet, traingdx, MSE, sgdm, Batchs.,64 targets(1:5,:), rand(size(targets(4:5,:)))*10^-10
+2018.01.13-18:27:44:     0.90321   0.76979   1.6542    2.0923e-10 9.7721e-11 - 5              train, fitnet, trainlm, MSE, sgdm, Batchs.,64 targets(1:5,:), rand(size(targets(4:5,:)))*10^-10
+2018.01.13-18:27:56:     4.5291    4.5499    13.7086   2.0609e-10 1.1757e-10 - 5              train, fitnet, traingd, MSE, sgdm, Batchs.,64 targets(1:5,:), rand(size(targets(4:5,:)))*10^-10
+2018.01.13-18:27:59:     3.672     2.7696    214.8477  1.9784e-10 9.893e-11  - 5              train, fitnet, traingdm, MSE, sgdm, Batchs.,64 targets(1:5,:), rand(size(targets(4:5,:)))*10^-10
+2018.01.13-18:28:03:     6.1547    8.4496    26.2921   1.9895e-10 1.0716e-10 - 5              train, fitnet, traingdx, MSE, sgdm, Batchs.,64 targets(1:5,:), rand(size(targets(4:5,:)))*10^-10
+2018.01.13-18:30:11:     0.90623   0.65141   1.5029    2.7117e-10 1.1228e-10 - 12             train, fitnet, trainlm, MSE, sgdm, Batchs.,64 targets(1:5,:), rand(size(targets(4:5,:)))*10^-10
+2018.01.13-18:30:22:     3.1179    7.3792    16.1738   2.1897e-10 1.1986e-10 - 12             train, fitnet, traingd, MSE, sgdm, Batchs.,64 targets(1:5,:), rand(size(targets(4:5,:)))*10^-10
+2018.01.13-18:30:25:     5.5368    5.2005    138.444   2.7366e-10 1.1269e-10 - 12             train, fitnet, traingdm, MSE, sgdm, Batchs.,64 targets(1:5,:), rand(size(targets(4:5,:)))*10^-10
+2018.01.13-18:30:29:     4.3153    7.0224    17.9336   2.0208e-10 1.0245e-10 - 12             train, fitnet, traingdx, MSE, sgdm, Batchs.,64 targets(1:5,:), rand(size(targets(4:5,:)))*10^-10
+2018.01.13-18:33:29:     0.92337   0.56775   1.6017    2.4271e-10 1.0335e-10 - 24             train, fitnet, trainlm, MSE, sgdm, Batchs.,64 targets(1:5,:), rand(size(targets(4:5,:)))*10^-10
+2018.01.13-18:33:32:     15.729    8.1695    115.6546  2.2228e-10 1.6335e-10 - 24             train, fitnet, traingd, MSE, sgdm, Batchs.,64 targets(1:5,:), rand(size(targets(4:5,:)))*10^-10
+2018.01.13-18:33:35:     7.0235    7.9005    266.2968  2.3917e-10 1.8099e-10 - 24             train, fitnet, traingdm, MSE, sgdm, Batchs.,64 targets(1:5,:), rand(size(targets(4:5,:)))*10^-10
+2018.01.13-18:33:39:     3.637     6.3376    26.3499   2.2345e-10 1.0272e-10 - 24             train, fitnet, traingdx, MSE, sgdm, Batchs.,64 targets(1:5,:), rand(size(targets(4:5,:)))*10^-10
+2018.01.15-10:02:58:     0.89363   0.58415   1.4596    3.4316e-10 1.0978e-10 - 48             train, fitnet, trainlm, MSE, sgdm, Batchs.,64 targets(1:5,:), rand(size(targets(4:5,:)))*10^-10
+2018.01.15-10:03:04:     7.2857    9.2729    191.8634  2.2166e-10 1.2289e-10 - 48             train, fitnet, traingd, MSE, sgdm, Batchs.,64 targets(1:5,:), rand(size(targets(4:5,:)))*10^-10
+2018.01.15-10:03:07:     3.7844    2.0057    165.3285  1.969e-10  9.3578e-11 - 48             train, fitnet, traingdm, MSE, sgdm, Batchs.,64 targets(1:5,:), rand(size(targets(4:5,:)))*10^-10
+2018.01.15-10:03:15:     13.4862   10.5784   50.8661   2.2481e-10 1.533e-10  - 48             train, fitnet, traingdx, MSE, sgdm, Batchs.,64 targets(1:5,:), rand(size(targets(4:5,:)))*10^-10
