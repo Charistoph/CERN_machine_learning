@@ -1,25 +1,30 @@
 Date                     Para1     Para2     Para3     Para4     Para5         Neurons        Details
 
 Currently best:
-2018.01.11-12:02:08:     0.83967   0.46312   1.2714    0         0           - 48  24         train, feedforwardnet, LM, MSE, sgdm, Batchs.,64 3
+2018.01.11-13:26:42:     0.82109   0.43614   1.1927    2.2723e-10 1.0481e-10 - 48  24         train, feedforwardnet, LM, MSE, sgdm, Batchs.,64 targets(1:5,:), rand(size(targets(4:5,:)))*10^-10
+2018.01.11-12:02:08:     0.83967   0.46312   1.2714    0         0           - 48  24         train, feedforwardnet, LM, MSE, sgdm, Batchs.,64 targets(1:3,:)
 _______________________________________________________________________________________________________________________
 
+*1 Initial Test
 2018.01.07-16:25:40:     3.4456    1.3634    3.3351    1.6924    3.3015      - 5              train, feedforwardnet, LM, MSE, sgdm, Batchs.,64
 2018.01.07-15:46:53:     1.7317    2.6014    6.8207    1.6118    4.2321      - 24             train, feedforwardnet, LM, MSE, sgdm, Batchs.,64
+Result: Code works
 
-* Test deviation of one train method
+*2 Test deviation of one train method
 2018.01.07-16:33:31:     2.2051    2.2655    6.0746    1.7031    3.2924      - 12   5         train, feedforwardnet, LM, MSE, sgdm, Batchs.,64
 2018.01.08-08:30:03:     2.2633    1.713     7.1757    1.6448    3.2855      - 12   5         train, feedforwardnet, LM, MSE, sgdm, Batchs.,64
 2018.01.08-08:44:56:     3.6889    1.3323    6.8207    1.5596    3.2927      - 12   5         train, feedforwardnet, LM, MSE, sgdm, Batchs.,64
 2018.01.09-08:25:09:     3.3004    1.5776    15.6264   1.9589    3.8191      - 12   5         train, feedforwardnet, LM, MSE, sgdm, Batchs.,64
+Result: Deviation quite large (especially in Para3) up to ~50%
 
-* One hidden layer with different amounts of neurons
+*3 One hidden layer with different amounts of neurons
 2018.01.07-15:50:24:     3.7356    1.4953    4.7487    1.626     2.8106      - 5              train, feedforwardnet, LM, MSE, sgdm, Batchs.,64
 2018.01.07-15:50:56:     2.001     1.2105    5.6353    1.5229    3.19        - 12             train, feedforwardnet, LM, MSE, sgdm, Batchs.,64
 2018.01.07-15:52:40:     1.9804    2.3907    5.2742    1.583     4.1277      - 24             train, feedforwardnet, LM, MSE, sgdm, Batchs.,64
 2018.01.07-16:00:06:     1.9471    2.5772    4.9147    1.5727    3.3226      - 48             train, feedforwardnet, LM, MSE, sgdm, Batchs.,64
+Result: No noticeable improvements.
 
-* Do we really need the last 2 parameters?
+*4 Do we really need the mixture subtraction and the para4 & para5?
 2018.01.09-09:57:49:     1.2009    0.80852   1.5201    0         0           - 5              train, feedforwardnet, LM, MSE, sgdm, Batchs.,64 targets(1:3,:)
 2018.01.09-09:09:54:     0.944     0.61502   1.4397    0         0           - 12   5         train, feedforwardnet, LM, MSE, sgdm, Batchs.,64 targets(1:5,:), no mixt - targets 4&5
 2018.01.09-10:00:23:     0.91626   0.72551   1.453     0         0           - 12   5         train, feedforwardnet, LM, MSE, sgdm, Batchs.,64 targets(1:3,:)
@@ -30,9 +35,10 @@ ________________________________________________________________________________
 2018.01.10-09:29:37:     1.1996    1.6096    1.9641    0         0           - 12   5         train, feedforwardnet, LM, MSE, sgdm, Batchs.,64 targets(1:5,:), no mixt - targets 4&5
 2018.01.10-09:27:08:     0.95402   0.71371   1.4558    2.1706e-10 9.6182e-11 - 12   5         train, feedforwardnet, LM, MSE, sgdm, Batchs.,64 targets(1:5,:), rand(size(targets(4:5,:)))*10^-10
 2018.01.10-09:45:13:     0.95474   0.69293   1.3724    2.0164e-10 9.5353e-11 - 12   5         train, feedforwardnet, LM, MSE, sgdm, Batchs.,64 targets(1:5,:), rand(size(targets(4:5,:)))*10^-10
-Result of 9-10.1.2018 with no mixture subtraction results are a lot better, targets(1:5,:) or 1:3 doesn't really matter - ignored by ml train?
+Result: With no mixture subtraction results are a lot better (all parameters except para3 better than baseline).
+Question: targets(1:5,:) or 1:3 doesn't really matter - ignored by ml train?
 
-* Comparison targets(1:3) & targets(1:5) with rand(size(targets(4:5,:)))*10^-10 with different layers & neurons
+*5 Comparison targets(1:3) & targets(1:5) with rand(size(targets(4:5,:)))*10^-10 with different layers & neurons
 2018.01.10-10:07:20:     0.93734   0.69671   1.4537    0         0           - 12   5         train, feedforwardnet, LM, MSE, sgdm, Batchs.,64 targets(1:3,:)
 2018.01.11-01:19:16:     0.88175   0.56337   3.9708    0         0           - 12   5         train, feedforwardnet, LM, MSE, sgdm, Batchs.,64 targets(1:3,:)
 2018.01.10-10:09:04:     0.86646   0.55844   1.3218    0         0           - 24  12   5     train, feedforwardnet, LM, MSE, sgdm, Batchs.,64 targets(1:3,:)
@@ -41,57 +47,81 @@ Result of 9-10.1.2018 with no mixture subtraction results are a lot better, targ
 2018.01.11-09:14:58:     0.94805   1.0972    1.4707    2.0278e-10 9.6696e-11 - 12   5         train, feedforwardnet, LM, MSE, sgdm, Batchs.,64 targets(1:5,:), rand(size(targets(4:5,:)))*10^-10
 2018.01.11-09:34:07:     0.95262   0.6988    1.3947    1.9662e-10 9.4791e-11 - 24  12   5     train, feedforwardnet, LM, MSE, sgdm, Batchs.,64 targets(1:5,:), rand(size(targets(4:5,:)))*10^-10
 2018.01.11-10:54:05:     0.88784   0.59654   1.4751    2.2825e-10 9.4768e-11 - 48  24  12   5 train, feedforwardnet, LM, MSE, sgdm, Batchs.,64 targets(1:5,:), rand(size(targets(4:5,:)))*10^-10
+Result: Both methods are yield similar results.
+Given that there are likely large deviations as in *2 one cannot say which method is better.
 
-* One hidden layer with different amounts of neurons
+*6 One hidden layer with different amounts of neurons (targets(1:3))
 2018.01.11-11:09:27:     0.90805   0.78323   1.5185    0         0           - 5              train, feedforwardnet, LM, MSE, sgdm, Batchs.,64 targets(1:3,:)
 2018.01.11-11:09:54:     0.90881   0.70102   1.3896    0         0           - 12             train, feedforwardnet, LM, MSE, sgdm, Batchs.,64 targets(1:3,:)
 2018.01.11-11:11:31:     0.876     0.54351   1.3141    0         0           - 24             train, feedforwardnet, LM, MSE, sgdm, Batchs.,64 targets(1:3,:)
 2018.01.11-11:16:48:     0.86313   0.52172   1.3222    0         0           - 48             train, feedforwardnet, LM, MSE, sgdm, Batchs.,64 targets(1:3,:)
+Result: Higher neuron numbers yield slightly better results but not significantly.
 
-* Two hidden layer with different amounts of neurons
+*7 One hidden layer with different amounts of neurons (targets(1:5) with rand(size(targets(4:5,:)))*10^-10))
+2018.01.11-13:27:14:     0.93064   0.7545    1.6107    1.9633e-10 9.5191e-11 - 5              train, feedforwardnet, LM, MSE, sgdm, Batchs.,64 targets(1:5,:), rand(size(targets(4:5,:)))*10^-10
+2018.01.11-13:29:11:     0.89779   0.55987   1.4185    2.2683e-10 1.0229e-10 - 12             train, feedforwardnet, LM, MSE, sgdm, Batchs.,64 targets(1:5,:), rand(size(targets(4:5,:)))*10^-10
+2018.01.11-13:30:58:     0.98528   0.66803   5.9698    2.0542e-10 1.0566e-10 - 24             train, feedforwardnet, LM, MSE, sgdm, Batchs.,64 targets(1:5,:), rand(size(targets(4:5,:)))*10^-10
+2018.01.11-13:43:33:     0.90286   0.54673   1.359     2.2691e-10 1.0742e-10 - 48             train, feedforwardnet, LM, MSE, sgdm, Batchs.,64 targets(1:5,:), rand(size(targets(4:5,:)))*10^-10
+Result: No significant improvements with bigger/smaller amounts of neurons.
+
+*8 Two hidden layer with different amounts of neurons
 2018.01.11-11:18:39:     0.89969   0.71494   1.4378    0         0           - 12   5         train, feedforwardnet, LM, MSE, sgdm, Batchs.,64 targets(1:3,:)
 2018.01.11-11:20:46:     0.8517    0.51105   1.2617    0         0           - 24  12         train, feedforwardnet, LM, MSE, sgdm, Batchs.,64 targets(1:3,:)
 2018.01.11-12:02:08:     0.83967   0.46312   1.2714    0         0           - 48  24         train, feedforwardnet, LM, MSE, sgdm, Batchs.,64 targets(1:3,:)
 2018.01.11-12:07:04:     0.91285   0.76374   1.4143    2.0213e-10 9.5204e-11 - 12   5         train, feedforwardnet, LM, MSE, sgdm, Batchs.,64 targets(1:5,:), rand(size(targets(4:5,:)))*10^-10
 2018.01.11-12:14:19:     0.89515   0.57508   1.3899    2.0463e-10 1.0065e-10 - 24  12         train, feedforwardnet, LM, MSE, sgdm, Batchs.,64 targets(1:5,:), rand(size(targets(4:5,:)))*10^-10
 2018.01.11-13:26:42:     0.82109   0.43614   1.1927    2.2723e-10 1.0481e-10 - 48  24         train, feedforwardnet, LM, MSE, sgdm, Batchs.,64 targets(1:5,:), rand(size(targets(4:5,:)))*10^-10
-2018.01.11-13:27:14:     0.93064   0.7545    1.6107    1.9633e-10 9.5191e-11 - 5              train, feedforwardnet, LM, MSE, sgdm, Batchs.,64 targets(1:5,:), rand(size(targets(4:5,:)))*10^-10
-2018.01.11-13:29:11:     0.89779   0.55987   1.4185    2.2683e-10 1.0229e-10 - 12             train, feedforwardnet, LM, MSE, sgdm, Batchs.,64 targets(1:5,:), rand(size(targets(4:5,:)))*10^-10
-2018.01.11-13:30:58:     0.98528   0.66803   5.9698    2.0542e-10 1.0566e-10 - 24             train, feedforwardnet, LM, MSE, sgdm, Batchs.,64 targets(1:5,:), rand(size(targets(4:5,:)))*10^-10
-2018.01.11-13:43:33:     0.90286   0.54673   1.359     2.2691e-10 1.0742e-10 - 48             train, feedforwardnet, LM, MSE, sgdm, Batchs.,64 targets(1:5,:), rand(size(targets(4:5,:)))*10^-10
+Result: Neuron Layers with layer1: 48, layer2: 24 yield the best results.
 
-* Irrelevant
+*9 Irrelevant
 2018.01.12-15:52:20:     1.0559    0.84446   1.7219    2.0771e-10 1.4534e-10 - 24             train, feedforwardnet, LM, MSE, sgdm, Batchs.,64 targets(1:5,:) - irrelevant
 
-* Study on which target configuration works better for 48,24 neurons
+*10 Study on which target configuration works better for 48,24 neurons
 2018.01.11-14:13:54:     0.84705   0.4808    1.4435    0         0           - 48  24         train, feedforwardnet, LM, MSE, sgdm, Batchs.,64 targets(1:3,:)
 2018.01.11-14:42:25:     0.85984   0.5003    1.2371    0         0           - 48  24         train, feedforwardnet, LM, MSE, sgdm, Batchs.,64 targets(1:3,:)
 2018.01.11-14:52:37:     0.90502   0.56125   1.3988    0         0           - 48  24         train, feedforwardnet, LM, MSE, sgdm, Batchs.,64 targets(1:3,:)
-* Started using parallel computing toolbox.
-2018.01.12-09:03:54:     0.87392   0.48523   1.3062    2.2112e-10 9.6888e-11 - 48  24         train, feedforwardnet, LM, MSE, sgdm, Batchs.,64 targets(1:5,:), rand(size(targets(4:5,:)))*10^-10
+Result: Para3 ~25-45% worse than baseline. All other parameters better than baseline.
 
-* Simplify the problem - take out waves in Para3
-2018.01.12-16:42:59:     0.93681   0.46486   0.5682    2.1714e-10 1.0136e-10 - 24             train, feedforwardnet, LM, MSE, sgdm, Batchs.,64 inputs & targets(:,abs(targets(3,:))<1.7)
+*11 Started using parallel computing toolbox.
+2018.01.12-09:03:54:     0.87392   0.48523   1.3062    2.2112e-10 9.6888e-11 - 48  24         train, feedforwardnet, LM, MSE, sgdm, Batchs.,64 targets(1:5,:), rand(size(targets(4:5,:)))*10^-10
 2018.01.13-13:26:15:     0.87392   0.48523   1.3062    2.2112e-10 9.6888e-11 - 48  24         train, LM, MSE, sgdm, Batchs.,64 targets(1:5,:), rand(size(targets(4:5,:)))*10^-10
 2018.01.13-13:54:47:     0.83842   0.44962   1.2479    2.0659e-10 1.0301e-10 - 48  24         train, LM, MSE, sgdm, Batchs.,64 targets(1:5,:), rand(size(targets(4:5,:)))*10^-10
 2018.01.13-17:49:26:     0.90468   0.5398    1.3448    2.0548e-10 1.0115e-10 - 48  24         train, LM, MSE, sgdm, Batchs.,64 targets(1:5,:), rand(size(targets(4:5,:)))*10^-10
-2018.01.13-18:26:29:     0.86325   0.4782    1.2955    2.0929e-10 1.1023e-10 - 48  24         train, fitnet, trainlm, MSE, sgdm, Batchs.,64 targets(1:5,:), rand(size(targets(4:5,:)))*10^-10
-2018.01.13-18:26:36:     10.677    6.2872    66.4199   2.1455e-10 1.3137e-10 - 48  24         train, fitnet, traingd, MSE, sgdm, Batchs.,64 targets(1:5,:), rand(size(targets(4:5,:)))*10^-10
-2018.01.13-18:26:41:     3.8007    2.0459    162.7261  1.9527e-10 9.3487e-11 - 48  24         train, fitnet, traingdm, MSE, sgdm, Batchs.,64 targets(1:5,:), rand(size(targets(4:5,:)))*10^-10
-2018.01.13-18:26:47:     3.9834    9.444     22.6636   2.1928e-10 9.9311e-11 - 48  24         train, fitnet, traingdx, MSE, sgdm, Batchs.,64 targets(1:5,:), rand(size(targets(4:5,:)))*10^-10
+Result: Para3 ~25-45% worse than baseline. All other parameters better than baseline.
+
+*12 Simplify the problem - take out interference pattern (2 side peaks at >0 & <0) in Para3
+2018.01.12-16:42:59:     0.93681   0.46486   0.5682    2.1714e-10 1.0136e-10 - 24             train, feedforwardnet, LM, MSE, sgdm, Batchs.,64 inputs & targets(:,abs(targets(3,:))<1.7)
+Result: If the interference pattern is taken out para3 is easy to train and almost twice as good as the baseline.
+
+*13 Meta Study of traingdm, trainlm, traingdx, traingd
 2018.01.13-18:27:44:     0.90321   0.76979   1.6542    2.0923e-10 9.7721e-11 - 5              train, fitnet, trainlm, MSE, sgdm, Batchs.,64 targets(1:5,:), rand(size(targets(4:5,:)))*10^-10
-2018.01.13-18:27:56:     4.5291    4.5499    13.7086   2.0609e-10 1.1757e-10 - 5              train, fitnet, traingd, MSE, sgdm, Batchs.,64 targets(1:5,:), rand(size(targets(4:5,:)))*10^-10
-2018.01.13-18:27:59:     3.672     2.7696    214.8477  1.9784e-10 9.893e-11  - 5              train, fitnet, traingdm, MSE, sgdm, Batchs.,64 targets(1:5,:), rand(size(targets(4:5,:)))*10^-10
-2018.01.13-18:28:03:     6.1547    8.4496    26.2921   1.9895e-10 1.0716e-10 - 5              train, fitnet, traingdx, MSE, sgdm, Batchs.,64 targets(1:5,:), rand(size(targets(4:5,:)))*10^-10
 2018.01.13-18:30:11:     0.90623   0.65141   1.5029    2.7117e-10 1.1228e-10 - 12             train, fitnet, trainlm, MSE, sgdm, Batchs.,64 targets(1:5,:), rand(size(targets(4:5,:)))*10^-10
-2018.01.13-18:30:22:     3.1179    7.3792    16.1738   2.1897e-10 1.1986e-10 - 12             train, fitnet, traingd, MSE, sgdm, Batchs.,64 targets(1:5,:), rand(size(targets(4:5,:)))*10^-10
-2018.01.13-18:30:25:     5.5368    5.2005    138.444   2.7366e-10 1.1269e-10 - 12             train, fitnet, traingdm, MSE, sgdm, Batchs.,64 targets(1:5,:), rand(size(targets(4:5,:)))*10^-10
-2018.01.13-18:30:29:     4.3153    7.0224    17.9336   2.0208e-10 1.0245e-10 - 12             train, fitnet, traingdx, MSE, sgdm, Batchs.,64 targets(1:5,:), rand(size(targets(4:5,:)))*10^-10
 2018.01.13-18:33:29:     0.92337   0.56775   1.6017    2.4271e-10 1.0335e-10 - 24             train, fitnet, trainlm, MSE, sgdm, Batchs.,64 targets(1:5,:), rand(size(targets(4:5,:)))*10^-10
-2018.01.13-18:33:32:     15.729    8.1695    115.6546  2.2228e-10 1.6335e-10 - 24             train, fitnet, traingd, MSE, sgdm, Batchs.,64 targets(1:5,:), rand(size(targets(4:5,:)))*10^-10
-2018.01.13-18:33:35:     7.0235    7.9005    266.2968  2.3917e-10 1.8099e-10 - 24             train, fitnet, traingdm, MSE, sgdm, Batchs.,64 targets(1:5,:), rand(size(targets(4:5,:)))*10^-10
-2018.01.13-18:33:39:     3.637     6.3376    26.3499   2.2345e-10 1.0272e-10 - 24             train, fitnet, traingdx, MSE, sgdm, Batchs.,64 targets(1:5,:), rand(size(targets(4:5,:)))*10^-10
 2018.01.15-10:02:58:     0.89363   0.58415   1.4596    3.4316e-10 1.0978e-10 - 48             train, fitnet, trainlm, MSE, sgdm, Batchs.,64 targets(1:5,:), rand(size(targets(4:5,:)))*10^-10
-2018.01.15-10:03:04:     7.2857    9.2729    191.8634  2.2166e-10 1.2289e-10 - 48             train, fitnet, traingd, MSE, sgdm, Batchs.,64 targets(1:5,:), rand(size(targets(4:5,:)))*10^-10
+2018.01.13-18:26:29:     0.86325   0.4782    1.2955    2.0929e-10 1.1023e-10 - 48  24         train, fitnet, trainlm, MSE, sgdm, Batchs.,64 targets(1:5,:), rand(size(targets(4:5,:)))*10^-10
+2018.01.13-18:27:59:     3.672     2.7696    214.8477  1.9784e-10 9.893e-11  - 5              train, fitnet, traingdm, MSE, sgdm, Batchs.,64 targets(1:5,:), rand(size(targets(4:5,:)))*10^-10
+2018.01.13-18:30:25:     5.5368    5.2005    138.444   2.7366e-10 1.1269e-10 - 12             train, fitnet, traingdm, MSE, sgdm, Batchs.,64 targets(1:5,:), rand(size(targets(4:5,:)))*10^-10
+2018.01.13-18:33:35:     7.0235    7.9005    266.2968  2.3917e-10 1.8099e-10 - 24             train, fitnet, traingdm, MSE, sgdm, Batchs.,64 targets(1:5,:), rand(size(targets(4:5,:)))*10^-10
 2018.01.15-10:03:07:     3.7844    2.0057    165.3285  1.969e-10  9.3578e-11 - 48             train, fitnet, traingdm, MSE, sgdm, Batchs.,64 targets(1:5,:), rand(size(targets(4:5,:)))*10^-10
+2018.01.13-18:26:41:     3.8007    2.0459    162.7261  1.9527e-10 9.3487e-11 - 48  24         train, fitnet, traingdm, MSE, sgdm, Batchs.,64 targets(1:5,:), rand(size(targets(4:5,:)))*10^-10
+2018.01.13-18:28:03:     6.1547    8.4496    26.2921   1.9895e-10 1.0716e-10 - 5              train, fitnet, traingdx, MSE, sgdm, Batchs.,64 targets(1:5,:), rand(size(targets(4:5,:)))*10^-10
+2018.01.13-18:30:29:     4.3153    7.0224    17.9336   2.0208e-10 1.0245e-10 - 12             train, fitnet, traingdx, MSE, sgdm, Batchs.,64 targets(1:5,:), rand(size(targets(4:5,:)))*10^-10
+2018.01.13-18:33:39:     3.637     6.3376    26.3499   2.2345e-10 1.0272e-10 - 24             train, fitnet, traingdx, MSE, sgdm, Batchs.,64 targets(1:5,:), rand(size(targets(4:5,:)))*10^-10
 2018.01.15-10:03:15:     13.4862   10.5784   50.8661   2.2481e-10 1.533e-10  - 48             train, fitnet, traingdx, MSE, sgdm, Batchs.,64 targets(1:5,:), rand(size(targets(4:5,:)))*10^-10
+2018.01.13-18:26:47:     3.9834    9.444     22.6636   2.1928e-10 9.9311e-11 - 48  24         train, fitnet, traingdx, MSE, sgdm, Batchs.,64 targets(1:5,:), rand(size(targets(4:5,:)))*10^-10
+2018.01.13-18:27:56:     4.5291    4.5499    13.7086   2.0609e-10 1.1757e-10 - 5              train, fitnet, traingd, MSE, sgdm, Batchs.,64 targets(1:5,:), rand(size(targets(4:5,:)))*10^-10
+2018.01.13-18:30:22:     3.1179    7.3792    16.1738   2.1897e-10 1.1986e-10 - 12             train, fitnet, traingd, MSE, sgdm, Batchs.,64 targets(1:5,:), rand(size(targets(4:5,:)))*10^-10
+2018.01.13-18:33:32:     15.729    8.1695    115.6546  2.2228e-10 1.6335e-10 - 24             train, fitnet, traingd, MSE, sgdm, Batchs.,64 targets(1:5,:), rand(size(targets(4:5,:)))*10^-10
+2018.01.15-10:03:04:     7.2857    9.2729    191.8634  2.2166e-10 1.2289e-10 - 48             train, fitnet, traingd, MSE, sgdm, Batchs.,64 targets(1:5,:), rand(size(targets(4:5,:)))*10^-10
+2018.01.13-18:26:36:     10.677    6.2872    66.4199   2.1455e-10 1.3137e-10 - 48  24         train, fitnet, traingd, MSE, sgdm, Batchs.,64 targets(1:5,:), rand(size(targets(4:5,:)))*10^-10
+Result: trainlm (Levenberg-Marquardt backpropagation) is clearly the best choice. It was used for all earlier tests.
+
+*14 Meta Study of trainbr, trainbfg, trainrp, trainscg, traincgb, traincgf, traincgp
+2018.01.17-10:58:52:     0.88637   0.81127   1.446     1.9577e-10 9.4101e-11 - 5              train, fitnet, trainbr, LM, MSE, sgdm, Batchs.,64 targets(1:5,:), rand(size(targets(4:5,:)))*10^-10
+2018.01.17-10:59:09:     1.4281    1.566     1.9954    2.1901e-10 1.0642e-10 - 5              train, fitnet, trainbfg, LM, MSE, sgdm, Batchs.,64 targets(1:5,:), rand(size(targets(4:5,:)))*10^-10
+2018.01.17-10:59:17:     3.7954    2.0149    6.4857    1.9581e-10 9.4072e-11 - 5              train, fitnet, trainrp, LM, MSE, sgdm, Batchs.,64 targets(1:5,:), rand(size(targets(4:5,:)))*10^-10
+2018.01.17-10:59:26:     1.5963    1.9347    2.5571    1.9639e-10 9.534e-11  - 5              train, fitnet, trainscg, LM, MSE, sgdm, Batchs.,64 targets(1:5,:), rand(size(targets(4:5,:)))*10^-10
+2018.01.17-10:59:37:     1.4988    1.6783    2.1362    2.1644e-10 1.161e-10  - 5              train, fitnet, traincgb, LM, MSE, sgdm, Batchs.,64 targets(1:5,:), rand(size(targets(4:5,:)))*10^-10
+2018.01.17-10:59:55:     1.4699    1.9735    1.9892    1.9812e-10 9.6638e-11 - 5              train, fitnet, traincgf, LM, MSE, sgdm, Batchs.,64 targets(1:5,:), rand(size(targets(4:5,:)))*10^-10
+2018.01.17-11:00:03:     1.7965    2.3818    3.4503    2.2992e-10 9.7613e-11 - 5              train, fitnet, traincgp, LM, MSE, sgdm, Batchs.,64 targets(1:5,:), rand(size(targets(4:5,:)))*10^-10
+2018.01.17-11:00:18:     1.7677    2.5359    2.9307    2.0013e-10 1.0184e-10 - 5              train, fitnet, trainoss, LM, MSE, sgdm, Batchs.,64 targets(1:5,:), rand(size(targets(4:5,:)))*10^-10

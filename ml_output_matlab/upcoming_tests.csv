@@ -1,4 +1,163 @@
 planned tests:
+    if trainMethod == 1
+      neurons = [48,24]
+      targets(4:5,:)=rand(size(targets(4:5,:)))*10^-10;
+      targets_train = targets;
+      net=fitnet(neurons,'trainbr');
+    end
+
+    if trainMethod == 2
+      neurons = [48,24]
+      targets(4:5,:)=rand(size(targets(4:5,:)))*10^-10;
+      targets_train = targets;
+      net=fitnet(neurons,'trainbfg');
+    end
+
+    if trainMethod == 3
+      neurons = [48,24]
+      targets(4:5,:)=rand(size(targets(4:5,:)))*10^-10;
+      targets_train = targets;
+      net=fitnet(neurons,'trainrp');;
+    end
+
+   if trainMethod == 4
+      neurons = [48,24]
+      targets(4:5,:)=rand(size(targets(4:5,:)))*10^-10;
+      targets_train = targets;
+      net=fitnet(neurons,'trainscg');
+    end
+
+    if trainMethod == 5
+      neurons = [48,24]
+      targets(4:5,:)=rand(size(targets(4:5,:)))*10^-10;
+      targets_train = targets;
+      net=fitnet(neurons,'traincgb');    
+    end
+
+    if trainMethod == 6
+      neurons = [48,24]
+      targets(4:5,:)=rand(size(targets(4:5,:)))*10^-10;
+      targets_train = targets;
+      net=fitnet(neurons,'traincgf');
+    end
+
+    if trainMethod == 7
+      neurons = [48,24]
+      targets(4:5,:)=rand(size(targets(4:5,:)))*10^-10;
+      targets_train = targets;
+      net=fitnet(neurons,'traincgp');
+    end
+
+    if trainMethod == 8
+      neurons = [48,24]
+      targets(4:5,:)=rand(size(targets(4:5,:)))*10^-10;
+      targets_train = targets;
+      net=fitnet(neurons,'trainoss');
+    end
+
+
+
+
+
+
+
+template:
+    if trainMethod == 1
+
+    end
+
+    if trainMethod == 2
+
+    end
+
+    if trainMethod == 3
+
+    end
+
+    if trainMethod == 4
+
+    end
+
+    if trainMethod == 5
+
+    end
+
+    if trainMethod == 6
+
+    end
+
+    if trainMethod == 7
+
+    end
+
+    if trainMethod == 8
+
+    end
+
+    if trainMethod == 9
+
+    end
+
+    if trainMethod == 10
+
+    end
+
+    if trainMethod == 11
+
+    end
+
+    if trainMethod == 12
+
+    end
+
+    if trainMethod == 13
+
+    end
+
+    if trainMethod == 14
+
+    end
+
+    if trainMethod == 15
+
+    end
+
+    if trainMethod == 16
+
+    end
+
+    if trainMethod == 17
+
+    end
+
+    if trainMethod == 18
+
+    end
+
+    if trainMethod == 19
+
+    end
+
+    if trainMethod == 20
+
+    end
+
+    if trainMethod == 21
+
+    end
+
+    if trainMethod == 22
+
+    end
+
+    if trainMethod == 23
+
+    end
+
+
+
+old tests:
+14-15.01.2018
      if trainMethod == 1
       neurons = [48,24]
       targets(4:5,:)=rand(size(targets(4:5,:)))*10^-10;
@@ -161,53 +320,6 @@ planned tests:
     end
 
 
-
-
-
-template:
-    if trainMethod == 1
-
-    end
-
-    if trainMethod == 2
-
-    end
-
-    if trainMethod == 3
-
-    end
-
-    if trainMethod == 4
-
-    end
-
-    if trainMethod == 5
-
-    end
-
-    if trainMethod == 6
-
-    end
-
-    if trainMethod == 7
-
-    end
-
-    if trainMethod == 8
-
-    end
-
-    if trainMethod == 9
-
-    end
-
-    if trainMethod == 10
-
-    end
-
-
-
-old tests:
 13.01.2018
     if trainMethod == 24
       neurons = [24]
