@@ -125,3 +125,10 @@ Result: trainlm (Levenberg-Marquardt backpropagation) is clearly the best choice
 2018.01.17-10:59:55:     1.4699    1.9735    1.9892    1.9812e-10 9.6638e-11 - 5              train, fitnet, traincgf, LM, MSE, sgdm, Batchs.,64 targets(1:5,:), rand(size(targets(4:5,:)))*10^-10
 2018.01.17-11:00:03:     1.7965    2.3818    3.4503    2.2992e-10 9.7613e-11 - 5              train, fitnet, traincgp, LM, MSE, sgdm, Batchs.,64 targets(1:5,:), rand(size(targets(4:5,:)))*10^-10
 2018.01.17-11:00:18:     1.7677    2.5359    2.9307    2.0013e-10 1.0184e-10 - 5              train, fitnet, trainoss, LM, MSE, sgdm, Batchs.,64 targets(1:5,:), rand(size(targets(4:5,:)))*10^-10
+
+*15 Closer Study of trainbr
+2018.01.18-08:46:18:     0.89276   0.78347   1.4629    1.9583e-10 9.3783e-11 - 5              train, fitnet, trainbr, MSE, sgdm, Batchs.,64 targets(1:5,:), rand(size(targets(4:5,:)))*10^-10
+2018.01.18-09:49:03:     0.8441    0.56813   3.4413    1.9514e-10 9.3818e-11 - 12             train, fitnet, trainbr, MSE, sgdm, Batchs.,64 targets(1:5,:), rand(size(targets(4:5,:)))*10^-10
+2018.01.19-02:45:13:     1.9369    0.71528   2.5016    1.9583e-10 9.3783e-11 - 24             train, fitnet, trainbr, MSE, sgdm, Batchs.,64 targets(1:5,:), rand(size(targets(4:5,:)))*10^-10
+2018.01.19-11:36:41:     0.90835   0.47097   1.0746    1.9514e-10 9.3858e-11 - 48             Stopped after 800 Steps, train, fitnet, trainbr, LM, MSE, sgdm, Batchs.,64 targets(1:5,:), rand(size(targets(4:5,:)))*10^-10
+2018.01.20-11:22:27:     1.5326    0.39361   1.7863    1.9583e-10 9.3783e-11 - 48  24         Stopped after 720 Steps, train, fitnet, trainbr, LM, MSE, sgdm, Batchs.,64 targets(1:5,:), rand(size(targets(4:5,:)))*10^-10

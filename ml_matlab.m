@@ -19,7 +19,7 @@ if makedata
 end
 
 % matlab train (neural network)
-for trainMethod=1:8
+for trainMethod=6:6
   if ml
     load data_root/matlab_inputs_tagets
 
@@ -42,58 +42,40 @@ for trainMethod=1:8
 
     if trainMethod == 2
 %      neurons = [48,24]
-      neurons = [5]
+      neurons = [12]
       targets(4:5,:)=rand(size(targets(4:5,:)))*10^-10;
       targets_train = targets;
-      net=fitnet(neurons,'trainbfg');
+      net=fitnet(neurons,'trainbr');
     end
 
     if trainMethod == 3
 %      neurons = [48,24]
-      neurons = [5]
+      neurons = [24]
       targets(4:5,:)=rand(size(targets(4:5,:)))*10^-10;
       targets_train = targets;
-      net=fitnet(neurons,'trainrp');;
+      net=fitnet(neurons,'trainbr');;
     end
 
    if trainMethod == 4
 %      neurons = [48,24]
-      neurons = [5]
+      neurons = [48]
       targets(4:5,:)=rand(size(targets(4:5,:)))*10^-10;
       targets_train = targets;
-      net=fitnet(neurons,'trainscg');
+      net=fitnet(neurons,'trainbr');
     end
 
     if trainMethod == 5
-%      neurons = [48,24]
-      neurons = [5]
+      neurons = [24,12]
       targets(4:5,:)=rand(size(targets(4:5,:)))*10^-10;
       targets_train = targets;
-      net=fitnet(neurons,'traincgb');    
+      net=fitnet(neurons,'trainbr');
     end
 
     if trainMethod == 6
-%      neurons = [48,24]
-      neurons = [5]
+      neurons = [48,24]
       targets(4:5,:)=rand(size(targets(4:5,:)))*10^-10;
       targets_train = targets;
-      net=fitnet(neurons,'traincgf');
-    end
-
-    if trainMethod == 7
-%      neurons = [48,24]
-      neurons = [5]
-      targets(4:5,:)=rand(size(targets(4:5,:)))*10^-10;
-      targets_train = targets;
-      net=fitnet(neurons,'traincgp');
-    end
-
-    if trainMethod == 8
-%      neurons = [48,24]
-      neurons = [5]
-      targets(4:5,:)=rand(size(targets(4:5,:)))*10^-10;
-      targets_train = targets;
-      net=fitnet(neurons,'trainoss');
+      net=fitnet(neurons,'trainbr');
     end
 
     size(inputs)

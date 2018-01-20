@@ -1,58 +1,44 @@
 planned tests:
     if trainMethod == 1
-      neurons = [48,24]
+      neurons = [5]
       targets(4:5,:)=rand(size(targets(4:5,:)))*10^-10;
       targets_train = targets;
       net=fitnet(neurons,'trainbr');
     end
 
     if trainMethod == 2
-      neurons = [48,24]
+      neurons = [12]
       targets(4:5,:)=rand(size(targets(4:5,:)))*10^-10;
       targets_train = targets;
-      net=fitnet(neurons,'trainbfg');
+      net=fitnet(neurons,'trainbr');
     end
 
     if trainMethod == 3
-      neurons = [48,24]
+      neurons = [24]
       targets(4:5,:)=rand(size(targets(4:5,:)))*10^-10;
       targets_train = targets;
-      net=fitnet(neurons,'trainrp');;
+      net=fitnet(neurons,'trainbr');;
     end
 
    if trainMethod == 4
-      neurons = [48,24]
+      neurons = [48]
       targets(4:5,:)=rand(size(targets(4:5,:)))*10^-10;
       targets_train = targets;
-      net=fitnet(neurons,'trainscg');
+      net=fitnet(neurons,'trainbr');
     end
 
     if trainMethod == 5
-      neurons = [48,24]
+      neurons = [24,12]
       targets(4:5,:)=rand(size(targets(4:5,:)))*10^-10;
       targets_train = targets;
-      net=fitnet(neurons,'traincgb');    
+      net=fitnet(neurons,'trainbr');
     end
 
     if trainMethod == 6
       neurons = [48,24]
       targets(4:5,:)=rand(size(targets(4:5,:)))*10^-10;
       targets_train = targets;
-      net=fitnet(neurons,'traincgf');
-    end
-
-    if trainMethod == 7
-      neurons = [48,24]
-      targets(4:5,:)=rand(size(targets(4:5,:)))*10^-10;
-      targets_train = targets;
-      net=fitnet(neurons,'traincgp');
-    end
-
-    if trainMethod == 8
-      neurons = [48,24]
-      targets(4:5,:)=rand(size(targets(4:5,:)))*10^-10;
-      targets_train = targets;
-      net=fitnet(neurons,'trainoss');
+      net=fitnet(neurons,'trainbr');
     end
 
 
@@ -157,6 +143,63 @@ template:
 
 
 old tests:
+16.01.2018
+    if trainMethod == 1
+      neurons = [48,24]
+      targets(4:5,:)=rand(size(targets(4:5,:)))*10^-10;
+      targets_train = targets;
+      net=fitnet(neurons,'trainbr');
+    end
+
+    if trainMethod == 2
+      neurons = [48,24]
+      targets(4:5,:)=rand(size(targets(4:5,:)))*10^-10;
+      targets_train = targets;
+      net=fitnet(neurons,'trainbfg');
+    end
+
+    if trainMethod == 3
+      neurons = [48,24]
+      targets(4:5,:)=rand(size(targets(4:5,:)))*10^-10;
+      targets_train = targets;
+      net=fitnet(neurons,'trainrp');;
+    end
+
+   if trainMethod == 4
+      neurons = [48,24]
+      targets(4:5,:)=rand(size(targets(4:5,:)))*10^-10;
+      targets_train = targets;
+      net=fitnet(neurons,'trainscg');
+    end
+
+    if trainMethod == 5
+      neurons = [48,24]
+      targets(4:5,:)=rand(size(targets(4:5,:)))*10^-10;
+      targets_train = targets;
+      net=fitnet(neurons,'traincgb');    
+    end
+
+    if trainMethod == 6
+      neurons = [48,24]
+      targets(4:5,:)=rand(size(targets(4:5,:)))*10^-10;
+      targets_train = targets;
+      net=fitnet(neurons,'traincgf');
+    end
+
+    if trainMethod == 7
+      neurons = [48,24]
+      targets(4:5,:)=rand(size(targets(4:5,:)))*10^-10;
+      targets_train = targets;
+      net=fitnet(neurons,'traincgp');
+    end
+
+    if trainMethod == 8
+      neurons = [48,24]
+      targets(4:5,:)=rand(size(targets(4:5,:)))*10^-10;
+      targets_train = targets;
+      net=fitnet(neurons,'trainoss');
+    end
+
 14-15.01.2018
      if trainMethod == 1
       neurons = [48,24]
