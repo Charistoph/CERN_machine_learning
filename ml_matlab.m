@@ -1,4 +1,4 @@
-readdata =      true;
+readdata =      false;
 
 % read data from with read_data script from input_data
 if readdata
@@ -6,7 +6,7 @@ if readdata
   read_data
 end
 
-makedata =      true;
+makedata =      false;
 datacheck =     true;
 ml =            true;
 printdata =     true;
@@ -16,10 +16,12 @@ analyzedata =   true;
 % create inputs and targets of length ntr, remove rows = 0
 if makedata
   make_data
+else
+  load('ml_input/ml_inputs_targets.mat')
 end
 
 % matlab train (neural network)
-for trainMethod=6:6
+for trainMethod=1:9
   if ml
     load data_root/matlab_inputs_tagets
 
@@ -32,50 +34,69 @@ for trainMethod=6:6
     targets_train = 0;
 
 % switch to test different methods
-    if trainMethod == 1
-%      neurons = [48,24]
-      neurons = [5]
-      targets(4:5,:)=rand(size(targets(4:5,:)))*10^-10;
-      targets_train = targets;
-      net=fitnet(neurons,'trainbr');
+  if trainMethod == 1
+      neurons = 5
+      targets_train=targets(1:3,:);
+      inputs_train=inputs;
+      net=feedforwardnet(neurons)
     end
 
     if trainMethod == 2
-%      neurons = [48,24]
-      neurons = [12]
+      neurons = 5
       targets(4:5,:)=rand(size(targets(4:5,:)))*10^-10;
       targets_train = targets;
-      net=fitnet(neurons,'trainbr');
+      inputs_train=inputs;
+      net=feedforwardnet(neurons)
     end
 
     if trainMethod == 3
-%      neurons = [48,24]
-      neurons = [24]
-      targets(4:5,:)=rand(size(targets(4:5,:)))*10^-10;
-      targets_train = targets;
-      net=fitnet(neurons,'trainbr');;
+      neurons = [48,24]
+      targets_train=targets(1:3,1:100000);
+      inputs_train=inputs(:,1:100000);
+      net=feedforwardnet(neurons)
     end
 
-   if trainMethod == 4
-%      neurons = [48,24]
-      neurons = [48]
-      targets(4:5,:)=rand(size(targets(4:5,:)))*10^-10;
-      targets_train = targets;
-      net=fitnet(neurons,'trainbr');
-    end
-
-    if trainMethod == 5
-      neurons = [24,12]
-      targets(4:5,:)=rand(size(targets(4:5,:)))*10^-10;
-      targets_train = targets;
-      net=fitnet(neurons,'trainbr');
-    end
-
-    if trainMethod == 6
+    if trainMethod == 4
       neurons = [48,24]
       targets(4:5,:)=rand(size(targets(4:5,:)))*10^-10;
       targets_train = targets;
-      net=fitnet(neurons,'trainbr');
+      inputs_train=inputs;
+      net=feedforwardnet(neurons)
+    end
+
+    if trainMethod == 5
+      neurons = 5
+      targets_train=targets(1:3,:);
+      inputs_train=inputs;
+      net=feedforwardnet(neurons)
+    end
+
+  if trainMethod == 6
+      neurons = 5
+      targets_train=targets(1:3,:);
+      inputs_train=inputs;
+      net=feedforwardnet(neurons)
+    end
+
+  if trainMethod == 7
+      neurons = 5
+      targets_train=targets(1:3,:);
+      inputs_train=inputs;
+      net=feedforwardnet(neurons)
+    end
+
+  if trainMethod == 8
+      neurons = 12
+      targets_train=targets(1:3,:);
+      inputs_train=inputs;
+      net=feedforwardnet(neurons)
+    end
+
+  if trainMethod == 9
+      neurons = 24
+      targets_train=targets(1:3,:);
+      inputs_train=inputs;
+      net=feedforwardnet(neurons)
     end
 
     size(inputs)
@@ -91,7 +112,8 @@ for trainMethod=6:6
 
       % net = Newly trained network
       % tr = Training record (epoch and perf)
-      [net,tr]=train(net,inputs,targets_train,'useParallel','yes','useGPU','yes'); % train network
+%      [net,tr]=train(net,inputs,targets_train,'useParallel','yes','useGPU','yes'); % train network
+      [net,tr]=train(net,inputs_train,targets_train); % train network
     end
 
 % MATLAB TrainNetwork: CONVOLUTIONAL NETWORK

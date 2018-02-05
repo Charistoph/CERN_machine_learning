@@ -1,5 +1,5 @@
 clear
-load('tracks.mat')
+load('ml_input/ml_inputs_targets.mat')
 ntr=length(track);
 %ntr=1;
 counter = 0;

@@ -90,3 +90,4 @@ if datacheck
 end
 
 save data_root/matlab_inputs_tagets inputs targets ntr
+save ml_input/ml_inputs_targets inputs targets 

@@ -3,7 +3,7 @@
 
 clear
 %temp=load('input_data/output.csv');
-temp=load('input_data/output_20171204.csv');
+temp=load('input_data/output_20180127.csv');
 l=length(temp)
 ntr=0;
 iline=1;
@@ -52,4 +52,5 @@ end
 %track(1).comp(1).par
 %track(1).mixt.par
 
-save tracks track
+% file to big to save
+% save tracks track

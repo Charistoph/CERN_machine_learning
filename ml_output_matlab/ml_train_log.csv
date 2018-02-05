@@ -90,7 +90,7 @@ Result: Para3 ~25-45% worse than baseline. All other parameters better than base
 Result: Para3 ~25-45% worse than baseline. All other parameters better than baseline.
 
 *12 Simplify the problem - take out interference pattern (2 side peaks at >0 & <0) in Para3
-2018.01.12-16:42:59:     0.93681   0.46486   0.5682    2.1714e-10 1.0136e-10 - 24             train, feedforwardnet, LM, MSE, sgdm, Batchs.,64 inputs & targets(:,abs(targets(3,:))<1.7)
+2018.01.12-16:42:59:     0.93681   0.46486   0.5682    2.1714e-10 1.0136e-10 - 24             train, feedforwardnet, LM, MSE, sgdm, Batchs.,64 inputs & targets(:,abs(targets(3,:))<1.7), targets(1:5,:), rand(size(targets(4:5,:)))*10^-10
 Result: If the interference pattern is taken out para3 is easy to train and almost twice as good as the baseline.
 
 *13 Meta Study of traingdm, trainlm, traingdx, traingd
@@ -130,5 +130,16 @@ Result: trainlm (Levenberg-Marquardt backpropagation) is clearly the best choice
 2018.01.18-08:46:18:     0.89276   0.78347   1.4629    1.9583e-10 9.3783e-11 - 5              train, fitnet, trainbr, MSE, sgdm, Batchs.,64 targets(1:5,:), rand(size(targets(4:5,:)))*10^-10
 2018.01.18-09:49:03:     0.8441    0.56813   3.4413    1.9514e-10 9.3818e-11 - 12             train, fitnet, trainbr, MSE, sgdm, Batchs.,64 targets(1:5,:), rand(size(targets(4:5,:)))*10^-10
 2018.01.19-02:45:13:     1.9369    0.71528   2.5016    1.9583e-10 9.3783e-11 - 24             train, fitnet, trainbr, MSE, sgdm, Batchs.,64 targets(1:5,:), rand(size(targets(4:5,:)))*10^-10
-2018.01.19-11:36:41:     0.90835   0.47097   1.0746    1.9514e-10 9.3858e-11 - 48             Stopped after 800 Steps, train, fitnet, trainbr, LM, MSE, sgdm, Batchs.,64 targets(1:5,:), rand(size(targets(4:5,:)))*10^-10
-2018.01.20-11:22:27:     1.5326    0.39361   1.7863    1.9583e-10 9.3783e-11 - 48  24         Stopped after 720 Steps, train, fitnet, trainbr, LM, MSE, sgdm, Batchs.,64 targets(1:5,:), rand(size(targets(4:5,:)))*10^-10
+2018.01.19-11:36:41:     0.90835   0.47097   1.0746    1.9514e-10 9.3858e-11 - 48             Stopped after 800 Steps, train, fitnet, trainbr, MSE, sgdm, Batchs.,64 targets(1:5,:), rand(size(targets(4:5,:)))*10^-10
+2018.01.20-11:22:27:     1.5326    0.39361   1.7863    1.9583e-10 9.3783e-11 - 48  24         Stopped after 720 Steps, train, fitnet, trainbr, MSE, sgdm, Batchs.,64 targets(1:5,:), rand(size(targets(4:5,:)))*10^-10
+2018.01.21-11:38:09:     0.76342   0.43271   1.4438    1.9583e-10 9.3783e-11 - 48             train, fitnet, trainbr, MSE, sgdm, Batchs.,64 targets(1:5,:), rand(size(targets(4:5,:)))*10^-10
+2018.01.22-08:27:13:     0.73985   0.43718   1.2884    1.9583e-10 9.3783e-11 - 48             Stopped after 600 Steps, train, fitnet, trainbr, MSE, sgdm, Batchs.,64 targets(1:5,:), rand(size(targets(4:5,:)))*10^-10
+
+*16 Tests with new data: 850.000+ datasets
+2018.01.27-15:02:58:     0.64139    1.0346    0.60036    0    0      - 5 LM, MSE, sgdm, Batchs.,64 1
+2018.01.27-15:08:33:     0.64139    1.0346    0.60036    0    0      - 5 LM, MSE, sgdm, Batchs.,64 2
+2018.01.27-17:21:24:     0.43777    1.559    4.3662    0    0      - 48  24 LM, MSE, sgdm, Batchs.,64 3
+2018.01.28-12:22:46:     0.73429    1.3381    1.225    0    0      - 5 LM, MSE, sgdm, Batchs.,64 5
+2018.01.28-13:37:51:     0.73429    1.3381    1.225    0    0      - 5 LM, MSE, sgdm, Batchs.,64 6
+2018.01.28-14:50:23:     1.1014    1.7734    2.8968    0    0      - 5 LM, MSE, sgdm, Batchs.,64 1
+2018.01.28-15:15:42:     1.1014    1.7734    2.8968    0    0      - 5 LM, MSE, sgdm, Batchs.,64 2 the same output? wierd
