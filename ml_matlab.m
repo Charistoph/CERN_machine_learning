@@ -24,11 +24,13 @@ else
    targ=targets;
 end
 
-for i=1:16
+for i=1:60
   inputs=0;
   targets=0;
-  itr1=1+(i-1)*60000;
-  itr2=60000+(i-1)*60000;
+%  itr1=1+(i-1)*60000;
+%  itr2=60000+(i-1)*60000;
+  itr1=1;
+  itr2=10000*i;
   inputs=inp(:,itr1:itr2);
   targets=targ(:,itr1:itr2);
 
@@ -45,8 +47,8 @@ for i=1:16
 
   % switch to test different methods
     if trainMethod == 1
-%        neurons = 5
-        neurons = [48,24]
+        neurons = 5
+%        neurons = [48,24]
         targets_train=targets(1:3,:);
         inputs_train=inputs;
         net=feedforwardnet(neurons)
