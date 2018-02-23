@@ -84,8 +84,8 @@ saveFunction(targets, dt, 'targets')
 % main
 
 function savefunction_1=saveFunction(val, dt, name)
-    path = strcat('ml_input/', dt);
+    path = strcat('python/ml_input/', dt);
     status = mkdir(path);
-    path = strcat('ml_input/', dt, '/', name, '.csv');
+    path = strcat('python/ml_input/', dt, '/', name, '.csv');
     csvwrite(path,val);
 end
