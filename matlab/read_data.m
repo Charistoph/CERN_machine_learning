@@ -3,7 +3,13 @@
 
 clear
 %temp=load('input_data/output.csv');
-temp=load('input_data/output_20180127.csv');
+mydir  = pwd;
+idcs   = strfind(mydir,'/');
+newdir = mydir(1:idcs(end)-1); 
+filepath = '/input_data/output_20180127.csv';
+newpath = strcat(newdir,filepath);
+temp=load(newpath);
+
 l=length(temp)
 ntr=0;
 iline=1;

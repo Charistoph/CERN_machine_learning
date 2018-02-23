@@ -19,6 +19,14 @@ python/rudis_data/ml_output_hidden
 
 !matlab/*
 
-!ml_output_matlab/ml_train_log.csv
-!ml_output_matlab/upcoming_tests.csv
+results.mat
+tracks.mat
 
+matlab/benchmark_data
+matlab/input_data
+matlab/ml_analyze
+matlab/ml_input
+matlab/ml_output_matlab/*
+
+!matlab/ml_output_matlab/ml_train_log.csv
+!matlab/ml_output_matlab/upcoming_tests.csv

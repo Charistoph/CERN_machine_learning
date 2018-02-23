@@ -7,7 +7,6 @@ if readdata
 end
 
 makedata =      false;
-datacheck =     true;
 ml =            true;
 printdata =     true;
 benchmark =     true;
@@ -49,8 +48,8 @@ for i=1:60
 
   % switch to test different methods
     if trainMethod == 1
-%        neurons = 5
-        neurons = [48,24]
+        neurons = 5
+%        neurons = [48,24]
         targets_train=targets(1:3,:);
         inputs_train=inputs;
         net=feedforwardnet(neurons)
