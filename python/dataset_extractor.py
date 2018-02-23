@@ -3,7 +3,7 @@ import csv
 import numpy as np
 from six.moves import cPickle as pickle
 
-workingdir = 'ml_input'
+workingdir = 'ml_input/2018.02.23-21:51:02'
 
 #===============================================================================
 # functions
