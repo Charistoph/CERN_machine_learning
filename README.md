@@ -2,6 +2,16 @@
 
 **Instructions to run machine learning application**
 
+# Setup
+
+Install
+
+* Matlab
+
+* Python
+
+* Tensorflow
+
 # Python Tensorflow
 
 * Run in matlab `read_data.m`
@@ -55,3 +65,11 @@ for data extraction from output.csv
 * `benchmark_check.m`
 
 * `analyze_ml_output.m`
+
+# Author
+
+Christoph Bernkopf
+
+Masterstudent Technical Physics
+
+TU Vienna, HEPHY, CERN
