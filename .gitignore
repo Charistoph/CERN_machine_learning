@@ -7,4 +7,5 @@ ignore all directories, and all sub-directories, and it's contents:
 !rudis_data_matlab/make_trialdata.m
 !ml_output_matlab/ml_train_log.csv
 !ml_output_matlab/upcoming_tests.csv
+!matlab/*
 *.mat
