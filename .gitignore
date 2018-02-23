@@ -10,11 +10,11 @@ python/data_root
 python/distribution_histo_plots
 python/ml_output_tensorflow
 
-python/rudis_data/data_root
-python/rudis_data/ml_output
-python/rudis_data/ml_input_2017.11.30_10_41_29
-python/rudis_data/rudis_data
-python/rudis_data/ml_output_hidden
+python/_archive_rudis_data/data_root
+python/_archive_rudis_data/ml_output
+python/_archive_rudis_data/ml_input_2017.11.30_10_41_29
+python/_archive_rudis_data/rudis_data
+python/_archive_rudis_data/ml_output_hidden
 
 
 !matlab/*
