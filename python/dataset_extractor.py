@@ -5,9 +5,6 @@ from six.moves import cPickle as pickle
 
 workingdir = 'ml_input/2018.02.23-21:51:02'
 
-#===============================================================================
-# functions
-
 # get length of csv file
 def getlength(filename):
     filelength = 0
