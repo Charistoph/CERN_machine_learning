@@ -1,4 +1,4 @@
-readdata =      false;
+readdata =      true; % usually false, only create data once
 
 % read data from with read_data script from input_data
 if readdata
@@ -6,7 +6,8 @@ if readdata
   read_data
 end
 
-makedata =      false;
+datacheck =     false; % condition used in make_data.m
+makedata =      true; % usually false, only create data once
 ml =            true;
 printdata =     true;
 benchmark =     true;
@@ -17,11 +18,12 @@ if makedata
   make_data
 else
   load('ml_input/ml_inputs_targets_20180127.mat')
-   inputs=transpose(inputs);
-   targets=transpose(targets);
-   inp=inputs;
-   targ=targets;
 end
+
+inputs=transpose(inputs);
+targets=transpose(targets);
+inp=inputs;
+targ=targets;
 
 for i=1:60
   inputs=0;
