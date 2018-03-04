@@ -12,6 +12,8 @@ Install
 
 * Tensorflow
 
+* Create folder input_data and add input .csv files
+
 # Python Tensorflow
 
 * Run in matlab `read_data.m`

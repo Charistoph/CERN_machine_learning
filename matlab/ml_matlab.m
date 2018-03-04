@@ -11,7 +11,7 @@ makedata =      true; % usually false, only create data once
 ml =            true;
 printdata =     true;
 benchmark =     true;
-analyzedata =   true;
+analyzedata =   false; % not important
 
 % create inputs and targets of length ntr, remove rows = 0
 if makedata
@@ -25,7 +25,7 @@ targets=transpose(targets);
 inp=inputs;
 targ=targets;
 
-for i=1:60
+for i=1:1 % 60
   inputs=0;
   targets=0;
 %  itr1=1+(i-1)*60000;

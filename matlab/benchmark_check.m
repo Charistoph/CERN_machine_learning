@@ -14,16 +14,12 @@ mat2 = transpose(csvread('ml_output_matlab/results.csv'));
 m_mean = mat2(1,:);
 matlab_std = mat2(2,:);
 
-try
-  mydir  = pwd;
-  idcs   = strfind(mydir,'/');
-  newdir = mydir(1:idcs(end)-1); 
-  filepath = '/python/ml_output_tensorflow/tf_output_benchmarks.csv';
-  newpath = strcat(newdir,filepath);
-  mat3 = transpose(csvread(newpath));
-catch
-  mat3=[0,0,0,0,0]
-mat3
+mydir  = pwd;
+idcs   = strfind(mydir,'/');
+newdir = mydir(1:idcs(end)-1); 
+filepath = '/python/ml_output_tensorflow/tf_output_benchmarks.csv';
+newpath = strcat(newdir,filepath);
+mat3 = transpose(csvread(newpath));
 
 tf_mean = mat3(1,:);
 tensorflow_std = mat3(2,:);
