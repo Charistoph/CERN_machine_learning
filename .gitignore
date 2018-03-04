@@ -7,7 +7,8 @@ ignore all directories, and all sub-directories, and it's contents:
 !python/*
 
 python/data_root
-python/distribution_histo_plots
+python/ml_input/*
+python/distribution_histo_plots/*
 python/ml_output_tensorflow/*
 !/python/ml_output_tensorflow/tf_output_benchmarks.csv
 
