@@ -89,5 +89,10 @@ if datacheck
   count_targets
 end
 
-save data_root/matlab_inputs_tagets inputs targets ntr
-save ml_input/ml_inputs_targets inputs targets
+% save data_root/matlab_inputs_tagets inputs targets ntr
+try
+  save ml_input/ml_inputs_targets inputs targets
+catch
+  mkdir ml_input
+  save ml_input/ml_inputs_targets inputs targets
+end

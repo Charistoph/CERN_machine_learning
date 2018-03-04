@@ -6,7 +6,7 @@ clear
 mydir  = pwd;
 idcs   = strfind(mydir,'/');
 newdir = mydir(1:idcs(end)-1); 
-filepath = '/input_data/output_20180127.csv';
+filepath = '/input_data/output_20171204.csv'; % or run output_20171204.csv
 newpath = strcat(newdir,filepath);
 temp=load(newpath);
 
