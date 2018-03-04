@@ -24,7 +24,7 @@ for data extraction from output.csv
 
 for data formating into inputs and targets, saved as inputs.csv and targets.csv
 
-* Run `py dataset_extractor.py`
+* Run `python dataset_extractor.py`
 
 data extraction from inputs.csv and targets.csv,
 
@@ -32,7 +32,7 @@ splitting into test, validate and train datasets & targets
 
 saved as pickle
 
-* Run `py print_dataset.py`
+* Run `python print_dataset.py`
 
 performs data checks
 
@@ -40,7 +40,7 @@ prints histos from targets (5 parameters)
 
 should: prints histos from inputs (5 parameters)
 
-* Run `py first_perc_one_hidden_layer.py`
+* Run `python first_perc_one_hidden_layer.py`
 
 Machine Learning Code
 

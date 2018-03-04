@@ -7,8 +7,8 @@ mydir  = pwd;
 idcs   = strfind(mydir,'/');
 newdir = mydir(1:idcs(end)-1); 
 % old file: 
-% filepath = '/input_data/output_20171204.csv';
- filepath = '/input_data/output_20180127.csv';
+filepath = '/input_data/output_20171204.csv';
+% filepath = '/input_data/output_20180127.csv';
 newpath = strcat(newdir,filepath);
 temp=load(newpath);
 
@@ -61,4 +61,4 @@ end
 %track(1).mixt.par
 
 % file to big to save
-% save tracks track
+save tracks track
