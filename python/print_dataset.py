@@ -4,10 +4,11 @@ import numpy as np
 import matplotlib.pyplot as plt
 from six.moves import cPickle as pickle
 
-savedir ="distribution_histo_plots"
+savedir = "distribution_histo_plots"
 
 #-------------------------------------------------------------------------------
 # functions
+
 
 def get_data():
     # get pickle file
@@ -28,7 +29,8 @@ def get_data():
 #    print('Validation set', valid_dataset.shape, valid_targets.shape)
 #    print('Test set', test_dataset.shape, test_targets.shape)
 
-    total_dataset = train_dataset.shape[0] + valid_dataset.shape[0] + test_dataset.shape[0]
+    total_dataset = train_dataset.shape[0] + \
+        valid_dataset.shape[0] + test_dataset.shape[0]
     input_heigth = train_dataset.shape[1]
     target_heigth = train_targets.shape[1]
     rearranged_length = total_dataset*12
@@ -44,23 +46,26 @@ def get_data():
 #    print('valid_size', valid_size)
 #    print('test_size', test_size)
 
-    inputs = np.zeros(shape=(total_dataset,input_heigth))
-    inputs_total = np.zeros(shape=(total_dataset,5))
-    inputs_rearranged = np.zeros(shape=(rearranged_length,5))
-    targets = np.zeros(shape=(total_dataset,target_heigth))
+    inputs = np.zeros(shape=(total_dataset, input_heigth))
+    inputs_total = np.zeros(shape=(total_dataset, 5))
+    inputs_rearranged = np.zeros(shape=(rearranged_length, 5))
+    targets = np.zeros(shape=(total_dataset, target_heigth))
 
 #    print('inputs.shape', inputs.shape)
 #    print('targets.shape', targets.shape)
 
 # write split datasets into single dataset, save for targets
-    inputs[0:train_size,:] = train_dataset
-    targets[0:train_size,:] = train_targets
-    inputs[train_size:train_size+valid_size,:] = valid_dataset
-    targets[train_size:train_size+valid_size,:] = valid_targets
-    inputs[train_size+valid_size:valid_size+train_size+test_size,:] = test_dataset
-    targets[train_size+valid_size:valid_size+train_size+test_size,:] = test_targets
+    inputs[0:train_size, :] = train_dataset
+    targets[0:train_size, :] = train_targets
+    inputs[train_size:train_size+valid_size, :] = valid_dataset
+    targets[train_size:train_size+valid_size, :] = valid_targets
+    inputs[train_size+valid_size:valid_size +
+           train_size+test_size, :] = test_dataset
+    targets[train_size+valid_size:valid_size +
+            train_size+test_size, :] = test_targets
 
-    return inputs,inputs_total,targets,inputs_rearranged,total_dataset
+    return inputs, inputs_total, targets, inputs_rearranged, total_dataset
+
 
 def create_dir(savedir):
     try:
@@ -68,7 +73,8 @@ def create_dir(savedir):
     except:
         print(savedir, "already created")
 
-def print_dist(savedir,name,plotdata):
+
+def print_dist(savedir, name, plotdata):
     plt.figure(name)
     plt.title(name)
     plt.hist(plotdata, normed=True, bins=30)
@@ -79,7 +85,8 @@ def print_dist(savedir,name,plotdata):
 #-------------------------------------------------------------------------------
 # main code
 
-inputs,inputs_total,targets,inputs_rearranged,total_dataset = get_data()
+
+inputs, inputs_total, targets, inputs_rearranged, total_dataset = get_data()
 
 # create directories
 savedir_targets = savedir + '/targets'
@@ -90,48 +97,49 @@ create_dir(savedir_targets)
 create_dir(savedir_inputs)
 create_dir(savedir_inputs_total)
 
-labels = ['q_p','dx_dz','dy_dz','x','y']
+labels = ['q_p', 'dx_dz', 'dy_dz', 'x', 'y']
 
 # for target 5 parameters create distribution histos
-for i in range(0,5):
+for i in range(0, 5):
     name = "Targets_SIM_Para_" + str(i+1) + "_" + labels[i]
-    print_dist(savedir_targets,name,targets[:,i])
+    print_dist(savedir_targets, name, targets[:, i])
 
 
 # calculate total inputs = weights times parameters
-for k in range(0,total_dataset):
-    for i in range(0,12):
-        for j in range(0,5):
-#            print(k*12+i,j,"",int(round(k/12)),i*6+j+1)
-            inputs_rearranged[k*12+i,j]=inputs[int(round(k/12)),i*6+j+1]
+for k in range(0, total_dataset):
+    for i in range(0, 12):
+        for j in range(0, 5):
+            #            print(k*12+i,j,"",int(round(k/12)),i*6+j+1)
+            inputs_rearranged[k*12+i, j] = inputs[int(round(k/12)), i*6+j+1]
 
 # for 60 compontents = 12*5 reco parameters create distribution histos
-for i in range(0,5):
+for i in range(0, 5):
     name = "Inputs_Total_RECO_Para_" + str(i+1) + "_" + labels[i]
-    print_dist(savedir_inputs,name,inputs_rearranged[:,i])
+    print_dist(savedir_inputs_total, name, inputs_rearranged[:, i])
 
 
-#TODO: check if mean is still = 0
+# TODO: check if mean is still = 0
 # calculate total inputs = weights times parameters
-for i in range(0,12):
-    for j in range(0,5):
-#        print(j,i*6,i*6+j+1)
-        inputs_total[:,j]=inputs_total[:,j]+inputs[:,i*6]*inputs[:,i*6+j+1]
+for i in range(0, 12):
+    for j in range(0, 5):
+        #        print(j,i*6,i*6+j+1)
+        inputs_total[:, j] = inputs_total[:, j] + \
+            inputs[:, i*6]*inputs[:, i*6+j+1]
 
-# for 5 total input reco parameters create distribution histos
-for i in range(0,5):
+# for 5 input reco parameters create distribution histos
+for i in range(0, 5):
     name = "Inputs_RECO_Para_" + str(i+1) + "_" + labels[i]
-    print_dist(savedir_inputs_total,name,inputs_total[:,i])
+    print_dist(savedir_inputs, name, inputs_total[:, i])
 
 # checks
 #diff = np.mean(np.transpose(targets-inputs_total),1)
 #print('diff', diff)
 #diff_means = np.mean(np.transpose(targets),1) - np.mean(np.transpose(inputs_total),1)
 #print('diff_means', diff_means)
-#print(np.mean(np.transpose(targets),1)/diff_means)
-#print(np.mean(np.transpose(inputs_total),1)/diff_means)
+# print(np.mean(np.transpose(targets),1)/diff_means)
+# print(np.mean(np.transpose(inputs_total),1)/diff_means)
 
-#for i in range(0,12):
+# for i in range(0,12):
 #    for j in range(0,5):
 #        print(j,i*6,i*6+j+1)
 #        inputs_total[0,j]=inputs_total[0,j]+inputs[0,i*6]*inputs[0,i*6+j+1]
