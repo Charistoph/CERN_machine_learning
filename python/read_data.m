@@ -3,13 +3,16 @@
 
 clear
 %temp=load('input_data/output.csv');
-mydir  = pwd;
-idcs   = strfind(mydir,'/');
-newdir = mydir(1:idcs(end)-1); 
-% old file: 
-filepath = '/input_data/output_20171204.csv';
-% filepath = '/input_data/output_20180127.csv';
-newpath = strcat(newdir,filepath);
+
+% relative file path
+% mydir  = pwd;
+% idcs   = strfind(mydir,'/');
+% newdir = mydir(1:idcs(end)-1); 
+% filepath = '/input_data/output_20171204.csv';
+% newpath = strcat(newdir,filepath);
+
+% absolute file path
+newpath = '/Users/christoph/Documents/coding/CERN_input_data/output_20171204.csv';
 temp=load(newpath);
 
 l=length(temp)

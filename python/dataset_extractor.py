@@ -3,9 +3,11 @@ import csv
 import numpy as np
 from six.moves import cPickle as pickle
 
-workingdir = 'ml_input/2018.02.23-21:51:02'
+workingdir = 'ml_input/2018.03.13-22:42:19'
 
 # get length of csv file
+
+
 def getlength(filename):
     filelength = 0
     f = open(workingdir + '/' + filename, 'rb')
@@ -16,6 +18,8 @@ def getlength(filename):
     return filelength
 
 # get data of csv file
+
+
 def getdata(array, arrayheight, filename):
     i = -1
     j = -1
@@ -23,7 +27,7 @@ def getdata(array, arrayheight, filename):
     f = open(workingdir + '/' + filename, 'rb')
     csvread = csv.reader(f)
     for line in csvread:
-#        print line
+        #        print line
         for item in line:
             i += 1
             if (i % arrayheight == 0):
@@ -31,33 +35,36 @@ def getdata(array, arrayheight, filename):
                 i = 0
 #            print i,j
 #            print item
-            array[i,j] = item
+            array[i, j] = item
 
 #    print array[0:10,0]
 #    print array.shape
     return array
 
-#randomize arrays
+# randomize arrays
+
+
 def randomize(dataset, targets):
-  permutation = np.random.permutation(targets.shape[0])
-  shuffled_dataset = dataset[permutation,:]
-  shuffled_targets = targets[permutation,:]
-  return shuffled_dataset, shuffled_targets
+    permutation = np.random.permutation(targets.shape[0])
+    shuffled_dataset = dataset[permutation, :]
+    shuffled_targets = targets[permutation, :]
+    return shuffled_dataset, shuffled_targets
 
 # spilt data set into training, validation and testing dataset
 
 #===============================================================================
 # main
 
+
 # generate input and target arrays
 inputlength = getlength('inputs.csv')
 inputheigth = 72
-inputs = np.zeros(shape=(inputheigth,inputlength/inputheigth))
+inputs = np.zeros(shape=(inputheigth, inputlength/inputheigth))
 inputs = getdata(inputs, inputheigth, 'inputs.csv')
 
 targetlength = getlength('targets.csv')
 targetheigth = 5
-targets = np.zeros(shape=(targetheigth,targetlength/targetheigth))
+targets = np.zeros(shape=(targetheigth, targetlength/targetheigth))
 targets = getdata(targets, targetheigth, 'targets.csv')
 
 # transpose datasets
@@ -86,12 +93,13 @@ print "valid_size =", valid_size
 print ""
 
 # split dataset
-test_dataset = inputs[0:test_size,:]
-test_targets = targets[0:test_size,:]
-valid_dataset = inputs[test_size:test_size+valid_size,:]
-valid_targets = targets[test_size:test_size+valid_size,:]
-train_dataset = inputs[test_size+valid_size:test_size+valid_size+train_size,:]
-train_targets = targets[test_size+valid_size:test_size+valid_size+train_size,:]
+test_dataset = inputs[0:test_size, :]
+test_targets = targets[0:test_size, :]
+valid_dataset = inputs[test_size:test_size+valid_size, :]
+valid_targets = targets[test_size:test_size+valid_size, :]
+train_dataset = inputs[test_size+valid_size:test_size+valid_size+train_size, :]
+train_targets = targets[test_size +
+                        valid_size:test_size+valid_size+train_size, :]
 
 # sizes
 print('Training:', train_dataset.shape, train_targets.shape)
@@ -103,7 +111,7 @@ print ""
 # save to pickle
 pickle_file = os.path.join('data_root', '5para.pickle')
 
-if (os.path.exists('data_root')==False):
+if (os.path.exists('data_root') == False):
     os.makedirs('data_root')
     print "path created"
 else:
@@ -129,5 +137,7 @@ except Exception as e:
 print ""
 
 # length checks
-print "difference between input length and dataset length =", inputlength/inputheigth - (len(train_dataset) + len(test_dataset) + len(valid_dataset))
-print "difference between input length and targets length =", inputlength/inputheigth - (len(train_targets) + len(test_targets) + len(valid_targets))
+print "difference between input length and dataset length =", inputlength / \
+    inputheigth - (len(train_dataset) + len(test_dataset) + len(valid_dataset))
+print "difference between input length and targets length =", inputlength / \
+    inputheigth - (len(train_targets) + len(test_targets) + len(valid_targets))
