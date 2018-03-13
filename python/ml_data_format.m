@@ -25,7 +25,7 @@ for itr=1:ntr
     end
 end
 
-% Reco formatting to Targets
+% Sim formatting to Targets
 %simparas(1:5,1:5);
 
 %meansim=mean(simparas,2);
