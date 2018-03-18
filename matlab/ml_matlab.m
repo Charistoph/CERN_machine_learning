@@ -1,4 +1,4 @@
-readdata =      true; % usually false, only create data once
+readdata =      false; % usually false, only create data once
 
 % read data from with read_data script from input_data
 if readdata
@@ -7,7 +7,7 @@ if readdata
 end
 
 datacheck =     false; % condition used in make_data.m
-makedata =      true; % usually false, only create data once
+makedata =      false; % usually false, only create data once
 ml =            true;
 printdata =     true;
 benchmark =     true;
@@ -17,7 +17,7 @@ analyzedata =   false; % not important
 if makedata
   make_data
 else
-  load('ml_input/ml_inputs_targets_20180127.mat')
+  load('/Users/christoph/Documents/coding/CERN_input_data/ml_inputs_targets_ex1_20180305.mat')
 end
 
 inputs=transpose(inputs);
@@ -25,11 +25,11 @@ targets=transpose(targets);
 inp=inputs;
 targ=targets;
 
-for i=1:80
+for i=1:10000
   inputs=0;
   targets=0;
-  itr1=1+(i-1)*60000;
-  itr2=60000+(i-1)*60000;
+  itr1=1+(i-1)*10000
+  itr2=10000+(i-1)*10000
 %  itr1=1;
 %  itr2=10000*i;
 %  itr1=220000;
@@ -49,106 +49,15 @@ for i=1:80
       inputs_train = 0;
 
   % switch to test different methods
-    if trainMethod == 1
-        neurons = 5
-%        neurons = [48,24]
-        targets_train=targets(1:3,:);
-        inputs_train=inputs;
-        net=feedforwardnet(neurons)
+      if trainMethod == 1
+          neurons = 5
+%          neurons = [48,24]
+          targets_train=targets(1:3,:);
+          inputs_train=inputs;
+          net=feedforwardnet(neurons)
       end
 
-      if trainMethod == 2
-        neurons = 5
-        targets_train=targets(1:3,:);
-        inputs_train=inputs;
-        net=feedforwardnet(neurons)
-      end
-
-      if trainMethod == 3
-        neurons = 5
-        targets_train=targets(1:3,:);
-        inputs_train=inputs;
-        net=feedforwardnet(neurons)
-      end
-
-      if trainMethod == 4
-        neurons = 5
-        targets_train=targets(1:3,:);
-        inputs_train=inputs;
-        net=feedforwardnet(neurons)
-      end
-
-      if trainMethod == 5
-        neurons = 5
-        targets_train=targets(1:3,:);
-        inputs_train=inputs;
-        net=feedforwardnet(neurons)
-      end
-
-      if trainMethod == 6
-        neurons = 5
-        targets_train=targets(1:3,:);
-        inputs_train=inputs;
-        net=feedforwardnet(neurons)
-      end
-
-  %    if trainMethod == 2
-  %      neurons = 5
-  %      targets(4:5,:)=rand(size(targets(4:5,:)))*10^-10;
-  %      targets_train = targets;
-  %      inputs_train=inputs;
-  %      net=feedforwardnet(neurons)
-  %    end
-  %
-  %    if trainMethod == 3
-  %      neurons = [48,24]
-  %      targets_train=targets(1:3,1:100000);
-  %      inputs_train=inputs(:,1:100000);
-  %      net=feedforwardnet(neurons)
-  %    end
-  %
-  %    if trainMethod == 4
-  %      neurons = [48,24]
-  %      targets(4:5,:)=rand(size(targets(4:5,:)))*10^-10;
-  %      targets_train = targets;
-  %      inputs_train=inputs;
-  %      net=feedforwardnet(neurons)
-  %    end
-  %
-  %    if trainMethod == 5
-  %      neurons = 5
-  %      targets_train=targets(1:3,:);
-  %      inputs_train=inputs;
-  %      net=feedforwardnet(neurons)
-  %    end
-  %
-  %  if trainMethod == 6
-  %      neurons = 5
-  %      targets_train=targets(1:3,:);
-  %      inputs_train=inputs;
-  %      net=feedforwardnet(neurons)
-  %    end
-
-    if trainMethod == 7
-        neurons = 5
-        targets_train=targets(1:3,:);
-        inputs_train=inputs;
-        net=feedforwardnet(neurons)
-      end
-
-    if trainMethod == 8
-        neurons = 12
-        targets_train=targets(1:3,:);
-        inputs_train=inputs;
-        net=feedforwardnet(neurons)
-      end
-
-    if trainMethod == 9
-        neurons = 24
-        targets_train=targets(1:3,:);
-        inputs_train=inputs;
-        net=feedforwardnet(neurons)
-      end
+% other trainMethods
 
       size(inputs)
       size(inputs_train)
