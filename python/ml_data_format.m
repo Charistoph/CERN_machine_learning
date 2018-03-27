@@ -1,7 +1,7 @@
 ntr=length(track);
 %ntr=1;
 counter = 0;
-dt = datestr(now,'yyyy.mm.dd-HH:MM:SS');
+dt = datestr(now,'yyyy.mm.dd_HH.MM.SS');
 
 %===============================================================================
 % main

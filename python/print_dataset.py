@@ -77,7 +77,7 @@ def create_dir(savedir):
 def print_dist(savedir, name, plotdata):
     plt.figure(name)
     plt.title(name)
-    plt.hist(plotdata, normed=True, bins=30)
+    plt.hist(plotdata, normed=True, bins=100)
 #    plt.show()
     plt.savefig(savedir + '/' + name + '.png')
     plt.gcf().clear()

@@ -3,7 +3,8 @@ import csv
 import numpy as np
 from six.moves import cPickle as pickle
 
-workingdir = 'ml_input/2018.03.13-22:42:19'
+# workingdir = 'ml_input/2018.03.13-22:42:19'
+workingdir = '/Users/christoph/Documents/coding/CERN_input_data/python/2018.03.27_00.17.06'
 
 # get length of csv file
 
