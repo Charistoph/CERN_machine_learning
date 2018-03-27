@@ -3,9 +3,9 @@
 
 clear
 %temp=load('input_data/output.csv');
-mydir  = pwd;
-idcs   = strfind(mydir,'/');
-newdir = mydir(1:idcs(end)-1); 
+% mydir  = pwd;
+% idcs   = strfind(mydir,'/');
+% newdir = mydir(1:idcs(end)-1); 
 
 % output_20171204
 % output_20180127

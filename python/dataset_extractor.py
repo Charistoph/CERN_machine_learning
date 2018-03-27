@@ -4,7 +4,8 @@ import numpy as np
 from six.moves import cPickle as pickle
 
 # workingdir = 'ml_input/2018.03.13-22:42:19'
-workingdir = '/Users/christoph/Documents/coding/CERN_input_data/python/2018.03.27_00.17.06'
+workingdir = '/Users/christoph/Documents/coding/CERN_input_data/python/2018.03.27_14.26.41'
+data_root_path = '/Users/christoph/Documents/coding/CERN_input_data/python/data_root'
 
 # get length of csv file
 
@@ -110,10 +111,10 @@ print ""
 
 
 # save to pickle
-pickle_file = os.path.join('data_root', '5para.pickle')
+pickle_file = os.path.join(data_root_path, '5para.pickle')
 
-if (os.path.exists('data_root') == False):
-    os.makedirs('data_root')
+if (os.path.exists(data_root_path) == False):
+    os.makedirs(data_root_path)
     print "path created"
 else:
     print "data_root directory aleady exists"

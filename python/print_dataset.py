@@ -12,7 +12,7 @@ savedir = "distribution_histo_plots"
 
 def get_data():
     # get pickle file
-    pickle_file = 'data_root/5para.pickle'
+    pickle_file = '/Users/christoph/Documents/coding/CERN_input_data/python/data_root/5para.pickle'
 
     # open pickle file and datasets & targets
     with open(pickle_file, 'rb') as f:
@@ -91,13 +91,20 @@ inputs, inputs_total, targets, inputs_rearranged, total_dataset = get_data()
 # create directories
 savedir_targets = savedir + '/targets'
 savedir_inputs = savedir + '/inputs'
-savedir_inputs_total = savedir + '/inputs_total'
+# savedir_inputs_total = savedir + '/inputs_total'
 create_dir(savedir)
 create_dir(savedir_targets)
 create_dir(savedir_inputs)
-create_dir(savedir_inputs_total)
+# create_dir(savedir_inputs_total)
 
 labels = ['q_p', 'dx_dz', 'dy_dz', 'x', 'y']
+
+tar = np.zeros(shape=(targets.shape))
+for i in range(0, 5):
+    tar[:, i] = np.sort(targets[:, i])
+
+targets = 0
+targets = tar[10:-10, :]
 
 # for target 5 parameters create distribution histos
 for i in range(0, 5):
@@ -113,9 +120,9 @@ for k in range(0, total_dataset):
             inputs_rearranged[k*12+i, j] = inputs[int(round(k/12)), i*6+j+1]
 
 # for 60 compontents = 12*5 reco parameters create distribution histos
-for i in range(0, 5):
-    name = "Inputs_Total_RECO_Para_" + str(i+1) + "_" + labels[i]
-    print_dist(savedir_inputs_total, name, inputs_rearranged[:, i])
+# for i in range(0, 5):
+#     name = "Inputs_Total_RECO_Para_" + str(i+1) + "_" + labels[i]
+#     print_dist(savedir_inputs_total, name, inputs_rearranged[:, i])
 
 
 # TODO: check if mean is still = 0

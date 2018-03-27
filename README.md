@@ -12,7 +12,7 @@ Install
 
 * Tensorflow
 
-* Create folder input_data and add input .csv files
+* Create folder input_data and add input .csv files -> outdated
 
 # Python Tensorflow
 
