@@ -90,9 +90,16 @@ if datacheck
 end
 
 % save data_root/matlab_inputs_tagets inputs targets ntr
+% try
+%   save ml_input/ml_inputs_targets inputs targets
+% catch
+%   mkdir ml_input
+%   save ml_input/ml_inputs_targets inputs targets
+% end
+
 try
-  save ml_input/ml_inputs_targets inputs targets
+  save /Users/christoph/Documents/coding/CERN_input_data/ml_inputs_targets_ex1_180208_144044_20180307 inputs targets
 catch
   mkdir ml_input
-  save ml_input/ml_inputs_targets inputs targets
+  save /Users/christoph/Documents/coding/CERN_input_data/ml_inputs_targets_ex1_180208_144044_20180307 inputs targets
 end

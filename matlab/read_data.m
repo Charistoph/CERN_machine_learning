@@ -11,8 +11,9 @@ newdir = mydir(1:idcs(end)-1);
 % output_20180127
 % output_ex1_20180305
 
-filepath = '/input_data/output_ex1_20180305.csv';
-newpath = strcat(newdir,filepath);
+% filepath = '/input_data/output_ex1_20180305.csv';
+% newpath = strcat(newdir,filepath);
+newpath = '/Users/christoph/Documents/coding/CERN_input_data/output_ex1_180208_144044_20180307.csv';
 temp=load(newpath);
 
 l=length(temp)
