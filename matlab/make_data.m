@@ -97,9 +97,9 @@ end
 %   save ml_input/ml_inputs_targets inputs targets
 % end
 
-try
-  save /Users/christoph/Documents/coding/CERN_input_data/ml_inputs_targets_ex1_180208_144044_20180307 inputs targets
-catch
-  mkdir ml_input
-  save /Users/christoph/Documents/coding/CERN_input_data/ml_inputs_targets_ex1_180208_144044_20180307 inputs targets
-end
+% try
+%   save /Users/christoph/Documents/coding/CERN_input_data/ml_inputs_targets_ex1_180208_144044_20180307 inputs targets
+% catch
+%   mkdir ml_input
+%   save /Users/christoph/Documents/coding/CERN_input_data/ml_inputs_targets_ex1_180208_144044_20180307 inputs targets
+% end

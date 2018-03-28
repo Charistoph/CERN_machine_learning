@@ -9,6 +9,7 @@ end
 datacheck =     false; % condition used in make_data.m
 makedata =      false; % usually false, only create data once
 ml =            true;
+trainSwitch =   true; % true = train, false = trainNetwork
 printdata =     true;
 benchmark =     true;
 analyzedata =   false; % not important
@@ -16,78 +17,61 @@ analyzedata =   false; % not important
 % create inputs and targets of length ntr, remove rows = 0
 if makedata
   make_data
+  
+  inputs=transpose(inputs);
+  targets=transpose(targets);
 else
-  load('/Users/christoph/Documents/coding/CERN_input_data/ml_inputs_targets_ex1_20180305.mat')
+  % load('/Users/christoph/Documents/coding/CERN_input_data/ml_inputs_targets_ex1_20180305.mat')
+
+  inputs=transpose(inputs);
+  targets=transpose(targets);
 end
 
-inputs=transpose(inputs);
-targets=transpose(targets);
-inp=inputs;
-targ=targets;
-
-for i=1:10000
-  inputs=0;
-  targets=0;
-  itr1=1+(i-1)*10000
-  itr2=10000+(i-1)*10000
-%  itr1=1;
-%  itr2=10000*i;
-%  itr1=220000;
-%  itr2=220000+10000*i;
-  inputs=inp(:,itr1:itr2);
-  targets=targ(:,itr1:itr2);
+for i=1:1
+  % itr1=1+(i-1)*10000
+  % itr2=10000+(i-1)*10000
+  itr1=1
+  itr2=10000
 
   % matlab train (neural network)
-  for trainMethod=1:1
-    if ml
-  %    load data_root/matlab_inputs_tagets
+  if ml
+    for trainMethod=1:1
 
-      ntr=size(inputs,2);
+      % targets_train = 0;
+      % inputs_train = 0;
 
-      trainSwitch = false;
-      targets_train = 0;
-      inputs_train = 0;
+      % targets_train=targets(1:3,itr1:itr2);
+      % inputs_train=inputs(:,itr1:itr2);
 
-  % switch to test different methods
-      if trainMethod == 1
-          neurons = 5
-%          neurons = [48,24]
-          targets_train=targets(1:3,:);
-          inputs_train=inputs;
-          net=feedforwardnet(neurons)
-      end
-
-% other trainMethods
-
-      size(inputs)
-      size(inputs_train)
-      size(targets)
-      size(targets_train)
-      trainMethod
-
+      if trainSwitch
   % MATLAB Train
-      if trainSwitch == false
-    %    regression network with a single hidden layer with 12 neurons
-    %    neurons = [12]
-    %    net=feedforwardnet(neurons);
+
+        if trainMethod == 1
+            neurons = 5
+  %          neurons = [48,24]
+            net=feedforwardnet(neurons)
+        end
 
         % net = Newly trained network
         % tr = Training record (epoch and perf)
   %      [net,tr]=train(net,inputs,targets_train,'useParallel','yes','useGPU','yes'); % train network
         [net,tr]=train(net,inputs_train,targets_train); % train network
-      end
 
+      else
   % MATLAB TrainNetwork: CONVOLUTIONAL NETWORK
-      if trainSwitch == true
+  % doesn't work with MATLAB
 
-        options = trainingOptions('sgdm','MiniBatchSize',64);
+        options = trainingOptions('sgdm',...
+                                  'MiniBatchSize',64,...
+                                  'MaxEpochs',20,...
+                                  'Plots','training-progress');
 
-        layers = [sequenceInputLayer(size(inputs,1))
-                  softmaxLayer
-                  regressionLayer];
+        layers = [sequenceInputLayer(72)
+                  fullyConnectedLayer(1)
+                  regressionLayer()];
 
     %    [trainedNet,traininfo] = trainNetwork(___)
-        trainedNet=trainNetwork(inputs,targets,layers,options); % train network
+        trainedNet=trainNetwork(inputs_train,targets_train,layers,options); % train network
 
       end
 

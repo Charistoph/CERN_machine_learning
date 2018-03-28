@@ -13,7 +13,7 @@ clear
 
 % filepath = '/input_data/output_ex1_20180305.csv';
 % newpath = strcat(newdir,filepath);
-newpath = '/Users/christoph/Documents/coding/CERN_input_data/output_ex1_180208_144044_20180307.csv';
+newpath = '/Users/christoph/Documents/coding/CERN_input_data/output_ex2_180129_165048_20180307.csv';
 temp=load(newpath);
 
 l=length(temp)
