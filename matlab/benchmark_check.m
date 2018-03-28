@@ -45,9 +45,12 @@ benchmark_result(3,:)=tensorflow_std;
 
 for i=1:5
   matlab_worse_than_baseline(i) = benchmark_result(2,i)/benchmark_result(1,i);
+  tf_worse_than_baseline(i) = benchmark_result(3,i)/benchmark_result(1,i);
 end
 
 matlab_worse_than_baseline
+
+tf_worse_than_baseline
 
 csvwrite('benchmark_data/benchmark_result.csv',benchmark_result)
 
