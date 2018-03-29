@@ -8,6 +8,14 @@ end
 
 datacheck =     false; % condition used in make_data.m
 makedata =      false; % usually false, only create data once
+
+% % don't delete these
+% keepvars = {'inputs','targets'};
+
+% % delete these
+% delvars = setdiff(who,keepvars);
+% clear(delvars{:},'delvars');
+
 ml =            true;
 trainSwitch =   true; % true = train, false = trainNetwork
 printdata =     true;
@@ -23,25 +31,25 @@ if makedata
 else
   % load('/Users/christoph/Documents/coding/CERN_input_data/ml_inputs_targets_ex1_20180305.mat')
 
-  inputs=transpose(inputs);
-  targets=transpose(targets);
+  % inputs=transpose(inputs);
+  % targets=transpose(targets);
 end
 
-for i=1:1
+for i=53:1000
   % itr1=1+(i-1)*10000
   % itr2=10000+(i-1)*10000
   itr1=1
-  itr2=10000
+  itr2=10000*i
 
   % matlab train (neural network)
   if ml
     for trainMethod=1:1
 
-      % targets_train = 0;
-      % inputs_train = 0;
+      targets_train = 0;
+      inputs_train = 0;
 
-      % targets_train=targets(1:3,itr1:itr2);
-      % inputs_train=inputs(:,itr1:itr2);
+      targets_train=targets(1:3,itr1:itr2);
+      inputs_train=inputs(:,itr1:itr2);
 
       if trainSwitch
   % MATLAB Train
