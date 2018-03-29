@@ -35,7 +35,7 @@ else
   % targets=transpose(targets);
 end
 
-for i=53:1000
+for i=54:1000
   % itr1=1+(i-1)*10000
   % itr2=10000+(i-1)*10000
   itr1=1
@@ -95,17 +95,29 @@ for i=53:1000
 
     % print histos & save outputs
     if printdata
-      results_print
+      try
+        results_print
+      catch
+        disp('results_print failed')
+      end
     end
 
     % compares MAD, Matlab & Tensorflow results
     if benchmark
-      benchmark_check
+      try
+        benchmark_check
+      catch
+        disp('benchmark_check failed')
+      end
     end
 
     % analyzed ml output
     if analyzedata
-      analyze_ml_output
+      try
+        analyze_ml_output
+      catch
+        disp('analyze_ml_output failed')
+      end
     end
 
   end
