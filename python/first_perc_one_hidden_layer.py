@@ -101,7 +101,7 @@ valid_targets_TMP = valid_targets
 test_dataset_TMP = test_dataset
 test_targets_TMP = test_targets
 
-for test_iterations in range(1, 1000):
+for test_iterations in range(1, 10):
     # reduce size of data set
     print("!!!! test_iterations", test_iterations, "!!!!")
     train_reduced_size = 10000*test_iterations
@@ -118,7 +118,7 @@ for test_iterations in range(1, 1000):
     # hyperparameters
     # num_steps = 3001
     num_steps = 100001
-    learning_rate = 0.01  # standard: 0.1
+    learning_rate = 0.1  # standard: 0.1
     momentum = 0.9  # standard: 0.9
 
     para_dataset_size = 72
