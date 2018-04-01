@@ -60,14 +60,14 @@ def randomize(dataset, targets):
 
 # generate input and target arrays
 inputlength = getlength('inputs.csv')
-inputheigth = 72
-inputs = np.zeros(shape=(inputheigth, inputlength/inputheigth))
-inputs = getdata(inputs, inputheigth, 'inputs.csv')
+inputheight = 72
+inputs = np.zeros(shape=(inputheight, inputlength/inputheight))
+inputs = getdata(inputs, inputheight, 'inputs.csv')
 
 targetlength = getlength('targets.csv')
-targetheigth = 5
-targets = np.zeros(shape=(targetheigth, targetlength/targetheigth))
-targets = getdata(targets, targetheigth, 'targets.csv')
+targetheight = 5
+targets = np.zeros(shape=(targetheight, targetlength/targetheight))
+targets = getdata(targets, targetheight, 'targets.csv')
 
 # transpose datasets
 inputs = np.transpose(inputs)
@@ -85,8 +85,8 @@ inputs, targets = randomize(inputs, targets)
 #train_size = 200000
 #valid_size = 10000
 #test_size = 10000
-train_size = inputlength/inputheigth-inputlength/inputheigth/20*2
-test_size = inputlength/inputheigth/20
+train_size = inputlength/inputheight-inputlength/inputheight/20*2
+test_size = inputlength/inputheight/20
 valid_size = test_size
 
 print "train_size =", train_size
@@ -140,6 +140,6 @@ print ""
 
 # length checks
 print "difference between input length and dataset length =", inputlength / \
-    inputheigth - (len(train_dataset) + len(test_dataset) + len(valid_dataset))
+    inputheight - (len(train_dataset) + len(test_dataset) + len(valid_dataset))
 print "difference between input length and targets length =", inputlength / \
-    inputheigth - (len(train_targets) + len(test_targets) + len(valid_targets))
+    inputheight - (len(train_targets) + len(test_targets) + len(valid_targets))
