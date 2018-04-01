@@ -115,7 +115,7 @@ for test_iterations in range(1, 10):
     test_dataset = test_dataset_TMP[0:test_reduced_size, :]
     test_targets = test_targets_TMP[0:test_reduced_size, :]
 
-    # hyperparameters
+    # Hyperparameters
     # num_steps = 3001
     num_steps = 100001
     learning_rate = 0.1  # standard: 0.1
@@ -154,17 +154,17 @@ for test_iterations in range(1, 10):
         logits_1 = tf.matmul(tf_train_dataset, weights_1) + biases_1
 
         # Hidden layer
-        # RELU
-        relu_layer = tf.nn.tanh(logits_1)
+        # Activation Function
+        act_layer = tf.nn.tanh(logits_1)
 
-        logits_2 = tf.matmul(relu_layer, weights_2) + biases_2
+        logits_2 = tf.matmul(act_layer, weights_2) + biases_2
 
         print('tf_train_dataset', tf_train_dataset.shape)
         print('tf_train_targets', tf_train_targets.shape)
         print('weights_1', weights_1.shape)
         print('biases_1', biases_1.shape)
         print('logits_1', logits_1.shape)
-        print('relu_layer', relu_layer.shape)
+        print('act_layer', act_layer.shape)
         print('weights_2', weights_2.shape)
         print('biases_2', biases_2.shape)
         print('logits_2', logits_2.shape)
@@ -181,10 +181,6 @@ for test_iterations in range(1, 10):
 
     #-------------------------------------------------------------------------------
     # run computation and iterate
-
-    def accuracy(predictions, targets):
-        return (100.0 * np.sum(np.argmax(predictions, 1) == np.argmax(targets, 1))
-                / predictions.shape[0])
 
     with tf.Session(graph=graph) as session:
         tf.global_variables_initializer().run()
@@ -213,8 +209,8 @@ for test_iterations in range(1, 10):
             # Append current loss to loss history
             loss_history = np.append(loss_history, l)
 
-            tf_train_dataset_out, weights_1_out, biases_1_out, logits_1_out, relu_layer_out, weights_2_out, biases_2_out, logits_2_out, tf_train_targets_out = session.run(
-                [tf_train_dataset, weights_1, biases_1, logits_1, relu_layer, weights_2, biases_2, logits_2, tf_train_targets], feed_dict=feed_dict)
+            tf_train_dataset_out, weights_1_out, biases_1_out, logits_1_out, act_layer_out, weights_2_out, biases_2_out, logits_2_out, tf_train_targets_out = session.run(
+                [tf_train_dataset, weights_1, biases_1, logits_1, act_layer, weights_2, biases_2, logits_2, tf_train_targets], feed_dict=feed_dict)
 
             # Update final_logits for difference calculator
             final_logits[offset:(offset + batch_size), :] = logits_2_out
@@ -225,7 +221,7 @@ for test_iterations in range(1, 10):
     #            print('weights_1_out\n', weights_1_out[0:5,0])
     #            print('biases_1_out\n', biases_1_out[0:5])
     #            print('logits_1_out\n', logits_1_out[0:5,0])
-    #            print('relu_layer_out\n', relu_layer_out[0:5,0])
+    #            print('act_layer_out\n', act_layer_out[0:5,0])
     #            print('weights_2_out\n', weights_2_out[0:5,0])
     #            print('biases_2_out\n', biases_2_out[0:5])
     #            print('logits_2_out\n', logits_2_out[0:5,0])
