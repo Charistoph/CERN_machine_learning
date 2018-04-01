@@ -742,3 +742,5 @@ IRREGULARITY - 2018.02.05-20:09:50:     1.3273    1.4875    2.8981    0         
 2018.04.01-08:20:24:     0.3792     0.40969    0.43187    0    0      - 5 LM, MSE, sgdm, Batchs.,64 1, input_size: [72, 1340k], targets_size: [3, 1340k], 0k - 1340k
 2018.04.01-12:53:26:     0.32508    0.41327    0.40531    0    0      - 5 LM, MSE, sgdm, Batchs.,64 1, input_size: [72, 1350k], targets_size: [3, 1350k], 0k - 1350k
 2018.04.01-14:23:33:     0.34885    0.45403    0.41509    0    0      - 5 LM, MSE, sgdm, Batchs.,64 1, input_size: [72, 1360k], targets_size: [3, 1360k], 0k - 1360k
+2018.04.01-21:35:24:     0.46801    0.44151    0.45926    0    0      - 5 LM, MSE, sgdm, Batchs.,64 1, input_size: [72, 1370k], targets_size: [3, 1370k], 0k - 1370k
+2018.04.01-23:50:27:     0.33938    0.439    0.40186    0    0      - 5 LM, MSE, sgdm, Batchs.,64 1, input_size: [72, 1380k], targets_size: [3, 1380k], 0k - 1380k
