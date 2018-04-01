@@ -4,7 +4,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from six.moves import cPickle as pickle
 
-savedir = "distribution_histo_plots"
+savedir = "distribution_histo_plots/ex1"
 
 #-------------------------------------------------------------------------------
 # functions
@@ -77,7 +77,7 @@ def create_dir(savedir):
 def print_dist(savedir, name, plotdata):
     plt.figure(name)
     plt.title(name)
-    plt.hist(plotdata, normed=True, bins=100)
+    plt.hist(plotdata, normed=True, bins=100)  # , range=(-8, 8)
 #    plt.show()
     plt.savefig(savedir + '/' + name + '.png')
     plt.gcf().clear()
@@ -108,16 +108,16 @@ targets = tar[10:-10, :]
 
 # for target 5 parameters create distribution histos
 for i in range(0, 5):
-    name = "Targets_SIM_Para_" + str(i+1) + "_" + labels[i]
+    name = "Dataset_1_Targets_SIM_Para_" + str(i+1) + "_" + labels[i]
     print_dist(savedir_targets, name, targets[:, i])
 
 
 # calculate total inputs = weights times parameters
-for k in range(0, total_dataset):
-    for i in range(0, 12):
-        for j in range(0, 5):
-            #            print(k*12+i,j,"",int(round(k/12)),i*6+j+1)
-            inputs_rearranged[k*12+i, j] = inputs[int(round(k/12)), i*6+j+1]
+# for k in range(0, total_dataset):
+#     for i in range(0, 12):
+#         for j in range(0, 5):
+#             #            print(k*12+i,j,"",int(round(k/12)),i*6+j+1)
+#             inputs_rearranged[k*12+i, j] = inputs[int(round(k/12)), i*6+j+1]
 
 # for 60 compontents = 12*5 reco parameters create distribution histos
 # for i in range(0, 5):
@@ -135,7 +135,7 @@ for i in range(0, 12):
 
 # for 5 input reco parameters create distribution histos
 for i in range(0, 5):
-    name = "Inputs_RECO_Para_" + str(i+1) + "_" + labels[i]
+    name = "Dataset_1_Inputs_RECO_Para_" + str(i+1) + "_" + labels[i]
     print_dist(savedir_inputs, name, inputs_total[:, i])
 
 # checks

@@ -4,7 +4,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from six.moves import cPickle as pickle
 
-savedir = "distribution_histo_plots/analysis"
+savedir = "distribution_histo_plots/ex1"
 
 #-------------------------------------------------------------------------------
 # functions
@@ -80,26 +80,96 @@ def create_dir(savedir):
 
 inputs, inputs_total, targets, inputs_rearranged, total_dataset = get_data()
 
-# max analysis
+# calculate total inputs
+for i in range(0, 12):
+    for j in range(0, 5):
+        #        print(j,i*6,i*6+j+1)
+        inputs_total[:, j] = inputs_total[:, j] + \
+            inputs[:, i*6]*inputs[:, i*6+j+1]
+
+# min max inputs_total analysis
+inp = np.zeros(shape=(inputs_total.shape))
+for i in range(0, 5):
+    inp[:, i] = np.sort(inputs_total[:, i])
+
+# save 100 largest params
+create_dir(savedir)
+create_dir(savedir + "/inputs")
+create_dir(savedir + "/inputs/min")
+create_dir(savedir + "/inputs/max")
+
+for j in range(0, 5):
+    f = open(savedir + "/inputs/min/paras_" + str(j+1) + "_anaylsis.csv", "w")
+    for i in range(0, 100):
+        f.write(str(inp[-i-1, j]))
+        f.write('\n')
+    f.close()
+
+for j in range(0, 5):
+    f = open(savedir + "/inputs/max/paras_" + str(j+1) + "_anaylsis.csv", "w")
+    for i in range(0, 100):
+        f.write(str(inp[i, j]))
+        f.write('\n')
+    f.close()
+
+
+# min max target analysis
 tar = np.zeros(shape=(targets.shape))
 for i in range(0, 5):
     tar[:, i] = np.sort(targets[:, i])
 
 # save 100 largest params
 create_dir(savedir)
-create_dir(savedir + "/min")
-create_dir(savedir + "/max")
+create_dir(savedir + "/targets")
+create_dir(savedir + "/targets/min")
+create_dir(savedir + "/targets/max")
 
 for j in range(0, 5):
-    f = open(savedir + "/min/paras_" + str(j+1) + "_anaylsis.csv", "w")
+    f = open(savedir + "/targets/min/paras_" + str(j+1) + "_anaylsis.csv", "w")
     for i in range(0, 100):
         f.write(str(tar[-i-1, j]))
         f.write('\n')
     f.close()
 
 for j in range(0, 5):
-    f = open(savedir + "/max/paras_" + str(j+1) + "_anaylsis.csv", "w")
+    f = open(savedir + "/targets/max/paras_" + str(j+1) + "_anaylsis.csv", "w")
     for i in range(0, 100):
         f.write(str(tar[i, j]))
+        f.write('\n')
+    f.close()
+
+
+# over abs 5 inputs
+overCount = np.zeros(shape=(5, 1))
+for i in range(0, 5):
+    for j in range(inputs_total.shape[0]):
+        if abs(inputs_total[j, i]) > 5:
+            overCount[i, 0] += 1
+
+for j in range(0, 5):
+    f = open(savedir + "/inputs/over_abs_5_anaylsis.csv", "w")
+    for i in range(0, 5):
+        f.write("Parameter " + str(i) + ": ")
+        f.write(str(overCount[i, 0]))
+        f.write(", ")
+        f.write(str(overCount[i, 0]/inputs_total.shape[0]))
+        f.write('\n')
+    f.close()
+
+
+# over abs 5 targets
+overCount = np.zeros(shape=(5, 1))
+for i in range(0, 5):
+    for j in range(targets.shape[0]):
+        if abs(targets[j, i]) > 8:
+            overCount[i, 0] += 1
+
+for j in range(0, 5):
+    f = open(savedir + "/targets/over_abs_5_anaylsis.csv", "w")
+    for i in range(0, 5):
+        f.write("Parameter " + str(i) + ": ")
+        f.write(str(overCount[i, 0]))
+        f.write(", ")
+        f.write(str(overCount[i, 0]/targets.shape[0]))
         f.write('\n')
     f.close()
