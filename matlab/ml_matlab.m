@@ -35,7 +35,7 @@ else
   % targets=transpose(targets);
 end
 
-for i=92:1000
+for i=137:1000
   % itr1=1+(i-1)*10000
   % itr2=10000+(i-1)*10000
   itr1=1
