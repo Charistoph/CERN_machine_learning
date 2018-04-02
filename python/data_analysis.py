@@ -4,7 +4,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from six.moves import cPickle as pickle
 
-savedir = "distribution_histo_plots/ex1"
+savedir = "distribution_histo_plots/ex2"
 
 #-------------------------------------------------------------------------------
 # functions

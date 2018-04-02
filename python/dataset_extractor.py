@@ -4,7 +4,7 @@ import numpy as np
 from six.moves import cPickle as pickle
 
 # workingdir = 'ml_input/2018.03.13-22:42:19'
-workingdir = '/Users/christoph/Documents/coding/CERN_input_data/python/2018.04.01_17.01.24_ex1'
+workingdir = '/Users/christoph/Documents/coding/CERN_input_data/python/2018.04.01_15.41.09_ex2'
 data_root_path = '/Users/christoph/Documents/coding/CERN_input_data/python/data_root'
 
 # get length of csv file
