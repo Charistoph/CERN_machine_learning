@@ -1,3 +1,4 @@
+%%%% ---- Marker 1 ---- %%%%
 readdata =      false; % usually false, only create data once
 
 % read data from with read_data script from input_data
@@ -22,6 +23,7 @@ printdata =     true;
 benchmark =     true;
 analyzedata =   false; % not important
 
+%%%% ---- Marker 2 ---- %%%%
 % create inputs and targets of length ntr, remove rows = 0
 if makedata
   make_data
@@ -35,22 +37,26 @@ else
   % targets=transpose(targets);
 end
 
+%%%% ---- Marker 3 ---- %%%%
 for i=146:1000
   % itr1=1+(i-1)*10000
   % itr2=10000+(i-1)*10000
   itr1=1
   itr2=10000*i
 
+%%%% ---- Marker 4 ---- %%%%
   % matlab train (neural network)
   if ml
     for trainMethod=1:1
 
+%%%% ---- Marker 5 ---- %%%%
       targets_train = 0;
       inputs_train = 0;
 
       targets_train=targets(1:3,itr1:itr2);
       inputs_train=inputs(:,itr1:itr2);
 
+%%%% ---- Marker 6 ---- %%%%
       if trainSwitch
   % MATLAB Train
 
@@ -66,6 +72,7 @@ for i=146:1000
         [net,tr]=train(net,inputs_train,targets_train); % train network
 
       else
+%%%% ---- Marker 7 ---- %%%%
   % MATLAB TrainNetwork: CONVOLUTIONAL NETWORK
   % doesn't work with MATLAB
 
@@ -83,6 +90,7 @@ for i=146:1000
 
       end
 
+%%%% ---- Marker 8 ---- %%%%
       netout=net(inputs); % compute net output of trained net to given input
 
       if size(netout,1)<5
@@ -93,6 +101,7 @@ for i=146:1000
 
     end
 
+%%%% ---- Marker 9 ---- %%%%
     % print histos & save outputs
     if printdata
       try
@@ -102,6 +111,7 @@ for i=146:1000
       end
     end
 
+%%%% ---- Marker 10 ---- %%%%
     % compares MAD, Matlab & Tensorflow results
     if benchmark
       try
@@ -111,6 +121,7 @@ for i=146:1000
       end
     end
 
+%%%% ---- Marker 11 ---- %%%%
     % analyzed ml output
     if analyzedata
       try
