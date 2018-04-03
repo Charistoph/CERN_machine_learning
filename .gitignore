@@ -20,6 +20,7 @@ python/_archive/*
 results.mat
 tracks.mat
 
+matlab/*.mat
 matlab/benchmark_data/*
 !matlab/benchmark_data/output_m3_maxcomp_12.csv
 !matlab/ml_output_matlab/results.csv
