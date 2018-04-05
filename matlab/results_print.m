@@ -3,6 +3,7 @@
 
 % print histos & save outputs
 
+%%%% ---- Marker 1 ---- %%%%
 results=zeros(size(netout,1),2);
 res=targets-netout;
 for i=1:size(netout,1)
@@ -10,6 +11,7 @@ for i=1:size(netout,1)
   results(i,:)=[mean(res(i,:)),std(res(i,:))];
 end
 
+%%%% ---- Marker 2 ---- %%%%
 dt = datestr(now,'yyyy.mm.dd-HH:MM:SS')
 path = strcat(pwd,'/ml_output_matlab/',dt)
 resultspath = strcat(path,'/results.csv')
@@ -23,7 +25,6 @@ try
 catch
   disp('print not worked')
 end
-
 
 csvwrite('ml_output_matlab/results.csv',results)
 csvwrite(resultspath,results)

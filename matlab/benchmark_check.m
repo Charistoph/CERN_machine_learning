@@ -3,6 +3,7 @@
 
 % compares MAD, Matlab & Tensorflow results
 
+%%%% ---- Marker 1 ---- %%%%
 mat1 = csvread('benchmark_data/output_m3_maxcomp_12.csv',12,0);
 
 baseline_std = mat1(1,:);
@@ -35,10 +36,12 @@ end
 m_diff_perc;
 tf_diff_perc;
 
+%%%% ---- Marker 2 ---- %%%%s
 baseline_std
 matlab_std
 tensorflow_std
 
+%%%% ---- Marker 3 ---- %%%%
 benchmark_result(1,:)=baseline_std;
 benchmark_result(2,:)=matlab_std;
 benchmark_result(3,:)=tensorflow_std;
@@ -52,10 +55,12 @@ matlab_worse_than_baseline
 
 tf_worse_than_baseline
 
+%%%% ---- Marker 4 ---- %%%%
 csvwrite('benchmark_data/benchmark_result.csv',benchmark_result)
 
 csvwrite(benchmark_resultspath,benchmark_result);
 
+%%%% ---- Marker 5 ---- %%%%
 ml_train_log  = strcat(dt, {':     '});
 for i=1:5
   ml_train_log = strcat(ml_train_log, num2str(matlab_worse_than_baseline(i)), {'    '});

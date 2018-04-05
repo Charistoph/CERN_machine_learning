@@ -11,7 +11,7 @@ while ntr<l
     para2(ntr)=temp(ntr,2);
     para3(ntr)=temp(ntr,3);
 end
-
+an
 % plot histogramms
 f=figure;
 subplot(3,1,1);
