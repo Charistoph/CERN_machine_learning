@@ -260,7 +260,7 @@ IRREGULARITY - 2018.02.05-20:09:50:     1.3273    1.4875    2.8981    0         
 2018.03.15-09:42:16:     1.6067     1.7999     68.7714    0    0      - 5 LM, MSE, sgdm, Batchs.,64 1
 2018.03.15-09:44:06:     0.49593    0.41642    0.33286    0    0      - 5 LM, MSE, sgdm, Batchs.,64 1
 2018.03.16-23:16:03:     0.56109    0.49336    0.58658    0    0      - 5 LM, MSE, sgdm, Batchs.,64 1
-2018.03.16-23:16:15:     0.93991    1.064     1.157       0    0      - 5 LM, MSE, sgdm, Batchs.,64 1
+2018.03.16-23:16:15:     0.93991    1.064      1.157      0    0      - 5 LM, MSE, sgdm, Batchs.,64 1
 
 *24 small iteration test: 10k events, ex1 data, [48,24] neurons
 2018.03.17-00:02:27:     0.35063    0.94498    4.4795     0    0      - 48  24 LM, MSE, sgdm, Batchs.,64 1, input_size: [72, 10k], targets_size: [3, 10k], 0k - 10k
@@ -775,3 +775,10 @@ IRREGULARITY - 2018.02.05-20:09:50:     1.3273    1.4875    2.8981    0         
 2018.04.04-07:01:43:     0.46029    0.4711     0.48325    0    0      - 5 LM, MSE, sgdm, Batchs.,64 1, input_size: [72, 1640k], targets_size: [3, 1640k], 0k - 1640k
 2018.04.04-15:16:56:     0.33877    0.41268    0.40667    0    0      - 5 LM, MSE, sgdm, Batchs.,64 1, input_size: [72, 1650k], targets_size: [3, 1650k], 0k - 1650k
 2018.04.05-07:58:51:     0.36719    0.4083     0.38506    0    0      - 5 LM, MSE, sgdm, Batchs.,64 1, input_size: [72, 1660k], targets_size: [3, 1660k], 0k - 1660k
+
+* 27 ex1_180126_081601 test
+2018.04.12-11:10:55:     0.44504    0.48695    0.69948    0    0      - 5 LM, MSE, sgdm, Batchs.,64 1, input_size: [72, 1000k], targets_size: [3, 1000k], 0k - 1000k
+2018.04.12-11:41:13:     0.66837    0.76726    0.84265    0    0      - 5 LM, MSE, sgdm, Batchs.,64 1, input_size: [72, 1010k], targets_size: [3, 1010k], 0k - 1010k
+2018.04.12-15:02:31:     0.45881    0.62458    0.63082    0    0      - 5 LM, MSE, sgdm, Batchs.,64 1, input_size: [72, 1020k], targets_size: [3, 1020k], 0k - 1020k
+2018.04.12-17:42:12:     0.47853    0.51592    0.77103    0    0      - 5 LM, MSE, sgdm, Batchs.,64 1, input_size: [72, 1030k], targets_size: [3, 1030k], 0k - 1030k
+2018.04.12-18:04:24:     0.60162    0.66773    0.6564     0    0      - 5 LM, MSE, sgdm, Batchs.,64 1, input_size: [72, 1040k], targets_size: [3, 1040k], 0k - 1040k
