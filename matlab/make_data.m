@@ -6,6 +6,7 @@
 inputs=zeros(ntr,72);
 targets=zeros(ntr,5);
 
+%%%% ---- Marker 1 ---- %%%%
 for itr=1:ntr
   if track(itr).ncomp==12
     for i=1:track(itr).ncomp
@@ -22,6 +23,7 @@ for itr=1:ntr
   end
 end
 
+%%%% ---- Marker 2 ---- %%%%
 % How many rows are = 0
 count=0
 pos=[];
@@ -33,6 +35,7 @@ for i=1:size(inputs,1)
   end
 end
 
+%%%% ---- Marker 3 ---- %%%%
 % Remove rows = 0
 count2=0
 for i=1:size(inputs,1)
@@ -52,6 +55,7 @@ targets=targets(1:ntr-count2,:);
 %  figure(i),clf,hist(targets(i,:),50)
 %end
 
+%%%% ---- Marker 4 ---- %%%%
 % remove targets with radius over 0.001
 overCounter=0
 pos=[];

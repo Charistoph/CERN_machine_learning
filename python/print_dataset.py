@@ -6,7 +6,7 @@ from six.moves import cPickle as pickle
 
 savedir = "distribution_histo_plots/ex2"
 
-#-------------------------------------------------------------------------------
+# -------------------------------------------------------------------------------
 # functions
 
 
@@ -82,10 +82,11 @@ def print_dist(savedir, name, plotdata):
     plt.savefig(savedir + '/' + name + '.png')
     plt.gcf().clear()
 
-#-------------------------------------------------------------------------------
+# -------------------------------------------------------------------------------
 # main code
 
 
+#### ---- Marker 1 ---- ####
 inputs, inputs_total, targets, inputs_rearranged, total_dataset = get_data()
 
 # create directories
@@ -112,20 +113,7 @@ for i in range(0, 5):
     print_dist(savedir_targets, name, targets[:, i])
 
 
-# calculate total inputs = weights times parameters
-# for k in range(0, total_dataset):
-#     for i in range(0, 12):
-#         for j in range(0, 5):
-#             #            print(k*12+i,j,"",int(round(k/12)),i*6+j+1)
-#             inputs_rearranged[k*12+i, j] = inputs[int(round(k/12)), i*6+j+1]
-
-# for 60 compontents = 12*5 reco parameters create distribution histos
-# for i in range(0, 5):
-#     name = "Inputs_Total_RECO_Para_" + str(i+1) + "_" + labels[i]
-#     print_dist(savedir_inputs_total, name, inputs_rearranged[:, i])
-
-
-# TODO: check if mean is still = 0
+#### ---- Marker 2 ---- ####
 # calculate total inputs = weights times parameters
 for i in range(0, 12):
     for j in range(0, 5):
@@ -137,16 +125,3 @@ for i in range(0, 12):
 for i in range(0, 5):
     name = "Dataset_2_Inputs_RECO_Para_" + str(i+1) + "_" + labels[i]
     print_dist(savedir_inputs, name, inputs_total[:, i])
-
-# checks
-#diff = np.mean(np.transpose(targets-inputs_total),1)
-#print('diff', diff)
-#diff_means = np.mean(np.transpose(targets),1) - np.mean(np.transpose(inputs_total),1)
-#print('diff_means', diff_means)
-# print(np.mean(np.transpose(targets),1)/diff_means)
-# print(np.mean(np.transpose(inputs_total),1)/diff_means)
-
-# for i in range(0,12):
-#    for j in range(0,5):
-#        print(j,i*6,i*6+j+1)
-#        inputs_total[0,j]=inputs_total[0,j]+inputs[0,i*6]*inputs[0,i*6+j+1]

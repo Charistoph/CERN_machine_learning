@@ -54,10 +54,11 @@ def randomize(dataset, targets):
 
 # spilt data set into training, validation and testing dataset
 
-#===============================================================================
+# ===============================================================================
 # main
 
 
+#### ---- Marker 1 ---- ####
 # generate input and target arrays
 inputlength = getlength('inputs.csv')
 inputheight = 72
@@ -69,6 +70,8 @@ targetheight = 5
 targets = np.zeros(shape=(targetheight, targetlength/targetheight))
 targets = getdata(targets, targetheight, 'targets.csv')
 
+
+#### ---- Marker 2 ---- ####
 # transpose datasets
 inputs = np.transpose(inputs)
 targets = np.transpose(targets)
@@ -78,13 +81,13 @@ print "targets shape =", targets.shape
 print ""
 
 
+#### ---- Marker 3 ---- ####
 # randomize
 inputs, targets = randomize(inputs, targets)
 
+
+#### ---- Marker 4 ---- ####
 # define data sizes
-#train_size = 200000
-#valid_size = 10000
-#test_size = 10000
 train_size = inputlength/inputheight-inputlength/inputheight/20*2
 test_size = inputlength/inputheight/20
 valid_size = test_size
@@ -110,6 +113,7 @@ print('Testing:', test_dataset.shape, test_targets.shape)
 print ""
 
 
+#### ---- Marker 5 ---- ####
 # save to pickle
 pickle_file = os.path.join(data_root_path, '5para.pickle')
 

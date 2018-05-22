@@ -12,7 +12,7 @@ import matplotlib.pyplot as plt
 
 savedir = 'ml_output_tensorflow'
 
-#-------------------------------------------------------------------------------
+# -------------------------------------------------------------------------------
 # functions
 
 # save loss history
@@ -49,10 +49,11 @@ def print_dist(savedir, name, plotdata):
     plt.savefig(savedir + '/' + name + '.png')
     plt.gcf().clear()
 
-#-------------------------------------------------------------------------------
+# -------------------------------------------------------------------------------
 # data loader
 
 
+#### ---- Marker 1 ---- ####
 # get pickle file
 pickle_file = '/Users/christoph/Documents/coding/CERN_input_data/python/data_root/5para.pickle'
 
@@ -85,13 +86,15 @@ with open(pickle_file, 'rb') as f:
     print('test_dataset type', test_dataset.dtype)
     print('test_targets type', test_targets.dtype)
 
+
+#### ---- Marker 2 ---- ####
 # timer
 start = time.clock()
 currenttime = time.clock()
-print ('\nstart time: ' + str(start))
+print('\nstart time: ' + str(start))
 
 
-#-------------------------------------------------------------------------------
+# -------------------------------------------------------------------------------
 # load all the data into TensorFlow and build the computation graph corresponding to our training
 
 train_dataset_TMP = train_dataset
@@ -101,8 +104,11 @@ valid_targets_TMP = valid_targets
 test_dataset_TMP = test_dataset
 test_targets_TMP = test_targets
 
+
+#### ---- Marker 3 ---- ####
 for test_iterations in range(1, 10):
     # reduce size of data set
+    #### ---- Marker 4 ---- ####
     print("!!!! test_iterations", test_iterations, "!!!!")
     train_reduced_size = 10000*test_iterations
     valid_reduced_size = int(train_reduced_size*0.1)
@@ -115,6 +121,7 @@ for test_iterations in range(1, 10):
     test_dataset = test_dataset_TMP[0:test_reduced_size, :]
     test_targets = test_targets_TMP[0:test_reduced_size, :]
 
+    #### ---- Marker 5 ---- ####
     # Hyperparameters
     # num_steps = 3001
     num_steps = 100001
@@ -126,13 +133,16 @@ for test_iterations in range(1, 10):
     batch_size = 1024
     num_nodes = 128
 
+    #### ---- Marker 6 ---- ####
     # additional tensors
     loss_history = np.empty(shape=[1], dtype=float)
     final_logits = np.empty(shape=train_targets.shape, dtype=float)
 
+    #### ---- Marker 7 ---- ####
     graph = tf.Graph()
     with graph.as_default():
 
+        #### ---- Marker 8 ---- ####
         # Input data. For the training data, we use a placeholder that will be fed
         # at run time with a training minibatch.
         tf_train_dataset = tf.placeholder(tf.float32,
@@ -150,6 +160,7 @@ for test_iterations in range(1, 10):
             [num_nodes, para_targets_size]))
         biases_2 = tf.Variable(tf.zeros([para_targets_size]))
 
+        #### ---- Marker 9 ---- ####
         # Training computation.
         logits_1 = tf.matmul(tf_train_dataset, weights_1) + biases_1
 
@@ -173,32 +184,40 @@ for test_iterations in range(1, 10):
         loss = tf.reduce_mean(tf.square(tf_train_targets - logits_2))
         print('loss', loss.shape)
 
+        #### ---- Marker 10 ---- ####
         # Optimizer & Training Step
         # optimizer = tf.train.GradientDescentOptimizer(learning_rate).minimize(loss)
         optimizer = tf.train.MomentumOptimizer(
             learning_rate, momentum, use_locking=False, use_nesterov=False).minimize(loss)
     #    optimizer = tf.train.MomentumOptimizer(learning_rate,momentum,use_locking=False,use_nesterov=True).minimize(loss)
 
-    #-------------------------------------------------------------------------------
+    # -------------------------------------------------------------------------------
     # run computation and iterate
 
+    #### ---- Marker 11 ---- ####
     with tf.Session(graph=graph) as session:
         tf.global_variables_initializer().run()
         print("Initialized")
+        #### ---- Marker 12 ---- ####
         for step in range(num_steps):
-            # Pick an offset within the training data, which has been randomized.
-            # Note: we could use better randomization across epochs.
+
+            #### ---- Marker 13 ---- ####
             offset = np.random.randint(0, train_targets.shape[0] - batch_size)
+
             # Generate a minibatch.
             batch_data = train_dataset[offset:(offset + batch_size), :]
             batch_targets = train_targets[offset:(offset + batch_size), :]
+
+            #### ---- Marker 14 ---- ####
             # Prepare a dictionary telling the session where to feed the minibatch.
-            # The key of the dictionary is the placeholder node of the graph to be fed,
-            # and the value is the numpy array to feed to it.
             feed_dict = {tf_train_dataset: batch_data,
                          tf_train_targets: batch_targets}
+
+            #### ---- Marker 15 ---- ####
             _, l = session.run(
                 [optimizer, loss], feed_dict=feed_dict)
+
+            # Prints to keep track of progress
             if (step % 500 == 0):
                 print("\nMinibatch loss at step %d: %f" % (step, l))
                 print('Computing time for steps ' + str(step-500) + ' to ' +
@@ -206,35 +225,24 @@ for test_iterations in range(1, 10):
                 currenttime = time.clock()
                 print("offset", offset)
 
+            #### ---- Marker 16 ---- ####
             # Append current loss to loss history
             loss_history = np.append(loss_history, l)
 
             tf_train_dataset_out, weights_1_out, biases_1_out, logits_1_out, act_layer_out, weights_2_out, biases_2_out, logits_2_out, tf_train_targets_out = session.run(
                 [tf_train_dataset, weights_1, biases_1, logits_1, act_layer, weights_2, biases_2, logits_2, tf_train_targets], feed_dict=feed_dict)
 
+            #### ---- Marker 17 ---- ####
             # Update final_logits for difference calculator
             final_logits[offset:(offset + batch_size), :] = logits_2_out
 
-    #        if (step < 3 or step > num_steps-2):
-    #            print('\nStep:', step)
-    #            print('tf_train_dataset_out\n', tf_train_dataset_out[0:5,0])
-    #            print('weights_1_out\n', weights_1_out[0:5,0])
-    #            print('biases_1_out\n', biases_1_out[0:5])
-    #            print('logits_1_out\n', logits_1_out[0:5,0])
-    #            print('act_layer_out\n', act_layer_out[0:5,0])
-    #            print('weights_2_out\n', weights_2_out[0:5,0])
-    #            print('biases_2_out\n', biases_2_out[0:5])
-    #            print('logits_2_out\n', logits_2_out[0:5,0])
-    #            print('tf_train_targets_out\n', tf_train_targets_out[0:5,0])
-    #            print('loss',l)
-    #        '''
         print("\nfinal loss: %f" % l)
-        print ('total computing time: ' + str(time.clock()-start))
+        print('total computing time: ' + str(time.clock()-start))
 
     #    saver = tf.train.Saver()
     #    saver.save(session, 'session_store/a2_sgd.ckpt')
 
-    #-------------------------------------------------------------------------------
+    # -------------------------------------------------------------------------------
     # analysis
 
     now = time.localtime()
@@ -243,9 +251,11 @@ for test_iterations in range(1, 10):
 
     savedir_with_time = savedir + "/" + time_now
 
+    #### ---- Marker 18 ---- ####
     # create folder
     create_dir(savedir_with_time)
 
+    #### ---- Marker 19 ---- ####
     # loss history prints
     if (num_steps < 101):
         save_loss_history(savedir_with_time, 'loss_history', loss_history)
@@ -266,6 +276,7 @@ for test_iterations in range(1, 10):
     save_loss_history(savedir_with_time, 'loss_history_last_1000_steps',
                       loss_history[len(loss_history)-1000:len(loss_history)])
 
+    #### ---- Marker 20 ---- ####
     # difference calculator
     try:
         diff = final_logits-train_targets
@@ -307,6 +318,7 @@ for test_iterations in range(1, 10):
     except:
         print("histos didn't work")
 
+    #### ---- Marker 21 ---- ####
     # write to log
     try:
         f = open(savedir + "/tf_output_log.csv", "a")

@@ -6,6 +6,7 @@ dt = datestr(now,'yyyy.mm.dd_HH.MM.SS');
 %===============================================================================
 % main
 
+%%%% ---- Marker 1 ---- %%%%
 % loop over all tracks
 for itr=1:ntr
     % eliminates all tracks which don`t have 12 components
@@ -38,6 +39,7 @@ end
 %    end
 %end
 
+%%%% ---- Marker 2 ---- %%%%
 %simparas(1:5,1:5);
 targets = transpose(simparas);
 
@@ -57,23 +59,27 @@ end
 recoparas(1:5,1:5);
 inputs = transpose(recoparas);
 
-% counts
+%%%% ---- Marker 3 ---- %%%%
+% length counts
 ntr
 itr-counter
 length(targets(:,1))
 length(inputs(:,1))/12
 
+%%%% ---- Marker 4 ---- %%%%
 % mean test
 mean(simparas,2)
 a=mean(recoparas,2);
 a(2:6)
 
+%%%% ---- Marker 5 ---- %%%%
 % std test
 a=transpose(std(transpose(simparas)));
 a(1:5)
 b=transpose(std(transpose(recoparas)));
 b(2:6)
 
+%%%% ---- Marker 6 ---- %%%%
 % saving
 saveFunction(inputs, dt, 'inputs')
 saveFunction(targets, dt, 'targets')
