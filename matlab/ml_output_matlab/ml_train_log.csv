@@ -782,3 +782,6 @@ IRREGULARITY - 2018.02.05-20:09:50:     1.3273    1.4875    2.8981    0         
 2018.04.12-15:02:31:     0.45881    0.62458    0.63082    0    0      - 5 LM, MSE, sgdm, Batchs.,64 1, input_size: [72, 1020k], targets_size: [3, 1020k], 0k - 1020k
 2018.04.12-17:42:12:     0.47853    0.51592    0.77103    0    0      - 5 LM, MSE, sgdm, Batchs.,64 1, input_size: [72, 1030k], targets_size: [3, 1030k], 0k - 1030k
 2018.04.12-18:04:24:     0.60162    0.66773    0.6564     0    0      - 5 LM, MSE, sgdm, Batchs.,64 1, input_size: [72, 1040k], targets_size: [3, 1040k], 0k - 1040k
+
+* create cov matrix (1 train session ex2) - one run to calculate the trace of the cov matrix.
+2018.05.23-15:50:38:     0.32709    0.43439    0.42234    0    0      - 5 LM, MSE, sgdm, Batchs.,64 1, input_size: [72, 1600k], targets_size: [3, 1600k], 0k - 1600k

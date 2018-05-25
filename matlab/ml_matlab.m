@@ -1,5 +1,5 @@
 %%%% ---- Marker 1 ---- %%%%
-readdata =      true; % usually false, only create data once
+readdata =      false; % usually false, only create data once
 
 % read data from with read_data script from input_data
 if readdata
@@ -8,7 +8,7 @@ if readdata
 end
 
 datacheck =     false; % condition used in make_data.m
-makedata =      true; % usually false, only create data once
+makedata =      false; % usually false, only create data once
 
 % % don't delete these
 % keepvars = {'inputs','targets'};
@@ -38,7 +38,7 @@ else
 end
 
 %%%% ---- Marker 3 ---- %%%%
-for i=100:1000
+for i=160:160
   % itr1=1+(i-1)*10000
   % itr2=10000+(i-1)*10000
   itr1=1
@@ -61,10 +61,13 @@ for i=100:1000
   % MATLAB Train
 
         if trainMethod == 1
-            % neurons = 5
-            neurons = [48,24]
+            neurons = 5
+            % neurons = [48,24]
             net=feedforwardnet(neurons)
         end
+
+        inputs(1:5,1:5)
+        targets(1:5,1:5)
 
         % net = Newly trained network
         % tr = Training record (epoch and perf)
