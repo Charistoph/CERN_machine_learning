@@ -86,37 +86,14 @@ print ""
 # randomize
 inputs, targets = randomize(inputs, targets)
 
-
-#### ---- Marker 4 ---- ####
-# define data sizes
-train_size = inputlength/inputheight-inputlength/inputheight/20*2
-test_size = inputlength/inputheight/20
-valid_size = test_size
-
-print "train_size =", train_size
-print "test_size =", test_size
-print "valid_size =", valid_size
-print ""
-
-# split dataset
-test_dataset = inputs[0:test_size, :]
-test_targets = targets[0:test_size, :]
-valid_dataset = inputs[test_size:test_size+valid_size, :]
-valid_targets = targets[test_size:test_size+valid_size, :]
-train_dataset = inputs[test_size+valid_size:test_size+valid_size+train_size, :]
-train_targets = targets[test_size +
-                        valid_size:test_size+valid_size+train_size, :]
-
 # sizes
-print('Training:', train_dataset.shape, train_targets.shape)
-print('Validation:', valid_dataset.shape, valid_targets.shape)
-print('Testing:', test_dataset.shape, test_targets.shape)
+print('Training:', inputs.shape, targets.shape)
 print ""
 
 
 #### ---- Marker 5 ---- ####
 # save to pickle
-pickle_file = os.path.join(data_root_path, '5para.pickle')
+pickle_file = os.path.join(data_root_path, '5para_one_set.pickle')
 
 if (os.path.exists(data_root_path) == False):
     os.makedirs(data_root_path)
@@ -127,12 +104,8 @@ else:
 try:
     f = open(pickle_file, 'wb')
     save = {
-        'train_dataset': train_dataset,
-        'train_targets': train_targets,
-        'valid_dataset': valid_dataset,
-        'valid_targets': valid_targets,
-        'test_dataset': test_dataset,
-        'test_targets': test_targets,
+        'inputs': inputs,
+        'targets': targets,
     }
     pickle.dump(save, f, pickle.HIGHEST_PROTOCOL)
     f.close()
@@ -140,11 +113,3 @@ try:
 except Exception as e:
     print('Unable to save data to', pickle_file, ':', e)
     raise
-
-print ""
-
-# length checks
-print "difference between input length and dataset length =", inputlength / \
-    inputheight - (len(train_dataset) + len(test_dataset) + len(valid_dataset))
-print "difference between input length and targets length =", inputlength / \
-    inputheight - (len(train_targets) + len(test_targets) + len(valid_targets))

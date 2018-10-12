@@ -12,7 +12,8 @@ clear
 % newpath = strcat(newdir,filepath);
 
 % absolute file path
-newpath = '/Users/christoph/Documents/coding/CERN_input_data/output_ex2_180129_165048_20180307.csv';
+% newpath = '/Users/christoph/Documents/coding/CERN_input_data/output_ex2_180129_165048_20180307.csv';
+newpath = '/Users/christoph/Documents/coding/cern_experiment/output_ex1.csv';
 temp=load(newpath);
 
 %%%% ---- Marker 1 ---- %%%%

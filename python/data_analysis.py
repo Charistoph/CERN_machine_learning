@@ -6,13 +6,14 @@ from six.moves import cPickle as pickle
 
 savedir = "distribution_histo_plots/ex2"
 
-#-------------------------------------------------------------------------------
+# -------------------------------------------------------------------------------
 # functions
 
 
 def get_data():
     # get pickle file
-    pickle_file = '/Users/christoph/Documents/coding/CERN_input_data/python/data_root/5para.pickle'
+    # pickle_file = '/Users/christoph/Documents/coding/CERN_input_data/python/data_root/5para.pickle'
+    pickle_file = 'data_root/5para_ex1_3_set_split.pickle'
 
     # open pickle file and datasets & targets
     with open(pickle_file, 'rb') as f:
@@ -74,7 +75,7 @@ def create_dir(savedir):
         print(savedir, "already created")
 
 
-#-------------------------------------------------------------------------------
+# -------------------------------------------------------------------------------
 # main code
 
 
